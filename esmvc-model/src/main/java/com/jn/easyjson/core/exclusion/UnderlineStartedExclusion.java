@@ -1,15 +1,3 @@
-/*
- *  Copyright (c) 2016
- *  BES Software Corporation.
- *  All Rights Reserved
- *      Revision History:
- *                                 Modification       Tracking
- *  Author (Email ID)              Date               Number               Description
- *  -------------------------------------------------------------------------------------------
- *  jinuo.fang                     2019-04-11                              Initial version
- *
- */
-
 package com.jn.easyjson.core.exclusion;
 
 import com.jn.langx.util.reflect.FieldAttributes;
