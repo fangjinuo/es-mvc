@@ -15,7 +15,6 @@ package com.jn.esmvc.service;
 import com.jn.easyjson.core.JSON;
 import com.jn.easyjson.core.JSONBuilderProvider;
 import com.jn.easyjson.core.exclusion.IgnoreAnnotationExclusion;
-import com.jn.easyjson.core.exclusion.ModifierExclusion;
 import com.jn.easyjson.core.exclusion.UnderlineStartedExclusion;
 import com.jn.esmvc.model.AbstractESModel;
 import org.elasticsearch.action.get.GetResponse;
@@ -24,6 +23,7 @@ import org.elasticsearch.index.get.GetResult;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class AbstractESModelService<MODEL extends AbstractESModel> implements IE
     protected Class<MODEL> modelClass;
     protected JSON json = JSONBuilderProvider.create()
             .addSerializationExclusion(new IgnoreAnnotationExclusion())
-            .addSerializationExclusion(new ModifierExclusion())
+            .excludeFieldsWithModifiers(Modifier.TRANSIENT)
             .addSerializationExclusion(new UnderlineStartedExclusion())
             .build();
 
