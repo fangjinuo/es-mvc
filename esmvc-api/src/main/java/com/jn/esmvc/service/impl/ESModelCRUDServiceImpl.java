@@ -1,16 +1,3 @@
-/*
- *  Copyright (c) 2016
- *  BES Software Corporation.
- *  All Rights Reserved
- *      Revision History:
- *                                 Modification       Tracking
- *  Author (Email ID)              Date               Number               Description
- *  -------------------------------------------------------------------------------------------
- *  jinuo.fang                     2019-04-12                              Initial version
- *  shuangxi.cao                   2019-07-05         SMP-514/SMP-515      Fix ES delay update issue
- *
- */
-
 package com.jn.esmvc.service.impl;
 
 import com.jn.esmvc.model.AbstractESModel;
