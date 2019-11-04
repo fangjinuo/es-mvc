@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>esmvc-api</module>
+        <module>esmvc-service</module>
         <module>esmvc-examples</module>
         <module>esmvc-model</module>
     </modules>
@@ -66,7 +66,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.fangjinuo.esmvc</groupId>
-                <artifactId>esmvc-api</artifactId>
+                <artifactId>esmvc-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

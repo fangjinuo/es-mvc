@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.fangjinuo.esmvc</groupId>
-            <artifactId>esmvc-api</artifactId>
+            <artifactId>esmvc-service</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
