@@ -64,6 +64,11 @@
                 <artifactId>esmvc-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
