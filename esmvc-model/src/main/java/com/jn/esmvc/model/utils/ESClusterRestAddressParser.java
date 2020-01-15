@@ -3,7 +3,7 @@ package com.jn.esmvc.model.utils;
 import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.function.Consumer;
-import com.jn.langx.util.struct.NetworkAddress;
+import com.jn.langx.util.net.NetworkAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,6 @@ public class ESClusterRestAddressParser {
      * case 2:
      *  host1,host2,host3:port  => host1:port,host2:port,host3:port
      * </pre>
-     *
      */
     public List<NetworkAddress> parse(String s) {
         if (Strings.isBlank(s)) {
