@@ -13,7 +13,16 @@
     <description>
         ElasticSearch ORM and service
     </description>
-    <url>https://github.com/fangjinuo/langx-java</url>
+
+    <properties>
+        <elasticsearch.version>6.7.0</elasticsearch.version>
+        <langx.version>2.0.1</langx.version>
+        <easyjson.version>2.1.0</easyjson.version>
+        <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
+        <scm.url>${scm.url0}.git</scm.url>
+    </properties>
+
+    <url>${scm.url0}</url>
     <developers>
         <developer>
             <id>jinuo.fang</id>
@@ -34,9 +43,9 @@
     </distributionManagement>
     <scm>
         <tag>${project.version}</tag>
-        <url>https://github.com/fangjinuo/es-mvc.git</url>
-        <connection>https://github.com/fangjinuo/es-mvc.git</connection>
-        <developerConnection>https://github.com/fangjinuo/es-mvc.git</developerConnection>
+        <url>${scm.url}</url>
+        <connection>${scm.url}</connection>
+        <developerConnection>${scm.url}</developerConnection>
     </scm>
     <licenses>
         <license>
@@ -46,11 +55,7 @@
         </license>
     </licenses>
 
-    <properties>
-        <elasticsearch.version>6.7.0</elasticsearch.version>
-        <langx.version>2.0.1</langx.version>
-        <easyjson.version>2.1.0</easyjson.version>
-    </properties>
+
 
     <modules>
         <module>esmvc-service</module>
