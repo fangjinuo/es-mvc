@@ -8,6 +8,7 @@
     <artifactId>esmvc</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
+    <name>esmvc</name>
 
     <description>
         ElasticSearch ORM and service
