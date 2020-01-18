@@ -8,17 +8,54 @@
     <artifactId>esmvc</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <modules>
-        <module>esmvc-service</module>
-        <module>esmvc-examples</module>
-        <module>esmvc-model</module>
-    </modules>
+
+    <description>
+        ElasticSearch ORM and service
+    </description>
+    <url>https://github.com/fangjinuo/langx-java</url>
+    <developers>
+        <developer>
+            <id>jinuo.fang</id>
+            <name>jinuo.fang</name>
+            <email>fs1194361820@163.com</email>
+            <url>http://www.cnblogs.com/f1194361820</url>
+        </developer>
+    </developers>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype_oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype_oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <tag>${project.version}</tag>
+        <url>https://github.com/fangjinuo/es-mvc.git</url>
+        <connection>https://github.com/fangjinuo/es-mvc.git</connection>
+        <developerConnection>https://github.com/fangjinuo/es-mvc.git</developerConnection>
+    </scm>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://github.com/fangjinuo/es-mvc/blob/master/LICENSE</url>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
 
     <properties>
         <elasticsearch.version>6.7.0</elasticsearch.version>
         <langx.version>2.0.1</langx.version>
         <easyjson.version>2.1.0</easyjson.version>
     </properties>
+
+    <modules>
+        <module>esmvc-service</module>
+        <module>esmvc-examples</module>
+        <module>esmvc-model</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
