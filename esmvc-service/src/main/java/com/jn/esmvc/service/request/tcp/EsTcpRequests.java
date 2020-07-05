@@ -1,13 +1,13 @@
-package com.jn.esmvc.service.impl.tcp;
+package com.jn.esmvc.service.request.tcp;
 
-import com.jn.esmvc.service.request.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.termvectors.TermVectorsRequest;
 
 import java.util.Map;
 
 public class EsTcpRequests {
-    public static TermVectorsRequest toEsRequest(com.jn.esmvc.service.request.termvectors.TermVectorsRequest from){
+    public static TermVectorsRequest toEsRequest(com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest from){
         TermVectorsRequest to = new TermVectorsRequest(from.getIndex(),from.getType(),from.getId());
         to.doc(from.getDocBuilder());
         to.routing(from.getRouting());

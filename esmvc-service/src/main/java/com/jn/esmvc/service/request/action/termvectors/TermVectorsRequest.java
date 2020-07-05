@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.termvectors;
+package com.jn.esmvc.service.request.action.termvectors;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 

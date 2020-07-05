@@ -1,9 +1,9 @@
-package com.jn.esmvc.service.impl.rest;
+package com.jn.esmvc.service.request.rest;
 
 import org.elasticsearch.client.core.TermVectorsRequest;
 
 public class EsRestRequests {
-    public static TermVectorsRequest toEsRequest(com.jn.esmvc.service.request.termvectors.TermVectorsRequest from){
+    public static TermVectorsRequest toEsRequest(com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest from){
         TermVectorsRequest to = new TermVectorsRequest(from.getIndex(), from.getType(), from.getDocBuilder());
         to.setRouting(from.getRouting());
         to.setPreference(from.getPreference());

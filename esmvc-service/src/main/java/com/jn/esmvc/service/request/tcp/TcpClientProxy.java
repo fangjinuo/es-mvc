@@ -1,8 +1,8 @@
-package com.jn.esmvc.service.impl.tcp;
+package com.jn.esmvc.service.request.tcp;
 
 import com.jn.esmvc.service.ClientProxy;
-import com.jn.esmvc.service.request.termvectors.TermVectorsRequest;
-import com.jn.esmvc.service.request.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;

@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.impl.rest;
+package com.jn.esmvc.service.request.rest;
 
 import com.jn.esmvc.service.ClientProxy;
 import org.elasticsearch.action.ActionListener;

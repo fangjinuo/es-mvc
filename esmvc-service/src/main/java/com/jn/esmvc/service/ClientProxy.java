@@ -1,8 +1,8 @@
 package com.jn.esmvc.service;
 
 
-import com.jn.esmvc.service.request.termvectors.TermVectorsRequest;
-import com.jn.esmvc.service.request.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import com.jn.langx.util.struct.Holder;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
