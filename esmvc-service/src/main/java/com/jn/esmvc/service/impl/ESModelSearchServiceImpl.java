@@ -4,15 +4,13 @@ import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.model.utils.ESModels;
 import com.jn.esmvc.service.AbstractESModelService;
 import com.jn.esmvc.service.ESModelSearchService;
+import com.jn.esmvc.service.request.action.count.CountRequest;
+import com.jn.esmvc.service.request.action.count.CountResponse;
 import com.jn.esmvc.service.scroll.ScrollContext;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.esmvc.service.util.ESRequests;
 import com.jn.langx.util.Preconditions;
 import org.elasticsearch.action.search.*;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.core.CountRequest;
-import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -52,7 +50,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         request.indices(index).types(type);
         request.source(bodyBuilder);
         try {
-            CountResponse response = ((RestHighLevelClient)client.get()).count(request, (RequestOptions) client.getGlobalOptions());
+            CountResponse response = client.count(request, null);
             return response.getCount();
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);

@@ -1,10 +1,12 @@
 package com.jn.esmvc.service.request.action.termvectors;
 
+import org.elasticsearch.action.ActionRequest;
+import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
 import java.util.Map;
 
-public class TermVectorsRequest {
+public class TermVectorsRequest extends ActionRequest {
     private String index;
     private String type;
     private String id = null;
@@ -21,6 +23,11 @@ public class TermVectorsRequest {
     private boolean requestTermStatistics = false;
     private Map<String, String> perFieldAnalyzer = null;
     private Map<String, Integer> filterSettings = null;
+
+    @Override
+    public ActionRequestValidationException validate() {
+        return null;
+    }
 
     public TermVectorsRequest(String index, String type, XContentBuilder docBuilder) {
         this.index = index;

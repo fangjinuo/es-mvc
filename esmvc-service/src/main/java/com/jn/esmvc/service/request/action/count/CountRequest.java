@@ -2,6 +2,7 @@ package com.jn.esmvc.service.request.action.count;
 
 import com.jn.langx.util.Objects;
 import com.jn.langx.util.hash.HashCodeBuilder;
+import org.elasticsearch.action.ActionRequest;
 import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.common.Strings;
@@ -11,7 +12,7 @@ import java.util.Arrays;
 
 import static org.elasticsearch.action.search.SearchRequest.DEFAULT_INDICES_OPTIONS;
 
-public class CountRequest {
+public class CountRequest extends ActionRequest {
     private String[] indices = Strings.EMPTY_ARRAY;
     private String[] types = Strings.EMPTY_ARRAY;
     private String routing;
