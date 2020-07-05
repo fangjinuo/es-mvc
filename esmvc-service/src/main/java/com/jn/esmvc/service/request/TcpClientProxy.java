@@ -4,6 +4,8 @@ import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.request.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.action.count.CountRequest;
 import com.jn.esmvc.service.request.action.count.CountResponse;
+import com.jn.esmvc.service.request.action.count.TcpCountRequestAdapter;
+import com.jn.esmvc.service.request.action.count.TcpCountResponseAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsRequestAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
@@ -150,11 +152,15 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     @Override
     public CountResponse count(CountRequest request, Object o) throws IOException {
-        return null;
+        TcpCountRequestAdapter requestAdapter = new TcpCountRequestAdapter();
+        TcpCountResponseAdapter responseAdapter = new TcpCountResponseAdapter();
+        return responseAdapter.apply(search(requestAdapter.apply(request),o));
     }
 
     @Override
     public void countAsync(CountRequest request, Object o, ActionListener<CountResponse> listener) {
-
+        TcpCountRequestAdapter requestAdapter = new TcpCountRequestAdapter();
+        TcpCountResponseAdapter responseAdapter = new TcpCountResponseAdapter();
+        searchAsync(requestAdapter.apply(request),o, new DelegatableActionListener<>(listener, responseAdapter));
     }
 }

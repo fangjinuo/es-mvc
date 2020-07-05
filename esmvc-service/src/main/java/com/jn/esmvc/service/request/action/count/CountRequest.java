@@ -1,6 +1,7 @@
 package com.jn.esmvc.service.request.action.count;
 
 import com.jn.langx.util.Objects;
+import com.jn.langx.util.hash.HashCodeBuilder;
 import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.action.support.IndicesOptions;
 import org.elasticsearch.common.Strings;
@@ -17,6 +18,8 @@ public class CountRequest {
     private String preference;
     private SearchSourceBuilder searchSourceBuilder;
     private IndicesOptions indicesOptions = DEFAULT_INDICES_OPTIONS;
+
+    private String countColumn = "_id";
 
     public CountRequest() {
         this.searchSourceBuilder = new SearchSourceBuilder();
@@ -154,6 +157,15 @@ public class CountRequest {
         return this.searchSourceBuilder;
     }
 
+    public String countColumn() {
+        return countColumn;
+    }
+
+    public CountRequest countColumn(String countColumn) {
+        this.countColumn = countColumn;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -167,14 +179,20 @@ public class CountRequest {
                 Arrays.equals(indices, that.indices) &&
                 Arrays.equals(types, that.types) &&
                 Objects.equals(routing, that.routing) &&
-                Objects.equals(preference, that.preference);
+                Objects.equals(preference, that.preference) &&
+                Objects.equals(countColumn, that.countColumn)
+                ;
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(indicesOptions, routing, preference);
-        result = 31 * result + Arrays.hashCode(indices);
-        result = 31 * result + Arrays.hashCode(types);
-        return result;
+        return new HashCodeBuilder()
+                .with(indicesOptions)
+                .with(routing)
+                .with(preference)
+                .with(indices)
+                .with(types)
+                .with(countColumn)
+                .build();
     }
 }
