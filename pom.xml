@@ -106,6 +106,12 @@
                 <artifactId>esmvc-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-spring-boot-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

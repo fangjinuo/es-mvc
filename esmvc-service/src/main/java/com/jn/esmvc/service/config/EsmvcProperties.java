@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class ElasticSearchProperties {
-    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchProperties.class);
+public class EsmvcProperties {
+    private static final Logger logger = LoggerFactory.getLogger(EsmvcProperties.class);
     public static final List<String> supportedProtocols = Collects.newArrayList("http","https");
     private String protocol = "http";
     private String nodes;
