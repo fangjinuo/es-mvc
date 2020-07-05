@@ -1,0 +1,98 @@
+
+## 删除 knowledge
+curl -XDELETE "http://localhost:9200/knowledge"
+
+
+## 创建 knowledge Index：
+curl -XPUT "http://localhost:9200/knowledge" -H 'Content-Type: application/json' -d'
+{
+  "settings": {
+    "index": {
+      "number_of_shards":1,
+      "number_of_replicas":1
+    },
+    "analysis":{
+      "filter":{
+        "english_stopwords":{
+          "type":"stop",
+          "stopwords":"_english_"
+        }
+      },
+      "analyzer":{
+        "titleAnalyzer":{
+          "type":"custom",
+          "tokenizer":"ik_max_word",
+          "filter":["lowercase", "english_stopwords"]
+        },
+        "contentAnalyzer":{
+          "type":"custom",
+          "tokenizer":"ik_max_word",
+          "filter":["lowercase", "english_stopwords"]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "_doc":{
+      "properties":{
+        "title":{
+          "type":"text",
+          "index":true,
+          "analyzer":"titleAnalyzer",
+          "index_options":"offsets"
+        },
+        "keywords":{
+          "type":"keyword",
+          "index":true
+        },
+        "labels":{
+          "type":"keyword",
+          "index":true
+        },
+        "createInfo":{
+          "type":"nested",
+          "properties":{
+            "userId": {
+              "type": "keyword",
+              "index": true
+            },
+            "userName": {
+              "type": "keyword",
+              "index": true
+            },
+            "datetime": {
+              "type": "date",
+              "format":"epoch_millis",
+              "index": true
+            }
+          }
+        },
+        "lastModifierInfo": {
+          "type":"nested",
+          "properties":{
+            "userId": {
+              "type": "keyword",
+              "index": true
+            },
+            "userName": {
+              "type": "keyword",
+              "index": true
+            },
+            "datetime": {
+              "type": "date",
+              "format":"epoch_millis",
+              "index": true
+            }
+          }
+        },
+        "content":{
+          "type":"text",
+          "index":true,
+          "analyzer":"contentAnalyzer",
+          "term_vector":"with_positions_offsets"
+        }
+      }
+    }
+  }
+}
+'
