@@ -2,7 +2,7 @@ package com.jn.esmvc.examples.service.tcp;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
 import com.jn.esmvc.service.impl.ESModelServiceImpl;
-import com.jn.esmvc.service.request.tcp.TcpClientProxy;
+import com.jn.esmvc.service.request.TcpClientProxy;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

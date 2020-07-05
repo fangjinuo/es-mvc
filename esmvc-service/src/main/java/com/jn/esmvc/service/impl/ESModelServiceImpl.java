@@ -2,7 +2,7 @@ package com.jn.esmvc.service.impl;
 
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.service.*;
-import com.jn.esmvc.service.request.rest.RestClientProxy;
+import com.jn.esmvc.service.request.RestClientProxy;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 

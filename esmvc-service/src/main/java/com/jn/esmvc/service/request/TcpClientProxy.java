@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.tcp;
+package com.jn.esmvc.service.request;
 
 import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.request.action.DelegatableActionListener;

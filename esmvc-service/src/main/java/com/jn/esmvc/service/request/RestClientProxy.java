@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.rest;
+package com.jn.esmvc.service.request;
 
 import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.ESRestClient;
