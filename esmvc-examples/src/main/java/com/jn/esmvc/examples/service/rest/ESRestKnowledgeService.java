@@ -22,7 +22,6 @@ public class ESRestKnowledgeService extends ESModelServiceImpl<KnowledgeESModel>
     }
 
     @Autowired
-    @Override
     @Qualifier("esRestClient")
     public ESRestKnowledgeService setClient(ESRestClient client) {
         super.setClient(client);

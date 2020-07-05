@@ -2,6 +2,8 @@ package com.jn.esmvc.service.request.rest;
 
 import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.ESRestClient;
+import com.jn.esmvc.service.request.action.DelegatableActionListener;
+import com.jn.esmvc.service.request.action.termvectors.RestTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
@@ -144,6 +146,6 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
 
     @Override
     public void termvectorsAsync(TermVectorsRequest request, RequestOptions options, ActionListener<TermVectorsResponse> listener) {
-        get().termvectorsAsync(EsRestRequests.toEsRequest(request), options, new EsRestRequests.TermVectorsRequestHandleListener(listener));
+        get().termvectorsAsync(EsRestRequests.toEsRequest(request), options, new DelegatableActionListener<>(listener, new RestTermVectorsResponseAdapter()));
     }
 }

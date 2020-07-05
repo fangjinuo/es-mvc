@@ -1,6 +1,8 @@
 package com.jn.esmvc.service.request.tcp;
 
 import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.request.action.DelegatableActionListener;
+import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
@@ -136,6 +138,6 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     @Override
     public void termvectorsAsync(TermVectorsRequest request, Object o, ActionListener<TermVectorsResponse> listener) {
-        get().termVectors(EsTcpRequests.toEsRequest(request), new EsTcpRequests.TermVectorsRequestHandleListener(listener));
+        get().termVectors(EsTcpRequests.toEsRequest(request), new DelegatableActionListener<>(listener, new TcpTermVectorsResponseAdapter()));
     }
 }

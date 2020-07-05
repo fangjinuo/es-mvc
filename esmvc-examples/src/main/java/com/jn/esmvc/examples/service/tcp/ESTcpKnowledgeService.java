@@ -1,19 +1,26 @@
 package com.jn.esmvc.examples.service.tcp;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
-import com.jn.esmvc.model.utils.ESModels;
-import org.elasticsearch.action.ActionFuture;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetRequestBuilder;
-import org.elasticsearch.action.get.GetResponse;
+import com.jn.esmvc.service.impl.ESModelServiceImpl;
+import com.jn.esmvc.service.request.tcp.TcpClientProxy;
 import org.elasticsearch.client.transport.TransportClient;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class ESTcpKnowledgeService {
+@Service
+public class ESTcpKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> implements InitializingBean {
 
-    private TransportClient transportClient;
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        init();
+    }
 
+    private void init() {
+        setClient(client).setModelClass(KnowledgeESModel.class);
+    }
 
+    /*
     public KnowledgeESModel getById(String id){
         String index = ESModels.getIndex(KnowledgeESModel.class);
         String type = ESModels.getType(KnowledgeESModel.class);
@@ -22,16 +29,19 @@ public class ESTcpKnowledgeService {
         GetRequestBuilder requestBuilder = transportClient.prepareGet(index,type,id);
         ActionFuture<GetResponse> actionFuture = requestBuilder.execute();
         GetResponse response = actionFuture.actionGet();
+
         // 方式 2：
         GetRequest request = new GetRequest();
         actionFuture= transportClient.get(request);
         response = actionFuture.actionGet();
 
-    }
+        // 方式 3：
 
+    }
+    */
 
     @Autowired
     public void setTransportClient(TransportClient transportClient) {
-        this.transportClient = transportClient;
+        setClient(TcpClientProxy.fromTransportClient(transportClient));
     }
 }
