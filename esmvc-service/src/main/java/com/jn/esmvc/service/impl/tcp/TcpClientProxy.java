@@ -1,6 +1,8 @@
 package com.jn.esmvc.service.impl.tcp;
 
 import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.request.termvectors.TermVectorsRequest;
+import com.jn.esmvc.service.request.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -15,8 +17,6 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.*;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.client.core.TermVectorsRequest;
-import org.elasticsearch.client.core.TermVectorsResponse;
 import org.elasticsearch.client.transport.TransportClient;
 
 import java.io.IOException;
@@ -126,7 +126,7 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     @Override
     public TermVectorsResponse termvectors(TermVectorsRequest request, Object o) throws IOException {
-        return get().termVectors(request).actionGet();
+        return get().termVectors(EsTcpRequests.toEsRequest(request)).actionGet();
     }
 
     @Override
