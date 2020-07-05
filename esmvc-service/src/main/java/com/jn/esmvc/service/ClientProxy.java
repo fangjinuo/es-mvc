@@ -1,6 +1,8 @@
 package com.jn.esmvc.service;
 
 
+import com.jn.esmvc.service.request.action.count.CountRequest;
+import com.jn.esmvc.service.request.action.count.CountResponse;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import com.jn.langx.util.struct.Holder;
@@ -222,4 +224,7 @@ public abstract class ClientProxy<CLIENT, OPTIONS> extends Holder<CLIENT> {
     public abstract TermVectorsResponse termvectors(TermVectorsRequest request, OPTIONS options) throws IOException;
     public abstract void termvectorsAsync(TermVectorsRequest request, OPTIONS options, ActionListener<TermVectorsResponse> listener);
 
+
+    public abstract CountResponse count(CountRequest request, OPTIONS options) throws IOException;
+    public abstract void countAsync(CountRequest request, OPTIONS options,  ActionListener<CountResponse> listener);
 }

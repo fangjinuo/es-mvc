@@ -2,6 +2,9 @@ package com.jn.esmvc.service.request.tcp;
 
 import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.request.action.DelegatableActionListener;
+import com.jn.esmvc.service.request.action.count.CountRequest;
+import com.jn.esmvc.service.request.action.count.CountResponse;
+import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsRequestAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
@@ -133,11 +136,25 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     @Override
     public TermVectorsResponse termvectors(TermVectorsRequest request, Object o) throws IOException {
-        return EsTcpRequests.fromEsResponse(get().termVectors(EsTcpRequests.toEsRequest(request)).actionGet());
+        TcpTermVectorsRequestAdapter requestAdapter = new TcpTermVectorsRequestAdapter();
+        TcpTermVectorsResponseAdapter responseAdapter = new TcpTermVectorsResponseAdapter();
+        return responseAdapter.apply(get().termVectors(requestAdapter.apply(request)).actionGet());
     }
 
     @Override
     public void termvectorsAsync(TermVectorsRequest request, Object o, ActionListener<TermVectorsResponse> listener) {
-        get().termVectors(EsTcpRequests.toEsRequest(request), new DelegatableActionListener<>(listener, new TcpTermVectorsResponseAdapter()));
+        TcpTermVectorsRequestAdapter requestAdapter = new TcpTermVectorsRequestAdapter();
+        TcpTermVectorsResponseAdapter responseAdapter = new TcpTermVectorsResponseAdapter();
+        get().termVectors(requestAdapter.apply(request), new DelegatableActionListener<>(listener, responseAdapter));
+    }
+
+    @Override
+    public CountResponse count(CountRequest request, Object o) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void countAsync(CountRequest request, Object o, ActionListener<CountResponse> listener) {
+
     }
 }

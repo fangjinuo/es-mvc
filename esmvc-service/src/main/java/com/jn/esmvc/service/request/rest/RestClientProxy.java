@@ -3,6 +3,11 @@ package com.jn.esmvc.service.request.rest;
 import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.request.action.DelegatableActionListener;
+import com.jn.esmvc.service.request.action.count.CountRequest;
+import com.jn.esmvc.service.request.action.count.CountResponse;
+import com.jn.esmvc.service.request.action.count.RestCountRequestAdapter;
+import com.jn.esmvc.service.request.action.count.RestCountResponseAdapter;
+import com.jn.esmvc.service.request.action.termvectors.RestTermVectorRequestAdapter;
 import com.jn.esmvc.service.request.action.termvectors.RestTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
@@ -141,11 +146,29 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
 
     @Override
     public TermVectorsResponse termvectors(TermVectorsRequest request, RequestOptions options) throws IOException {
-        return EsRestRequests.fromEsResponse(get().termvectors(EsRestRequests.toEsRequest(request),mergeRequestOptions(getGlobalOptions(),options)));
+        RestTermVectorRequestAdapter requestAdapter = new RestTermVectorRequestAdapter();
+        RestTermVectorsResponseAdapter responseAdapter = new RestTermVectorsResponseAdapter();
+        return responseAdapter.apply(get().termvectors(requestAdapter.apply(request),mergeRequestOptions(getGlobalOptions(),options)));
     }
 
     @Override
     public void termvectorsAsync(TermVectorsRequest request, RequestOptions options, ActionListener<TermVectorsResponse> listener) {
-        get().termvectorsAsync(EsRestRequests.toEsRequest(request), options, new DelegatableActionListener<>(listener, new RestTermVectorsResponseAdapter()));
+        RestTermVectorRequestAdapter requestAdapter = new RestTermVectorRequestAdapter();
+        RestTermVectorsResponseAdapter responseAdapter = new RestTermVectorsResponseAdapter();
+        get().termvectorsAsync(requestAdapter.apply(request), options, new DelegatableActionListener<>(listener, responseAdapter));
+    }
+
+    @Override
+    public CountResponse count(CountRequest request, RequestOptions requestOptions) throws IOException {
+        RestCountRequestAdapter requestAdapter = new RestCountRequestAdapter();
+        RestCountResponseAdapter responseAdapter = new RestCountResponseAdapter();
+        return responseAdapter.apply(get().count(requestAdapter.apply(request), mergeRequestOptions(getGlobalOptions(), requestOptions)));
+    }
+
+    @Override
+    public void countAsync(CountRequest request, RequestOptions requestOptions, ActionListener<CountResponse> listener) {
+        RestCountRequestAdapter requestAdapter = new RestCountRequestAdapter();
+        RestCountResponseAdapter responseAdapter = new RestCountResponseAdapter();
+        get().countAsync(requestAdapter.apply(request),  mergeRequestOptions(getGlobalOptions(), requestOptions), new DelegatableActionListener<>(listener, responseAdapter));
     }
 }
