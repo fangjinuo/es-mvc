@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.impl.rest;
+package com.jn.esmvc.service.impl;
 
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.model.utils.ESModels;

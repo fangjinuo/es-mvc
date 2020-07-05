@@ -1,8 +1,7 @@
-package com.jn.esmvc.service.impl.rest;
+package com.jn.esmvc.service.impl;
 
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.service.*;
-import com.jn.esmvc.service.impl.ESModelCRUDServiceImpl;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 

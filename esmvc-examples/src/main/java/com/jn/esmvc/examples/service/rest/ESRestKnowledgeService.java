@@ -2,7 +2,7 @@ package com.jn.esmvc.examples.service.rest;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
 import com.jn.esmvc.service.ESRestClient;
-import com.jn.esmvc.service.impl.rest.ESModelServiceImpl;
+import com.jn.esmvc.service.impl.ESModelServiceImpl;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
