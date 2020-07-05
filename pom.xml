@@ -15,6 +15,9 @@
     </description>
 
     <properties>
+        <spring.version>5.2.6.RELEASE</spring.version>
+        <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
+
         <elasticsearch.version>6.7.0</elasticsearch.version>
         <langx.version>2.5.2</langx.version>
         <easyjson.version>3.0.0</easyjson.version>
@@ -61,6 +64,7 @@
         <module>esmvc-model</module>
         <module>esmvc-service</module>
         <module>esmvc-examples</module>
+        <module>esmvc-spring-boot-starter</module>
     </modules>
 
     <dependencyManagement>
