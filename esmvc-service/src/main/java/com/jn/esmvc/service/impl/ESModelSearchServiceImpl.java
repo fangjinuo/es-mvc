@@ -28,8 +28,8 @@ import java.util.*;
 
 import static com.jn.esmvc.service.util.ESRequests.logRequestWhenFail;
 
-public class RestESModelSearchServiceImpl<MODEL extends AbstractESModel> extends AbstractESModelService<MODEL> implements ESModelSearchService<MODEL> {
-    private static final Logger logger = LoggerFactory.getLogger(RestESModelSearchServiceImpl.class);
+public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends AbstractESModelService<MODEL> implements ESModelSearchService<MODEL> {
+    private static final Logger logger = LoggerFactory.getLogger(ESModelSearchServiceImpl.class);
     private ScrollContextCache searchScrollCache;
     private long scrollDuration = 60 * 1000;
 

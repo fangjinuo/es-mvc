@@ -15,7 +15,7 @@ public class ESModelServiceImpl<MODEL extends AbstractESModel> extends AbstractE
 
     public ESModelServiceImpl() {
         crudService = new ESModelCRUDServiceImpl<>();
-        searchService = new RestESModelSearchServiceImpl<>();
+        searchService = new ESModelSearchServiceImpl<>();
     }
 
 
