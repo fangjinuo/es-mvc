@@ -43,8 +43,7 @@ public class EsmvcTransportClientAutoConfiguration {
     @ConditionalOnMissingBean(name = "transportClient")
     @Primary
     @Autowired
-    @Qualifier("esmvcTransportClientProperties")
-    public TransportClient transportClient(EsmvcTransportClientProperties esmvcTransportClientProperties) {
+    public TransportClient transportClient(@Qualifier("esmvcTransportClientProperties") EsmvcTransportClientProperties esmvcTransportClientProperties) {
 
         Settings.Builder builder = Settings.builder();
         if (Emptys.isNotEmpty(esmvcTransportClientProperties.getProps())) {
@@ -90,6 +89,6 @@ public class EsmvcTransportClientAutoConfiguration {
             }
         }).toArray(TransportAddress[].class);
 
-        return new PreBuiltTransportClient(settings).addTransportAddresses();
+        return new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
     }
 }

@@ -36,12 +36,11 @@ public class EsmvcRestClientAutoConfiguration {
         return new EsmvcRestClientProperties();
     }
 
-    @Bean
+    @Bean("esRestClient")
     @ConditionalOnExpression("#{esmvcRestClientProperties.protocol=='http' || #esmvcRestClientProperties.protocol=='https'}")
     @Primary
     @Autowired
-    @Qualifier("esmvcRestClientProperties")
-    public ESRestClient esRestClient(EsmvcRestClientProperties esmvcProperties) {
+    public ESRestClient esRestClient(@Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties) {
         List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser().parse(esmvcProperties.getNodes());
         if (Emptys.isEmpty(clusterAddress)) {
             clusterAddress = Collects.newArrayList(new NetworkAddress("localhost", 9200));
@@ -57,9 +56,12 @@ public class EsmvcRestClientAutoConfiguration {
         return new ESRestClient(new RestHighLevelClient(RestClient.builder(restHosts)));
     }
 
-    @Bean
+    @ConditionalOnMissingBean(name="scrollContextCache")
+    @Bean("scrollContextCache")
     @Autowired
-    public ScrollContextCache scrollContextCache(EsmvcRestClientProperties esmvcProperties, ESRestClient esRestClient) {
+    public ScrollContextCache scrollContextCache(
+            @Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties,
+            @Qualifier("esRestClient") ESRestClient esRestClient) {
         ScrollContextCache cache = new ScrollContextCache();
         cache.setExpireInSeconds(esmvcProperties.getLocalCacheExpireInSeconds());
         cache.setMaxCapacity(esmvcProperties.getLocalCacheMaxCapacity());
