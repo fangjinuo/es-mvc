@@ -4,7 +4,9 @@ import com.jn.langx.util.Preconditions;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
-public class ESRestClient extends ClientHolder<RestHighLevelClient> {
+@Deprecated
+public class ESRestClient {
+    private RestHighLevelClient client;
     private RequestOptions requestOptions = RequestOptions.DEFAULT;
 
     public ESRestClient(RestHighLevelClient restClient) {
@@ -12,11 +14,11 @@ public class ESRestClient extends ClientHolder<RestHighLevelClient> {
     }
 
     public RestHighLevelClient getRestClient() {
-        return get();
+        return client;
     }
 
     public void setRestClient(RestHighLevelClient restClient) {
-        set(restClient);
+        this.client = restClient;
     }
 
     public RequestOptions getRequestOptions() {
