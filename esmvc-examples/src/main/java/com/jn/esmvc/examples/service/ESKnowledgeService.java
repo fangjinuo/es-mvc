@@ -1,8 +1,9 @@
 package com.jn.esmvc.examples.service;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
-import com.jn.esmvc.examples.service.impl.ESModelServiceImpl;
-import com.jn.esmvc.examples.service.scroll.ScrollContextCache;
+import com.jn.esmvc.service.ESRestClient;
+import com.jn.esmvc.service.impl.ESModelServiceImpl;
+import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
