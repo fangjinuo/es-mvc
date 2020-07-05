@@ -32,7 +32,11 @@ import java.io.IOException;
 
 public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOptions> {
 
-    public static RestClientProxy fromESRestClient(ESRestClient restClient){
+    public RestClientProxy() {
+        setGlobalOptions(RequestOptions.DEFAULT);
+    }
+
+    public static RestClientProxy fromESRestClient(ESRestClient restClient) {
         RestClientProxy proxy = new RestClientProxy();
         proxy.set(restClient.getRestClient());
         proxy.setGlobalOptions(restClient.getRequestOptions());
@@ -41,6 +45,12 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
 
 
     private RequestOptions mergeRequestOptions(RequestOptions global, RequestOptions options) {
+        if (global == null && options == null) {
+            setGlobalOptions(RequestOptions.DEFAULT);
+        }
+        if (options == null) {
+            return global;
+        }
         return options;
     }
 
@@ -66,7 +76,7 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
 
     @Override
     public UpdateResponse update(UpdateRequest request, RequestOptions requestOptions) throws IOException {
-        return get().update(request,mergeRequestOptions(getGlobalOptions(), requestOptions));
+        return get().update(request, mergeRequestOptions(getGlobalOptions(), requestOptions));
     }
 
     @Override
@@ -141,14 +151,14 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
 
     @Override
     public void msearch(MultiSearchRequest request, RequestOptions options, ActionListener<MultiSearchResponse> listener) {
-        get().msearchAsync(request, mergeRequestOptions(getGlobalOptions(),options), listener);
+        get().msearchAsync(request, mergeRequestOptions(getGlobalOptions(), options), listener);
     }
 
     @Override
     public TermVectorsResponse termvectors(TermVectorsRequest request, RequestOptions options) throws IOException {
         RestTermVectorRequestAdapter requestAdapter = new RestTermVectorRequestAdapter();
         RestTermVectorsResponseAdapter responseAdapter = new RestTermVectorsResponseAdapter();
-        return responseAdapter.apply(get().termvectors(requestAdapter.apply(request),mergeRequestOptions(getGlobalOptions(),options)));
+        return responseAdapter.apply(get().termvectors(requestAdapter.apply(request), mergeRequestOptions(getGlobalOptions(), options)));
     }
 
     @Override
@@ -169,6 +179,6 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
     public void countAsync(CountRequest request, RequestOptions requestOptions, ActionListener<CountResponse> listener) {
         RestCountRequestAdapter requestAdapter = new RestCountRequestAdapter();
         RestCountResponseAdapter responseAdapter = new RestCountResponseAdapter();
-        get().countAsync(requestAdapter.apply(request),  mergeRequestOptions(getGlobalOptions(), requestOptions), new DelegatableActionListener<>(listener, responseAdapter));
+        get().countAsync(requestAdapter.apply(request), mergeRequestOptions(getGlobalOptions(), requestOptions), new DelegatableActionListener<>(listener, responseAdapter));
     }
 }

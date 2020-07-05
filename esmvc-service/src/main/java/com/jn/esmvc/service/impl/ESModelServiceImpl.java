@@ -97,6 +97,11 @@ public class ESModelServiceImpl<MODEL extends AbstractESModel> extends AbstractE
     }
 
     @Override
+    public long count(String countColumn, SearchSourceBuilder bodyBuilder) throws IOException {
+        return searchService.count(countColumn, bodyBuilder);
+    }
+
+    @Override
     public List<MODEL> search(SearchSourceBuilder bodyBuilder) throws IOException {
         return searchService.search(bodyBuilder);
     }
