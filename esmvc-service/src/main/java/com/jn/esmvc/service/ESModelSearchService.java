@@ -23,6 +23,15 @@ public interface ESModelSearchService<MODEL extends AbstractESModel> extends IES
     long count(SearchSourceBuilder bodyBuilder) throws IOException;
 
     /**
+     * Search API: count
+     *
+     * @param bodyBuilder search body builder
+     * @return matched results
+     * @throws IOException throws it when network or tcp error
+     */
+    long count(String countColumn, SearchSourceBuilder bodyBuilder) throws IOException;
+
+    /**
      * Search API: search search
      *
      * @param bodyBuilder search body builder

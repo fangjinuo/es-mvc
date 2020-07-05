@@ -43,12 +43,18 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
 
     @Override
     public long count(SearchSourceBuilder bodyBuilder) throws IOException {
+       return count("_id", bodyBuilder);
+    }
+
+    @Override
+    public long count(String countColumn, SearchSourceBuilder bodyBuilder) throws IOException {
         String index = ESModels.getIndex(modelClass);
         String type = ESModels.getType(modelClass);
 
         CountRequest request = new CountRequest();
         request.indices(index).types(type);
         request.source(bodyBuilder);
+        request.countColumn(countColumn);
         try {
             CountResponse response = client.count(request, null);
             return response.getCount();
