@@ -12,6 +12,10 @@ public class EsmvcRestClientProperties extends AbstractClientProperties {
     private int localCacheMaxCapacity = 100;
     private int localCacheExpireInSeconds = 55;
 
+    public EsmvcRestClientProperties(){
+        setProtocol("http");
+    }
+
     public void setProtocol(String protocol) {
         if (!supportedProtocols.contains(protocol)) {
             logger.warn("Unsupported protocol {} for esmvc", protocol);

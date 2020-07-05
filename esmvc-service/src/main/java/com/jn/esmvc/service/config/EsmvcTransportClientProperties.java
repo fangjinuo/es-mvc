@@ -5,6 +5,10 @@ import java.util.Map;
 public class EsmvcTransportClientProperties extends AbstractClientProperties {
     private Map<String, Object> props;
 
+    public EsmvcTransportClientProperties(){
+        setProtocol("tcp");
+    }
+
     public Map<String, Object> getProps() {
         return props;
     }

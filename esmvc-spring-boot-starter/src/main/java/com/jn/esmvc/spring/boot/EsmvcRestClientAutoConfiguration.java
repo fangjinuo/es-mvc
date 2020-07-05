@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
-@ConditionalOnProperty(name="esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnMissingBean(name = "esmvcRestClientAutoConfiguration")
 @Configuration
 public class EsmvcRestClientAutoConfiguration {
@@ -41,11 +41,17 @@ public class EsmvcRestClientAutoConfiguration {
     @Primary
     @Autowired
     public ESRestClient esRestClient(@Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties) {
+        if (Emptys.isEmpty(esmvcProperties.getProtocol())) {
+            esmvcProperties.setProtocol("http");
+        }
+        if(Emptys.isEmpty(esmvcProperties.getName())){
+            esmvcProperties.setName("http-primary");
+        }
         List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser().parse(esmvcProperties.getNodes());
         if (Emptys.isEmpty(clusterAddress)) {
             clusterAddress = Collects.newArrayList(new NetworkAddress("localhost", 9200));
         }
-        String protocol = esmvcProperties.getProtocol();
+
         HttpHost[] restHosts = Pipeline.of(clusterAddress).map(new Function<NetworkAddress, HttpHost>() {
             @Override
             public HttpHost apply(NetworkAddress networkAddress) {
@@ -56,7 +62,7 @@ public class EsmvcRestClientAutoConfiguration {
         return new ESRestClient(new RestHighLevelClient(RestClient.builder(restHosts)));
     }
 
-    @ConditionalOnMissingBean(name="scrollContextCache")
+    @ConditionalOnMissingBean(name = "scrollContextCache")
     @Bean("scrollContextCache")
     @Autowired
     public ScrollContextCache scrollContextCache(

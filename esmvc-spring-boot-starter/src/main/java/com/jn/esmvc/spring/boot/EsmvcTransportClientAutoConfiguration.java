@@ -44,6 +44,12 @@ public class EsmvcTransportClientAutoConfiguration {
     @Primary
     @Autowired
     public TransportClient transportClient(@Qualifier("esmvcTransportClientProperties") EsmvcTransportClientProperties esmvcTransportClientProperties) {
+        if(Emptys.isEmpty(esmvcTransportClientProperties.getName())){
+            esmvcTransportClientProperties.setName("tcp-primary");
+        }
+        if(Emptys.isEmpty(esmvcTransportClientProperties.getProtocol())){
+            esmvcTransportClientProperties.setProtocol("tcp");
+        }
 
         Settings.Builder builder = Settings.builder();
         if (Emptys.isNotEmpty(esmvcTransportClientProperties.getProps())) {
