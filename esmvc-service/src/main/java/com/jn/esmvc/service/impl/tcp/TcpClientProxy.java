@@ -71,7 +71,7 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     @Override
     public void mgetAsync(MultiGetRequest request, Object o, ActionListener<MultiGetResponse> listener) {
-        get().multiGet(request,listener);
+        get().multiGet(request, listener);
     }
 
     @Override
@@ -126,11 +126,11 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     @Override
     public TermVectorsResponse termvectors(TermVectorsRequest request, Object o) throws IOException {
-        return get().termVectors(EsTcpRequests.toEsRequest(request)).actionGet();
+        return EsTcpRequests.fromEsResponse(get().termVectors(EsTcpRequests.toEsRequest(request)).actionGet());
     }
 
     @Override
     public void termvectorsAsync(TermVectorsRequest request, Object o, ActionListener<TermVectorsResponse> listener) {
-
+        get().termVectors(EsTcpRequests.toEsRequest(request), new EsTcpRequests.TermVectorsRequestHandleListener(listener));
     }
 }
