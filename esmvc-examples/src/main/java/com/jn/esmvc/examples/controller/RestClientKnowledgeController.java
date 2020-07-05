@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/https/knowledge")
-public class HttpRestClientKnowledgeController {
+public class RestClientKnowledgeController {
 
     private ESRestKnowledgeService knowledgeService;
 
