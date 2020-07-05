@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.impl.rest;
+package com.jn.esmvc.service.impl;
 
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.model.utils.ESModels;
@@ -44,7 +44,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
         request.source(json.toJson(model), XContentType.JSON);
         IndexResponse response;
         try {
-            response = client.getRestClient().index(request, client.getRequestOptions());
+            response = client.index(request, null);
             RestStatus status = response.status();
             if (status == CREATED || status == OK) {
                 return id;
@@ -68,7 +68,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
                 .id(id);
 
         try {
-            GetResponse response = client.getRestClient().get(request, client.getRequestOptions());
+            GetResponse response = client.get(request, null);
             if (response.isExists() && !response.isSourceEmpty()) {
                 return asModel(response);
             }
@@ -91,7 +91,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
                 .id(id);
         DeleteResponse response;
         try {
-            response = client.getRestClient().delete(request, client.getRequestOptions());
+            response = client.delete(request, null);
             RestStatus rs = response.status();
             if (rs == OK) {
                 return true;
@@ -120,7 +120,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
 
         UpdateResponse response;
         try {
-            response = client.getRestClient().update(request, client.getRequestOptions());
+            response = client.update(request, null);
             RestStatus restStatus = response.status();
             if (restStatus == OK) {
                 return true;
@@ -150,7 +150,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
 
         UpdateResponse response;
         try {
-            response = client.getRestClient().update(request, client.getRequestOptions());
+            response = client.update(request, null);
             if (response.getGetResult().isExists() && !response.getGetResult().isSourceEmpty()) {
                 return asModel(response.getGetResult());
             }
@@ -181,7 +181,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
                 .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 
         try {
-            UpdateResponse response = client.getRestClient().update(request, client.getRequestOptions());
+            UpdateResponse response = client.update(request, null);
             if (response.getGetResult().isExists() && !response.getGetResult().isSourceEmpty()) {
                 return asModel(response.getGetResult());
             }
@@ -203,7 +203,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
         List<MODEL> list = new ArrayList<>();
         MultiGetResponse response;
         try {
-            response = client.getRestClient().mget(request, client.getRequestOptions());
+            response = client.mget(request, null);
             response.forEach(multiGetItemResponse -> {
                 if (!multiGetItemResponse.isFailed()) {
                     if (multiGetItemResponse.getResponse().isExists() && !multiGetItemResponse.getResponse().isSourceEmpty()) {
@@ -241,7 +241,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
 
         BulkResponse bulkResponse;
         try {
-            bulkResponse = client.getRestClient().bulk(request, client.getRequestOptions());
+            bulkResponse = client.bulk(request, null);
             if (bulkResponse.hasFailures()) {
                 bulkResponse.buildFailureMessage();
             }

@@ -9,6 +9,8 @@ import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.esmvc.service.util.ESRequests;
 import com.jn.langx.util.Preconditions;
 import org.elasticsearch.action.search.*;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;
 import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.common.unit.TimeValue;
@@ -26,8 +28,8 @@ import java.util.*;
 
 import static com.jn.esmvc.service.util.ESRequests.logRequestWhenFail;
 
-public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends AbstractESModelService<MODEL> implements ESModelSearchService<MODEL> {
-    private static final Logger logger = LoggerFactory.getLogger(ESModelSearchServiceImpl.class);
+public class RestESModelSearchServiceImpl<MODEL extends AbstractESModel> extends AbstractESModelService<MODEL> implements ESModelSearchService<MODEL> {
+    private static final Logger logger = LoggerFactory.getLogger(RestESModelSearchServiceImpl.class);
     private ScrollContextCache searchScrollCache;
     private long scrollDuration = 60 * 1000;
 
@@ -50,7 +52,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         request.indices(index).types(type);
         request.source(bodyBuilder);
         try {
-            CountResponse response = client.getRestClient().count(request, client.getRequestOptions());
+            CountResponse response = ((RestHighLevelClient)client.get()).count(request, (RequestOptions) client.getGlobalOptions());
             return response.getCount();
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);
@@ -120,7 +122,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                 .scroll(sc.getScroll())
                 .scrollId(sc.getScrollId());
         try {
-            SearchResponse response = client.getRestClient().scroll(request, client.getRequestOptions());
+            SearchResponse response = client.searchScroll(request, null);
             return extractScrollResults(response, searchSourceBuilder, sc);
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);
@@ -153,7 +155,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                     .types(type)
                     .searchType(SearchType.QUERY_THEN_FETCH);
             request.source(searchBodyBuilder);
-            SearchResponse response = client.getRestClient().search(request, client.getRequestOptions());
+            SearchResponse response = client.search(request,null);
             return extractSearchResults(response);
         } else {
             String index = ESModels.getIndex(modelClass);
@@ -170,7 +172,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                 request.scroll(scrollContext.getScroll());
                 SearchResponse response;
                 try {
-                    response = client.getRestClient().search(request, client.getRequestOptions());
+                    response = client.search(request, null);
                     return extractScrollResults(response, searchBodyBuilder, scrollContext);
                 } catch (Throwable ex) {
                     logRequestWhenFail(logger, request, ex);
@@ -216,7 +218,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         Set<MODEL> list = new HashSet<>();
 
         try {
-            multiSearchResponse = client.getRestClient().msearch(request, client.getRequestOptions());
+            multiSearchResponse = client.msearch(request, null);
             multiSearchResponse.forEach(item -> {
                 if (!item.isFailure()) {
                     SearchResponse response = item.getResponse();

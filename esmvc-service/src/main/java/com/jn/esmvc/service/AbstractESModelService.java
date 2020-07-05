@@ -16,24 +16,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AbstractESModelService<MODEL extends AbstractESModel> implements IESModelService<MODEL> {
-    protected ESRestClient client;
+    protected ClientProxy client;
     protected Class<MODEL> modelClass;
     protected JSON json = JSONBuilderProvider.create()
             .addSerializationExclusion(new IgnoreAnnotationExclusion())
             .excludeFieldsWithModifiers(Modifier.TRANSIENT)
             .addSerializationExclusion(new UnderlineStartedExclusion())
             .build();
-
-    @Override
-    public ESRestClient getClient() {
-        return client;
-    }
-
-    @Override
-    public AbstractESModelService<MODEL> setClient(ESRestClient client) {
-        this.client = client;
-        return this;
-    }
 
     @Override
     public Class<MODEL> getModelClass() {
@@ -44,6 +33,17 @@ public class AbstractESModelService<MODEL extends AbstractESModel> implements IE
     public AbstractESModelService<MODEL> setModelClass(Class<MODEL> modelClass) {
         this.modelClass = modelClass;
         return this;
+    }
+
+    @Override
+    public ClientProxy getClient() {
+        return client;
+    }
+
+    @Override
+    public IESModelService setClient(ClientProxy client) {
+         this.client= client;
+         return this;
     }
 
     protected final MODEL asModel(GetResult result) {

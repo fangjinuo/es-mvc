@@ -4,20 +4,19 @@ import com.jn.langx.util.Preconditions;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 
-public class ESRestClient {
-    private RestHighLevelClient restClient;
+public class ESRestClient extends ClientHolder<RestHighLevelClient> {
     private RequestOptions requestOptions = RequestOptions.DEFAULT;
 
     public ESRestClient(RestHighLevelClient restClient) {
-        this.restClient = restClient;
+        setRestClient(restClient);
     }
 
     public RestHighLevelClient getRestClient() {
-        return restClient;
+        return get();
     }
 
     public void setRestClient(RestHighLevelClient restClient) {
-        this.restClient = restClient;
+        set(restClient);
     }
 
     public RequestOptions getRequestOptions() {
