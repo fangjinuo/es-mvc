@@ -7,6 +7,12 @@ esmvc:
     primary:
       name: testTcp
       nodes: localhost:9300
+      props:
+        "client.transport.sniff": true # 是否启用sniff方案获取可用集群nodes
+        "client.transport.nodes_sampler_interval": 60 #unit:seconds
+        "client.transport.ignore_cluster_name": false
+        "cluster.name": my-application # 当集群名称不忽略时，该名称必须是存在的集群名称
+
 swagger:
   base-package: com.jn.esmvc.examples
 
