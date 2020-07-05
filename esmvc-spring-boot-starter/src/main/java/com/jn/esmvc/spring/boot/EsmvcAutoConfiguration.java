@@ -15,24 +15,26 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-@ConditionalOnMissingBean
+@ConditionalOnMissingBean(name = "esmvcAutoConfiguration")
 @Configuration
 public class EsmvcAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
+    @Bean("esmvcProperties")
+    @ConditionalOnMissingBean(name = "esmvcProperties")
+    @ConfigurationProperties(prefix = "esmvc")
     public EsmvcProperties esmvcProperties() {
         return new EsmvcProperties();
     }
 
     @Bean
     @Autowired
-    @ConditionalOnExpression("#esmvcProperties.protocol=='http' || #esmvcProperties.protocol=='https'")
+    @ConditionalOnExpression("#{esmvcProperties.protocol=='http' || #esmvcProperties.protocol=='https'}")
     public ESRestClient esRestClient(EsmvcProperties esmvcProperties) {
         List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser().parse(esmvcProperties.getNodes());
         if (Emptys.isEmpty(clusterAddress)) {

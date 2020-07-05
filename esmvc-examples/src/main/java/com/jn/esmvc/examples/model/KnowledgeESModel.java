@@ -4,7 +4,7 @@ package com.jn.esmvc.examples.model;
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.model.Index;
 
-@Index("srm_knowledge")
+@Index("knowledge")
 public class KnowledgeESModel extends AbstractESModel<KnowledgeESModel> {
     public static final KnowledgeESModel DEFAULT = new KnowledgeESModel();
     private String title;

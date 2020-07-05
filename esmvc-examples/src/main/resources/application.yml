@@ -1,0 +1,5 @@
+esmvc:
+  nodes: localhost:9200
+swagger:
+  base-package: com.jn.esmvc.examples
+
