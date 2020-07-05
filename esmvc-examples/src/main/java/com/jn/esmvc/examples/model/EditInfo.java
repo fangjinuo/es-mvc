@@ -1,4 +1,4 @@
-package com.jn.esmvc.model;
+package com.jn.esmvc.examples.model;
 
 public class EditInfo{
     private static final long serialVersionUID = 1L;
