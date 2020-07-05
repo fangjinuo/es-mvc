@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jn.esmvc.spring.boot.EsmvcAutoConfiguration
+  com.jn.esmvc.spring.boot.EsmvcRestClientAutoConfiguration,\
+  com.jn.esmvc.spring.boot.EsmvcTransportClientAutoConfiguration

@@ -2,7 +2,7 @@ package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.ESRestClient;
-import com.jn.esmvc.service.config.EsmvcProperties;
+import com.jn.esmvc.service.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
@@ -13,29 +13,35 @@ import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
-@ConditionalOnMissingBean(name = "esmvcAutoConfiguration")
+@ConditionalOnProperty(name="esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnMissingBean(name = "esmvcRestClientAutoConfiguration")
 @Configuration
-public class EsmvcAutoConfiguration {
+public class EsmvcRestClientAutoConfiguration {
 
-    @Bean("esmvcProperties")
-    @ConditionalOnMissingBean(name = "esmvcProperties")
-    @ConfigurationProperties(prefix = "esmvc")
-    public EsmvcProperties esmvcProperties() {
-        return new EsmvcProperties();
+    @Bean("esmvcRestClientProperties")
+    @ConditionalOnMissingBean(name = "esmvcRestClientProperties")
+    @ConfigurationProperties(prefix = "esmvc.rest.primary")
+    public EsmvcRestClientProperties esmvcRestClientProperties() {
+        return new EsmvcRestClientProperties();
     }
 
     @Bean
+    @ConditionalOnExpression("#{esmvcRestClientProperties.protocol=='http' || #esmvcRestClientProperties.protocol=='https'}")
+    @Primary
     @Autowired
-    @ConditionalOnExpression("#{esmvcProperties.protocol=='http' || #esmvcProperties.protocol=='https'}")
-    public ESRestClient esRestClient(EsmvcProperties esmvcProperties) {
+    @Qualifier("esmvcRestClientProperties")
+    public ESRestClient esRestClient(EsmvcRestClientProperties esmvcProperties) {
         List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser().parse(esmvcProperties.getNodes());
         if (Emptys.isEmpty(clusterAddress)) {
             clusterAddress = Collects.newArrayList(new NetworkAddress("localhost", 9200));
@@ -53,7 +59,7 @@ public class EsmvcAutoConfiguration {
 
     @Bean
     @Autowired
-    public ScrollContextCache scrollContextCache(EsmvcProperties esmvcProperties, ESRestClient esRestClient) {
+    public ScrollContextCache scrollContextCache(EsmvcRestClientProperties esmvcProperties, ESRestClient esRestClient) {
         ScrollContextCache cache = new ScrollContextCache();
         cache.setExpireInSeconds(esmvcProperties.getLocalCacheExpireInSeconds());
         cache.setMaxCapacity(esmvcProperties.getLocalCacheMaxCapacity());
