@@ -1,7 +1,7 @@
 package com.jn.esmvc.examples.controller;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
-import com.jn.esmvc.examples.service.ESKnowledgeService;
+import com.jn.esmvc.examples.service.rest.ESRestKnowledgeService;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/https/knowledge")
 public class HttpRestClientKnowledgeController {
 
-    private ESKnowledgeService knowledgeService;
+    private ESRestKnowledgeService knowledgeService;
 
     @PostMapping
     public void add(@RequestBody KnowledgeESModel knowledge) throws IOException {
@@ -46,7 +46,7 @@ public class HttpRestClientKnowledgeController {
     }
 
     @Autowired
-    public void setKnowledgeService(ESKnowledgeService knowledgeService) {
+    public void setKnowledgeService(ESRestKnowledgeService knowledgeService) {
         this.knowledgeService = knowledgeService;
     }
 }

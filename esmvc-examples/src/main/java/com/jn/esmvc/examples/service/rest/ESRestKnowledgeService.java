@@ -1,4 +1,4 @@
-package com.jn.esmvc.examples.service;
+package com.jn.esmvc.examples.service.rest;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
 import com.jn.esmvc.service.ESRestClient;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ESKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> implements InitializingBean {
+public class ESRestKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -24,7 +24,7 @@ public class ESKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> imp
     @Autowired
     @Override
     @Qualifier("esRestClient")
-    public ESKnowledgeService setClient(ESRestClient client) {
+    public ESRestKnowledgeService setClient(ESRestClient client) {
         super.setClient(client);
         return this;
     }
