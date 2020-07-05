@@ -1,4 +1,4 @@
-package com.jn.esmvc.model;
+package com.jn.esmvc.examples.model;
 
 
 @Index("srm_knowledge")
