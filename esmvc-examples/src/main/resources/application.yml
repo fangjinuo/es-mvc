@@ -1,5 +1,12 @@
 esmvc:
-  nodes: localhost:9200
+  rest:
+    primary:
+      name: testRest
+      nodes: localhost:9200
+  tcp:
+    primary:
+      name: testTcp
+      nodes: localhost:9300
 swagger:
   base-package: com.jn.esmvc.examples
 
