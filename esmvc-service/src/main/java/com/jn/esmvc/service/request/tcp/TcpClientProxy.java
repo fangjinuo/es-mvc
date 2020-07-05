@@ -23,6 +23,11 @@ import java.io.IOException;
 
 public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
+    public static TcpClientProxy fromTransportClient(TransportClient transportClient){
+        TcpClientProxy proxy = new TcpClientProxy();
+        proxy.set(transportClient);
+        return proxy;
+    }
 
     @Override
     public IndexResponse index(IndexRequest request, Object o) throws IOException {

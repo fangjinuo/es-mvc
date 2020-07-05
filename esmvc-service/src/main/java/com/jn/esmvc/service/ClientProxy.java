@@ -25,6 +25,10 @@ public abstract class ClientProxy<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
     private OPTIONS globalOptions;
 
+    public void setGlobalOptions(OPTIONS options){
+        this.globalOptions = options;
+    }
+
     public OPTIONS getGlobalOptions() {
         return globalOptions;
     }

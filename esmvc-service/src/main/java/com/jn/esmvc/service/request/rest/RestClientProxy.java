@@ -1,6 +1,7 @@
 package com.jn.esmvc.service.request.rest;
 
 import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
@@ -23,6 +24,14 @@ import org.elasticsearch.client.RestHighLevelClient;
 import java.io.IOException;
 
 public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOptions> {
+
+    public static RestClientProxy fromESRestClient(ESRestClient restClient){
+        RestClientProxy proxy = new RestClientProxy();
+        proxy.set(restClient.getRestClient());
+        proxy.setGlobalOptions(restClient.getRequestOptions());
+        return proxy;
+    }
+
 
     private RequestOptions mergeRequestOptions(RequestOptions global, RequestOptions options) {
         return options;
