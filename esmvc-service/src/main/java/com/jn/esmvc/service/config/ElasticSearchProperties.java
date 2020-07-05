@@ -20,7 +20,7 @@ public class ElasticSearchProperties {
 
     public void setProtocol(String protocol) {
         if(!supportedProtocols.contains(protocol)){
-            logger.warn("Unsupported protocol {} for esmvc");
+            logger.warn("Unsupported protocol {} for esmvc", protocol);
             return;
         }
         this.protocol = protocol;
