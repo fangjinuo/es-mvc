@@ -1,6 +1,8 @@
 package com.jn.esmvc.service.request.rest;
 
 import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
+import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -17,8 +19,6 @@ import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.core.TermVectorsRequest;
-import org.elasticsearch.client.core.TermVectorsResponse;
 
 import java.io.IOException;
 
@@ -130,11 +130,11 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
 
     @Override
     public TermVectorsResponse termvectors(TermVectorsRequest request, RequestOptions options) throws IOException {
-        return get().termvectors(request,mergeRequestOptions(getGlobalOptions(),options));
+        return EsRestRequests.fromEsResponse(get().termvectors(EsRestRequests.toEsRequest(request),mergeRequestOptions(getGlobalOptions(),options)));
     }
 
     @Override
     public void termvectorsAsync(TermVectorsRequest request, RequestOptions options, ActionListener<TermVectorsResponse> listener) {
-        get().termvectorsAsync(request, options, listener);
+        get().termvectorsAsync(EsRestRequests.toEsRequest(request), options, new EsRestRequests.TermVectorsRequestHandleListener(listener));
     }
 }
