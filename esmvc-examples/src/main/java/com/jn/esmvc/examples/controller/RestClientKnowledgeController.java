@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/https/knowledge")
+@RequestMapping("/https/knowledges")
 public class RestClientKnowledgeController {
 
     private ESRestKnowledgeService knowledgeService;
@@ -45,8 +45,16 @@ public class RestClientKnowledgeController {
         return knowledgeService.search(sourceBuilder);
     }
 
+    public long total() throws IOException{
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        QueryBuilder queryBuilder = new MatchAllQueryBuilder();
+        sourceBuilder.query(queryBuilder);
+        return knowledgeService.count("_id", sourceBuilder);
+    }
+
     @Autowired
     public void setKnowledgeService(ESRestKnowledgeService knowledgeService) {
         this.knowledgeService = knowledgeService;
     }
+
 }
