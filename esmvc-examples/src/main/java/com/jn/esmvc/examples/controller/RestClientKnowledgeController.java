@@ -2,6 +2,8 @@ package com.jn.esmvc.examples.controller;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
 import com.jn.esmvc.examples.service.rest.ESRestKnowledgeService;
+import com.jn.esmvc.service.util.ESRequests;
+import com.jn.langx.util.pagination.PagingResult;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -38,11 +40,12 @@ public class RestClientKnowledgeController {
     }
 
     @GetMapping
-    public List<KnowledgeESModel> list() throws IOException {
+    public PagingResult<KnowledgeESModel> list() throws IOException {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         QueryBuilder queryBuilder = new MatchAllQueryBuilder();
         sourceBuilder.from(0).size(100).query(queryBuilder);
-        return knowledgeService.search(sourceBuilder);
+        knowledgeService.search(sourceBuilder);
+        return ESRequests.ES_PAGING.get().getResult();
     }
 
     public long total() throws IOException{
