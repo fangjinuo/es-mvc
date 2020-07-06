@@ -41,7 +41,7 @@ public class TcpClientKnowledgeController {
     public List<KnowledgeESModel> list() throws IOException {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         QueryBuilder queryBuilder = new MatchAllQueryBuilder();
-        sourceBuilder.from(0).size(100).query(queryBuilder);
+        sourceBuilder.from(0).size(10).query(queryBuilder);
         return knowledgeService.search(sourceBuilder);
     }
 
