@@ -19,7 +19,7 @@
         <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
 
         <elasticsearch.version>6.7.0</elasticsearch.version>
-        <langx.version>2.5.2</langx.version>
+        <langx.version>2.5.4</langx.version>
         <easyjson.version>3.0.0</easyjson.version>
         <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
         <scm.url>${scm.url0}.git</scm.url>

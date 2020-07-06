@@ -10,6 +10,9 @@ import com.jn.esmvc.service.scroll.ScrollContext;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.esmvc.service.util.ESRequests;
 import com.jn.langx.util.Preconditions;
+import com.jn.langx.util.collection.Collects;
+import com.jn.langx.util.pagination.PagingRequest;
+import com.jn.langx.util.pagination.PagingResult;
 import org.elasticsearch.action.search.*;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
@@ -24,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
+import static com.jn.esmvc.service.util.ESRequests.ES_PAGING;
 import static com.jn.esmvc.service.util.ESRequests.logRequestWhenFail;
 
 public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends AbstractESModelService<MODEL> implements ESModelSearchService<MODEL> {
@@ -43,7 +47,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
 
     @Override
     public long count(SearchSourceBuilder bodyBuilder) throws IOException {
-       return count("_id", bodyBuilder);
+        return count("_id", bodyBuilder);
     }
 
     @Override
@@ -75,6 +79,18 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                 }
             }
         }
+
+        PagingRequest pr = ES_PAGING.get();
+        if (pr != null) {
+            SearchHits hits = response.getHits();
+            PagingResult<MODEL> pagingResult = new PagingResult<MODEL>();
+            pagingResult.setItems(models);
+            pagingResult.setPageNo(pr.getPageNo());
+            pagingResult.setPageSize(pr.getPageSize());
+            pagingResult.setTotal(hits.getTotalHits());
+            pr.setResult(pagingResult);
+        }
+
         return models;
     }
 
@@ -117,6 +133,16 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         } else {
             searchScrollCache.clear(searchBodyBuilder.query());
         }
+
+        PagingRequest<MODEL> pr = ES_PAGING.get();
+        if (pr != null) {
+            PagingResult<MODEL> pagingResult = new PagingResult<MODEL>();
+            pagingResult.setItems(results);
+            pagingResult.setPageNo(pr.getPageNo());
+            pagingResult.setPageSize(pr.getPageSize());
+            pagingResult.setTotal(searchHits.getTotalHits());
+            pr.setResult(pagingResult);
+        }
         return results;
     }
 
@@ -141,12 +167,21 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         if (searchBodyBuilder == null) {
             searchBodyBuilder = new SearchSourceBuilder();
         }
-        if (searchBodyBuilder.size() == -1) {
+        if (searchBodyBuilder.size() < 0) {
             // index max result window is 10000
             searchBodyBuilder.size(10000);
         }
+        if (searchBodyBuilder.size() == 0) {
+            return Collects.emptyArrayList();
+        }
         if (searchBodyBuilder.from() >= 0) {
             useFromSizePagation = true;
+
+            PagingRequest<MODEL> pr = new PagingRequest<MODEL>();
+            pr.setPageSize(searchBodyBuilder.size());
+            int pageNo = searchBodyBuilder.from() / searchBodyBuilder.size() + 1;
+            pr.setPageNo(pageNo);
+            ES_PAGING.set(pr);
         }
         ScrollContext<MODEL> scrollContext = (ScrollContext<MODEL>) searchScrollCache.get(queryBuilder);
         searchBodyBuilder.query(queryBuilder);
@@ -159,7 +194,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                     .types(type)
                     .searchType(SearchType.QUERY_THEN_FETCH);
             request.source(searchBodyBuilder);
-            SearchResponse response = client.search(request,null);
+            SearchResponse response = client.search(request, null);
             return extractSearchResults(response);
         } else {
             String index = ESModels.getIndex(modelClass);

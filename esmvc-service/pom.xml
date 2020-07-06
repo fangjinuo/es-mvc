@@ -10,6 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>esmvc-service</artifactId>
+
+    <properties>
+        <sqlhelper.version>3.1.1</sqlhelper.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
