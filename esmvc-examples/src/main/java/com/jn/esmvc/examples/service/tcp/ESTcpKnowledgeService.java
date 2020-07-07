@@ -7,6 +7,7 @@ import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,6 +49,7 @@ public class ESTcpKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> 
 
     @Autowired
     @Override
+    @Qualifier("tcpScrollContextCache")
     public void setScrollCache(ScrollContextCache scrollContextCache) {
         super.setScrollCache(scrollContextCache);
         setScrollDuration(scrollContextCache.getExpireInSeconds() * 1000 + 5 * 1000);

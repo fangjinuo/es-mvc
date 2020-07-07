@@ -38,7 +38,6 @@ public class EsmvcRestClientAutoConfiguration {
     }
 
     @Bean("esRestClient")
-    @ConditionalOnExpression("#{esmvcRestClientProperties.protocol.equals('http') || #esmvcRestClientProperties.protocol.equals('https')}")
     @Primary
     @Autowired
     public ESRestClient esRestClient(@Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties) {
