@@ -36,11 +36,13 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
         setGlobalOptions(RequestOptions.DEFAULT);
     }
 
+    public RestClientProxy(ESRestClient restClient){
+        this.set(restClient.getRestClient());
+        this.setGlobalOptions(restClient.getRequestOptions());
+    }
+
     public static RestClientProxy fromESRestClient(ESRestClient restClient) {
-        RestClientProxy proxy = new RestClientProxy();
-        proxy.set(restClient.getRestClient());
-        proxy.setGlobalOptions(restClient.getRequestOptions());
-        return proxy;
+        return new RestClientProxy(restClient);
     }
 
 

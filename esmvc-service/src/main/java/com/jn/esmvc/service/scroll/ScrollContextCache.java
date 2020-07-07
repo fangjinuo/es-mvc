@@ -1,6 +1,6 @@
 package com.jn.esmvc.service.scroll;
 
-import com.jn.esmvc.service.ESRestClient;
+import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.util.ESRequests;
 import com.jn.langx.cache.*;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class ScrollContextCache {
     private static final Logger logger = LoggerFactory.getLogger(ScrollContextCache.class);
     private List<ScrollContextCacheListener> listeners = new ArrayList<>();
-    private ESRestClient esRestClient;
+    private ClientProxy clientProxy;
     private Cache<QueryBuilder, ScrollContext> localCache;
 
     private long expireInSeconds = 60;
@@ -46,26 +46,6 @@ public class ScrollContextCache {
                         return null;
                     }
                 }).build();
-    }
-
-    private class InternelGuavaRemoveListener implements RemoveListener<QueryBuilder, ScrollContext> {
-        @Override
-        public void onRemove(QueryBuilder key, ScrollContext value, RemoveCause cause) {
-            try {
-                for (ScrollContextCacheListener listener : listeners) {
-                    listener.onRemove(key, value);
-                }
-            } catch (Throwable ex) {
-                logger.error(ex.getMessage(), ex);
-            } finally {
-                try {
-                    ESRequests.clearScroll(value.getScrollId(), esRestClient);
-                } catch (Throwable ex) {
-                    // IGNORE IT
-                }
-            }
-
-        }
     }
 
     public void addListener(ScrollContextCacheListener listener) {
@@ -112,11 +92,31 @@ public class ScrollContextCache {
         this.maxCapacity = maxCapacity;
     }
 
-    public ESRestClient getEsRestClient() {
-        return esRestClient;
+    public ClientProxy getClientProxy() {
+        return clientProxy;
     }
 
-    public void setEsRestClient(ESRestClient esRestClient) {
-        this.esRestClient = esRestClient;
+    public void setClientProxy(ClientProxy clientProxy) {
+        this.clientProxy = clientProxy;
+    }
+
+    private class InternelGuavaRemoveListener implements RemoveListener<QueryBuilder, ScrollContext> {
+        @Override
+        public void onRemove(QueryBuilder key, ScrollContext value, RemoveCause cause) {
+            try {
+                for (ScrollContextCacheListener listener : listeners) {
+                    listener.onRemove(key, value);
+                }
+            } catch (Throwable ex) {
+                logger.error(ex.getMessage(), ex);
+            } finally {
+                try {
+                    ESRequests.clearScroll(value.getScrollId(), clientProxy);
+                } catch (Throwable ex) {
+                    // IGNORE IT
+                }
+            }
+
+        }
     }
 }

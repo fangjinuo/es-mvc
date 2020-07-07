@@ -1,9 +1,11 @@
 package com.jn.esmvc.service.config;
 
 public abstract class AbstractClientProperties {
-    protected String name;
-    protected String protocol;
-    protected String nodes;
+    private String name;
+    private String protocol;
+    private String nodes;
+    private int localCacheMaxCapacity = 100;
+    private int localCacheExpireInSeconds = 55;
 
     public String getProtocol() {
         return protocol;
@@ -27,5 +29,21 @@ public abstract class AbstractClientProperties {
 
     public void setNodes(String nodes) {
         this.nodes = nodes;
+    }
+
+    public int getLocalCacheMaxCapacity() {
+        return localCacheMaxCapacity;
+    }
+
+    public void setLocalCacheMaxCapacity(int localCacheMaxCapacity) {
+        this.localCacheMaxCapacity = localCacheMaxCapacity;
+    }
+
+    public int getLocalCacheExpireInSeconds() {
+        return localCacheExpireInSeconds;
+    }
+
+    public void setLocalCacheExpireInSeconds(int localCacheExpireInSeconds) {
+        this.localCacheExpireInSeconds = localCacheExpireInSeconds;
     }
 }

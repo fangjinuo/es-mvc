@@ -2,6 +2,8 @@ package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.config.EsmvcTransportClientProperties;
+import com.jn.esmvc.service.request.TcpClientProxy;
+import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
@@ -44,10 +46,10 @@ public class EsmvcTransportClientAutoConfiguration {
     @Primary
     @Autowired
     public TransportClient transportClient(@Qualifier("esmvcTransportClientProperties") EsmvcTransportClientProperties esmvcTransportClientProperties) {
-        if(Emptys.isEmpty(esmvcTransportClientProperties.getName())){
+        if (Emptys.isEmpty(esmvcTransportClientProperties.getName())) {
             esmvcTransportClientProperties.setName("tcp-primary");
         }
-        if(Emptys.isEmpty(esmvcTransportClientProperties.getProtocol())){
+        if (Emptys.isEmpty(esmvcTransportClientProperties.getProtocol())) {
             esmvcTransportClientProperties.setProtocol("tcp");
         }
 
@@ -96,5 +98,19 @@ public class EsmvcTransportClientAutoConfiguration {
         }).toArray(TransportAddress[].class);
 
         return new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
+    }
+
+    @ConditionalOnMissingBean(name = "tcpScrollContextCache")
+    @Bean("tcpScrollContextCache")
+    @Autowired
+    public ScrollContextCache scrollContextCache(
+            @Qualifier("esmvcTransportClientProperties") EsmvcTransportClientProperties esmvcProperties,
+            @Qualifier("transportClient") TransportClient transportClient) {
+        ScrollContextCache cache = new ScrollContextCache();
+        cache.setExpireInSeconds(esmvcProperties.getLocalCacheExpireInSeconds());
+        cache.setMaxCapacity(esmvcProperties.getLocalCacheMaxCapacity());
+        cache.init();
+        cache.setClientProxy(new TcpClientProxy(transportClient));
+        return cache;
     }
 }

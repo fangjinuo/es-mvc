@@ -30,10 +30,15 @@ import java.io.IOException;
 
 public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
-    public static TcpClientProxy fromTransportClient(TransportClient transportClient){
+    public TcpClientProxy(){}
+
+    public TcpClientProxy(TransportClient transportClient){
         TcpClientProxy proxy = new TcpClientProxy();
         proxy.set(transportClient);
-        return proxy;
+    }
+
+    public static TcpClientProxy fromTransportClient(TransportClient transportClient){
+        return new TcpClientProxy(transportClient);
     }
 
     @Override

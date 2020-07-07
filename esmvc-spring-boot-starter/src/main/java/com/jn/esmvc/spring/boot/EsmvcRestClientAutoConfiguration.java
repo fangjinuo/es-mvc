@@ -3,6 +3,7 @@ package com.jn.esmvc.spring.boot;
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.config.EsmvcRestClientProperties;
+import com.jn.esmvc.service.request.RestClientProxy;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @ConditionalOnProperty(name = "esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnMissingBean(name = "esmvcRestClientAutoConfiguration")
-@Configuration
+@Configuration("esmvcRestClientAutoConfiguration")
 public class EsmvcRestClientAutoConfiguration {
 
     @Bean("esmvcRestClientProperties")
@@ -37,7 +38,7 @@ public class EsmvcRestClientAutoConfiguration {
     }
 
     @Bean("esRestClient")
-    @ConditionalOnExpression("#{esmvcRestClientProperties.protocol=='http' || #esmvcRestClientProperties.protocol=='https'}")
+    @ConditionalOnExpression("#{esmvcRestClientProperties.protocol.equals('http') || #esmvcRestClientProperties.protocol.equals('https')}")
     @Primary
     @Autowired
     public ESRestClient esRestClient(@Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties) {
@@ -62,8 +63,8 @@ public class EsmvcRestClientAutoConfiguration {
         return new ESRestClient(new RestHighLevelClient(RestClient.builder(restHosts)));
     }
 
-    @ConditionalOnMissingBean(name = "scrollContextCache")
-    @Bean("scrollContextCache")
+    @ConditionalOnMissingBean(name = "restScrollContextCache")
+    @Bean("restScrollContextCache")
     @Autowired
     public ScrollContextCache scrollContextCache(
             @Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties,
@@ -72,7 +73,7 @@ public class EsmvcRestClientAutoConfiguration {
         cache.setExpireInSeconds(esmvcProperties.getLocalCacheExpireInSeconds());
         cache.setMaxCapacity(esmvcProperties.getLocalCacheMaxCapacity());
         cache.init();
-        cache.setEsRestClient(esRestClient);
+        cache.setClientProxy(new RestClientProxy(esRestClient));
         return cache;
     }
 
