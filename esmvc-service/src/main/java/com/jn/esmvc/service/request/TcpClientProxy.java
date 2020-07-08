@@ -33,8 +33,7 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
     public TcpClientProxy(){}
 
     public TcpClientProxy(TransportClient transportClient){
-        TcpClientProxy proxy = new TcpClientProxy();
-        proxy.set(transportClient);
+        this.set(transportClient);
     }
 
     public static TcpClientProxy fromTransportClient(TransportClient transportClient){
