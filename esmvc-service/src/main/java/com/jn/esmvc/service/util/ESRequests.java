@@ -28,7 +28,7 @@ public class ESRequests {
         }
     }
 
-    public static void clearScroll(String scrollId, ClientProxy clientProxy) {
+    public static void clearScroll(String scrollId, ClientProxy<?,?> clientProxy) {
         Preconditions.checkNotNull(scrollId);
         ClearScrollRequest request = new ClearScrollRequest();
         request.addScrollId(scrollId);
