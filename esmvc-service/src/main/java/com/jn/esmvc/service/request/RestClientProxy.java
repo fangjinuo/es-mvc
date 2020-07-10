@@ -11,6 +11,8 @@ import com.jn.esmvc.service.request.document.action.termvectors.RestTermVectorRe
 import com.jn.esmvc.service.request.document.action.termvectors.RestTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.indices.IndicesClientProxy;
+import com.jn.esmvc.service.request.indices.rest.RestIndicesClientProxy;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -45,6 +47,10 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
         return new RestClientProxy(restClient);
     }
 
+    @Override
+    public IndicesClientProxy indicesClient() {
+        return new RestIndicesClientProxy(this);
+    }
 
     private RequestOptions mergeRequestOptions(RequestOptions global, RequestOptions options) {
         if (global == null && options == null) {

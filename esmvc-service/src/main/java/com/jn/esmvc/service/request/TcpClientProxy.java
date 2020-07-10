@@ -10,6 +10,8 @@ import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsRe
 import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.indices.IndicesClientProxy;
+import com.jn.esmvc.service.request.indices.tcp.TcpIndicesClientProxy;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -34,6 +36,11 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
 
     public TcpClientProxy(TransportClient transportClient){
         this.set(transportClient);
+    }
+
+    @Override
+    public IndicesClientProxy indicesClient() {
+        return new TcpIndicesClientProxy(this);
     }
 
     public static TcpClientProxy fromTransportClient(TransportClient transportClient){

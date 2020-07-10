@@ -5,6 +5,7 @@ import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.indices.IndicesClientProxy;
 import com.jn.langx.util.struct.Holder;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -34,6 +35,8 @@ public abstract class ClientProxy<CLIENT, OPTIONS> extends Holder<CLIENT> {
     public OPTIONS getGlobalOptions() {
         return globalOptions;
     }
+
+    public abstract IndicesClientProxy indicesClient();
 
     /**
      * 同步 index
