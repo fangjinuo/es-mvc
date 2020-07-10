@@ -1,6 +1,6 @@
-package com.jn.esmvc.service.request.action.count;
+package com.jn.esmvc.service.request.document.action.count;
 
-import com.jn.esmvc.service.request.action.ResponseAdapter;
+import com.jn.esmvc.service.request.document.action.ResponseAdapter;
 import org.elasticsearch.action.search.SearchResponse;
 
 public class TcpCountResponseAdapter implements ResponseAdapter<SearchResponse, CountResponse> {

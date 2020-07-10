@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.action.count;
+package com.jn.esmvc.service.request.document.action.count;
 
 import com.jn.langx.util.Objects;
 import com.jn.langx.util.hash.HashCodeBuilder;

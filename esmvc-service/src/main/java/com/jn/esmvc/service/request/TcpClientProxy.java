@@ -1,15 +1,15 @@
 package com.jn.esmvc.service.request;
 
 import com.jn.esmvc.service.ClientProxy;
-import com.jn.esmvc.service.request.action.DelegatableActionListener;
-import com.jn.esmvc.service.request.action.count.CountRequest;
-import com.jn.esmvc.service.request.action.count.CountResponse;
-import com.jn.esmvc.service.request.action.count.TcpCountRequestAdapter;
-import com.jn.esmvc.service.request.action.count.TcpCountResponseAdapter;
-import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsRequestAdapter;
-import com.jn.esmvc.service.request.action.termvectors.TcpTermVectorsResponseAdapter;
-import com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest;
-import com.jn.esmvc.service.request.action.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
+import com.jn.esmvc.service.request.document.action.count.CountRequest;
+import com.jn.esmvc.service.request.document.action.count.CountResponse;
+import com.jn.esmvc.service.request.document.action.count.TcpCountRequestAdapter;
+import com.jn.esmvc.service.request.document.action.count.TcpCountResponseAdapter;
+import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsRequestAdapter;
+import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsResponseAdapter;
+import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
+import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;

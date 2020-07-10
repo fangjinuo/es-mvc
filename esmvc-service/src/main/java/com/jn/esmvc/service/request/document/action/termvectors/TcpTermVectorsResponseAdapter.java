@@ -1,6 +1,6 @@
-package com.jn.esmvc.service.request.action.termvectors;
+package com.jn.esmvc.service.request.document.action.termvectors;
 
-import com.jn.esmvc.service.request.action.ResponseAdapter;
+import com.jn.esmvc.service.request.document.action.ResponseAdapter;
 
 public class TcpTermVectorsResponseAdapter implements ResponseAdapter<org.elasticsearch.action.termvectors.TermVectorsResponse,TermVectorsResponse> {
     @Override

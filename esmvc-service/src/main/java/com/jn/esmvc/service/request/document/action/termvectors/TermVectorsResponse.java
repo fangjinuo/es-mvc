@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.action.termvectors;
+package com.jn.esmvc.service.request.document.action.termvectors;
 
 import org.elasticsearch.common.Nullable;
 import org.elasticsearch.common.ParseField;

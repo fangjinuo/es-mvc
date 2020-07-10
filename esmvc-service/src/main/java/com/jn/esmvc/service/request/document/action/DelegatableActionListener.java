@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.action;
+package com.jn.esmvc.service.request.document.action;
 
 import org.elasticsearch.action.ActionListener;
 

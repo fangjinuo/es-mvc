@@ -1,11 +1,11 @@
-package com.jn.esmvc.service.request.action.count;
+package com.jn.esmvc.service.request.document.action.count;
 
-import com.jn.esmvc.service.request.action.RequestAdapter;
+import com.jn.esmvc.service.request.document.action.RequestAdapter;
 import org.elasticsearch.client.core.CountRequest;
 
-public class RestCountRequestAdapter implements RequestAdapter<com.jn.esmvc.service.request.action.count.CountRequest,CountRequest> {
+public class RestCountRequestAdapter implements RequestAdapter<com.jn.esmvc.service.request.document.action.count.CountRequest,CountRequest> {
     @Override
-    public CountRequest apply(com.jn.esmvc.service.request.action.count.CountRequest from) {
+    public CountRequest apply(com.jn.esmvc.service.request.document.action.count.CountRequest from) {
         CountRequest to = new CountRequest();
         to.indices(from.indices());
         to.types(from.types());

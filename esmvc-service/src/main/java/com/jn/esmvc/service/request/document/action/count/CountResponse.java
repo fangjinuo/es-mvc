@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.action.count;
+package com.jn.esmvc.service.request.document.action.count;
 
 import org.elasticsearch.action.search.ShardSearchFailure;
 import org.elasticsearch.common.ParseField;

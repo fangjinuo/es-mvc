@@ -1,13 +1,13 @@
-package com.jn.esmvc.service.request.action.termvectors;
+package com.jn.esmvc.service.request.document.action.termvectors;
 
-import com.jn.esmvc.service.request.action.RequestAdapter;
+import com.jn.esmvc.service.request.document.action.RequestAdapter;
 import org.elasticsearch.action.termvectors.TermVectorsRequest;
 
 import java.util.Map;
 
-public class TcpTermVectorsRequestAdapter implements RequestAdapter<com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest,TermVectorsRequest> {
+public class TcpTermVectorsRequestAdapter implements RequestAdapter<com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest,TermVectorsRequest> {
     @Override
-    public TermVectorsRequest apply(com.jn.esmvc.service.request.action.termvectors.TermVectorsRequest from) {
+    public TermVectorsRequest apply(com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest from) {
         TermVectorsRequest to = new TermVectorsRequest(from.getIndex(), from.getType(), from.getId());
         to.doc(from.getDocBuilder());
         to.routing(from.getRouting());

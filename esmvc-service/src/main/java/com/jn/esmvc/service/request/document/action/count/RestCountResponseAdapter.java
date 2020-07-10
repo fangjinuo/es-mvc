@@ -1,6 +1,6 @@
-package com.jn.esmvc.service.request.action.count;
+package com.jn.esmvc.service.request.document.action.count;
 
-import com.jn.esmvc.service.request.action.ResponseAdapter;
+import com.jn.esmvc.service.request.document.action.ResponseAdapter;
 
 public class RestCountResponseAdapter implements ResponseAdapter<org.elasticsearch.client.core.CountResponse,CountResponse> {
     @Override
