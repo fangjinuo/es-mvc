@@ -15,7 +15,7 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -27,6 +27,7 @@ import java.util.List;
 
 @ConditionalOnProperty(name = "esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnMissingBean(name = "esmvcRestClientAutoConfiguration")
+@ConditionalOnClass(RestHighLevelClient.class)
 @Configuration("esmvcRestClientAutoConfiguration")
 public class EsmvcRestClientAutoConfiguration {
 
@@ -44,7 +45,7 @@ public class EsmvcRestClientAutoConfiguration {
         if (Emptys.isEmpty(esmvcProperties.getProtocol())) {
             esmvcProperties.setProtocol("http");
         }
-        if(Emptys.isEmpty(esmvcProperties.getName())){
+        if (Emptys.isEmpty(esmvcProperties.getName())) {
             esmvcProperties.setName("http-primary");
         }
         List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser().parse(esmvcProperties.getNodes());
