@@ -1,6 +1,7 @@
 package com.jn.esmvc.service.scroll;
 
 import com.jn.esmvc.model.AbstractESModel;
+import com.jn.esmvc.service.ClientProxy;
 import org.elasticsearch.search.Scroll;
 
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ public class ScrollContext<MODEL extends AbstractESModel> {
     private String scrollId;
     private Scroll scroll;
     private List<MODEL> scrolledModels = new LinkedList<>();
+    private ClientProxy clientProxy;
 
     public ScrollContext() {
     }
@@ -40,5 +42,13 @@ public class ScrollContext<MODEL extends AbstractESModel> {
 
     public void setScrolledModels(List<MODEL> scrolledModels) {
         this.scrolledModels = scrolledModels;
+    }
+
+    public ClientProxy getClientProxy() {
+        return clientProxy;
+    }
+
+    public void setClientProxy(ClientProxy clientProxy) {
+        this.clientProxy = clientProxy;
     }
 }

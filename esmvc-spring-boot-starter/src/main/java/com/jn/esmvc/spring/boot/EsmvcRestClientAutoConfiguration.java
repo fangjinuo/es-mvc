@@ -3,8 +3,6 @@ package com.jn.esmvc.spring.boot;
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.config.EsmvcRestClientProperties;
-import com.jn.esmvc.service.request.RestClientProxy;
-import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
@@ -63,18 +61,5 @@ public class EsmvcRestClientAutoConfiguration {
         return new ESRestClient(new RestHighLevelClient(RestClient.builder(restHosts)));
     }
 
-    @ConditionalOnMissingBean(name = "restScrollContextCache")
-    @Bean("restScrollContextCache")
-    @Autowired
-    public ScrollContextCache scrollContextCache(
-            @Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties,
-            @Qualifier("esRestClient") ESRestClient esRestClient) {
-        ScrollContextCache cache = new ScrollContextCache();
-        cache.setExpireInSeconds(esmvcProperties.getLocalCacheExpireInSeconds());
-        cache.setMaxCapacity(esmvcProperties.getLocalCacheMaxCapacity());
-        cache.init();
-        cache.setClientProxy(new RestClientProxy(esRestClient));
-        return cache;
-    }
 
 }

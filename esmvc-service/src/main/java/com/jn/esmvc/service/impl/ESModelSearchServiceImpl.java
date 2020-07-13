@@ -9,6 +9,7 @@ import com.jn.esmvc.service.request.document.action.count.CountResponse;
 import com.jn.esmvc.service.scroll.ScrollContext;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import com.jn.esmvc.service.util.ESRequests;
+import com.jn.langx.util.Emptys;
 import com.jn.langx.util.Preconditions;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.pagination.PagingRequest;
@@ -27,8 +28,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
-import static com.jn.esmvc.service.util.ESRequests.ES_PAGING;
-import static com.jn.esmvc.service.util.ESRequests.logRequestWhenFail;
+import static com.jn.esmvc.service.util.ESRequests.*;
 
 public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends AbstractESModelService<MODEL> implements ESModelSearchService<MODEL> {
     private static final Logger logger = LoggerFactory.getLogger(ESModelSearchServiceImpl.class);
@@ -75,7 +75,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         if (searchHits.getTotalHits() > 0) {
             for (SearchHit hit : searchHits.getHits()) {
                 if (hit.hasSource()) {
-                    models.add(asModel(hit));
+                    models.add(asModel(hit, json, modelClass));
                 }
             }
         }
@@ -102,7 +102,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
             List<MODEL> models = new LinkedList<>();
             for (SearchHit hit : searchHits.getHits()) {
                 if (hit.hasSource()) {
-                    models.add(asModel(hit));
+                    models.add(asModel(hit, json, modelClass));
                 }
             }
 
@@ -124,6 +124,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                     ScrollContext newScrollContext = new ScrollContext();
                     newScrollContext.setScrollId(response.getScrollId());
                     newScrollContext.setScroll(scrollContext.getScroll());
+                    newScrollContext.setClientProxy(client);
                     scrollContext.setScrolledModels(remainResults);
                     searchScrollCache.put(searchBodyBuilder.query(), newScrollContext);
                 }
@@ -216,11 +217,11 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                 } catch (Throwable ex) {
                     logRequestWhenFail(logger, request, ex);
                 }
-                return Collections.emptyList();
+                return Collects.emptyArrayList();
 
             } else {
                 List<MODEL> cachedModels = scrollContext.getScrolledModels();
-                if (cachedModels == null || cachedModels.isEmpty()) {
+                if (Emptys.isEmpty(cachedModels)) {
                     return searchWithScroll(searchBodyBuilder, scrollContext);
                 } else {
                     if (searchBodyBuilder.size() > cachedModels.size()) {
@@ -264,7 +265,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
                     SearchHits searchHits = response.getHits();
                     for (SearchHit hit : searchHits.getHits()) {
                         if (hit.hasSource()) {
-                            list.add(asModel(hit));
+                            list.add(asModel(hit, json, modelClass));
                         }
                     }
                 }

@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 public class ScrollContextCache {
     private static final Logger logger = LoggerFactory.getLogger(ScrollContextCache.class);
     private List<ScrollContextCacheListener> listeners = new ArrayList<>();
-    private ClientProxy clientProxy;
     private Cache<QueryBuilder, ScrollContext> localCache;
 
     private long expireInSeconds = 60;
@@ -92,26 +91,28 @@ public class ScrollContextCache {
         this.maxCapacity = maxCapacity;
     }
 
+    @Deprecated
     public ClientProxy getClientProxy() {
-        return clientProxy;
+        return null;
     }
 
+    @Deprecated
     public void setClientProxy(ClientProxy clientProxy) {
-        this.clientProxy = clientProxy;
+
     }
 
     private class InternelGuavaRemoveListener implements RemoveListener<QueryBuilder, ScrollContext> {
         @Override
-        public void onRemove(QueryBuilder key, ScrollContext value, RemoveCause cause) {
+        public void onRemove(QueryBuilder key, ScrollContext ctx, RemoveCause cause) {
             try {
                 for (ScrollContextCacheListener listener : listeners) {
-                    listener.onRemove(key, value);
+                    listener.onRemove(key, ctx);
                 }
             } catch (Throwable ex) {
                 logger.error(ex.getMessage(), ex);
             } finally {
                 try {
-                    ESRequests.clearScroll(value.getScrollId(), clientProxy);
+                    ESRequests.clearScroll(ctx.getScrollId(), ctx.getClientProxy());
                 } catch (Throwable ex) {
                     // IGNORE IT
                 }
