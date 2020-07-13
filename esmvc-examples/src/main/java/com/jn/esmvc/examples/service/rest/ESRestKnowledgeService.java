@@ -30,7 +30,7 @@ public class ESRestKnowledgeService extends ESModelServiceImpl<KnowledgeESModel>
 
     @Override
     @Autowired
-    @Qualifier("restScrollContextCache")
+    @Qualifier("scrollContextCache")
     public void setScrollCache(ScrollContextCache scrollContextCache) {
         super.setScrollCache(scrollContextCache);
         setScrollDuration(scrollContextCache.getExpireInSeconds() * 1000 + 5 * 1000);

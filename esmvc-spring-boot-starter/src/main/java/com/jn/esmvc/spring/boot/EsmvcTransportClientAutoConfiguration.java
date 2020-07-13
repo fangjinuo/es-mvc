@@ -2,7 +2,6 @@ package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.config.EsmvcTransportClientProperties;
-import com.jn.esmvc.service.config.ScrollCacheProperties;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
