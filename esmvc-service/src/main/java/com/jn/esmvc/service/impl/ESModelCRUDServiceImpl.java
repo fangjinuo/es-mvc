@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jn.esmvc.service.util.ESRequests.asModel;
 import static com.jn.esmvc.service.util.ESRequests.logRequestWhenFail;
 import static org.elasticsearch.rest.RestStatus.CREATED;
 import static org.elasticsearch.rest.RestStatus.OK;
@@ -70,7 +71,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
         try {
             GetResponse response = client.get(request, null);
             if (response.isExists() && !response.isSourceEmpty()) {
-                return asModel(response);
+                return asModel(response, json, modelClass);
             }
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);
@@ -152,7 +153,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
         try {
             response = client.update(request, null);
             if (response.getGetResult().isExists() && !response.getGetResult().isSourceEmpty()) {
-                return asModel(response.getGetResult());
+                return asModel(response.getGetResult(), json, modelClass);
             }
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);
@@ -183,7 +184,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
         try {
             UpdateResponse response = client.update(request, null);
             if (response.getGetResult().isExists() && !response.getGetResult().isSourceEmpty()) {
-                return asModel(response.getGetResult());
+                return asModel(response.getGetResult(), json, modelClass);
             }
         } catch (Throwable ex) {
             logRequestWhenFail(logger, request, ex);
@@ -207,7 +208,7 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
             response.forEach(multiGetItemResponse -> {
                 if (!multiGetItemResponse.isFailed()) {
                     if (multiGetItemResponse.getResponse().isExists() && !multiGetItemResponse.getResponse().isSourceEmpty()) {
-                        list.add(asModel(multiGetItemResponse.getResponse()));
+                        list.add(asModel(multiGetItemResponse.getResponse(), json, modelClass));
                     }
                 }
             });
