@@ -43,13 +43,14 @@ public class ESTcpKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> 
     */
 
     @Autowired
+    @Qualifier("transportClient")
     public void setTransportClient(TransportClient transportClient) {
         setClient(TcpClientProxy.fromTransportClient(transportClient));
     }
 
     @Autowired
     @Override
-    @Qualifier("tcpScrollContextCache")
+    @Qualifier("scrollContextCache")
     public void setScrollCache(ScrollContextCache scrollContextCache) {
         super.setScrollCache(scrollContextCache);
         setScrollDuration(scrollContextCache.getExpireInSeconds() * 1000 + 5 * 1000);
