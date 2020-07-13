@@ -29,8 +29,8 @@ import java.util.List;
 
 @ConditionalOnProperty(name = "esmvc.tcp.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnMissingBean(name = "esmvcTransportClientAutoConfiguration")
-@Configuration("esmvcTransportClientAutoConfiguration")
 @ConditionalOnClass(PreBuiltTransportClient.class)
+@Configuration("esmvcTransportClientAutoConfiguration")
 public class EsmvcTransportClientAutoConfiguration {
 
 
