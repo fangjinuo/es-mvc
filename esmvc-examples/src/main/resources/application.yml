@@ -1,9 +1,10 @@
 esmvc:
+  scrollcache:
+    local-cache-max-capacity: 30
   rest:
     primary:
       name: testRest
       nodes: localhost:9200
-      local-cache-max-capacity: 30
   tcp:
     primary:
       name: testTcp

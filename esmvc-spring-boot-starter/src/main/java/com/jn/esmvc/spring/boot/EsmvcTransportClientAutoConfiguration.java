@@ -2,6 +2,7 @@ package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.config.EsmvcTransportClientProperties;
+import com.jn.esmvc.service.config.ScrollCacheProperties;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
@@ -14,6 +15,7 @@ import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,6 +27,7 @@ import org.springframework.context.annotation.Primary;
 import java.net.InetSocketAddress;
 import java.util.List;
 
+@AutoConfigureAfter(ScrollContextCacheAutoConfiguration.class)
 @ConditionalOnProperty(name = "esmvc.tcp.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnMissingBean(name = "esmvcTransportClientAutoConfiguration")
 @ConditionalOnClass(PreBuiltTransportClient.class)
