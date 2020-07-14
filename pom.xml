@@ -17,9 +17,9 @@
     <properties>
         <spring.version>5.2.6.RELEASE</spring.version>
         <spring.boot.version>2.3.0.RELEASE</spring.boot.version>
-
+        <slf4j.version>1.7.25</slf4j.version>
         <elasticsearch.version>6.7.0</elasticsearch.version>
-        <langx.version>2.5.4</langx.version>
+        <langx.version>2.7.1</langx.version>
         <easyjson.version>3.0.0</easyjson.version>
         <scm.url0>https://github.com/fangjinuo/es-mvc</scm.url0>
         <scm.url>${scm.url0}.git</scm.url>
@@ -58,8 +58,6 @@
         </license>
     </licenses>
 
-
-
     <modules>
         <module>esmvc-model</module>
         <module>esmvc-service</module>
@@ -82,6 +80,13 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${slf4j.version}</version>
             </dependency>
 
             <dependency>
@@ -94,7 +99,6 @@
                 <artifactId>easyjson-core</artifactId>
                 <version>${easyjson.version}</version>
             </dependency>
-
 
             <dependency>
                 <groupId>com.github.fangjinuo.esmvc</groupId>
@@ -114,6 +118,15 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <resources>
