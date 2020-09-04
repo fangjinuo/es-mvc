@@ -9,6 +9,7 @@ import com.jn.langx.util.Emptys;
 import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
+import com.jn.langx.util.function.Consumer;
 import com.jn.langx.util.function.Function;
 import com.jn.langx.util.net.NetworkAddress;
 import org.apache.http.HttpHost;
@@ -46,7 +47,7 @@ public class EsmvcRestClientAutoConfiguration {
 
     @Bean("restClientBuilderCustomizer")
     @ConditionalOnMissingBean(name = "restClientBuilderCustomizer")
-    public RestClientBuilderCustomizer restClientBuilderCustomizer(EsmvcRestClientProperties esmvcRestClientProperties){
+    public RestClientBuilderCustomizer restClientBuilderCustomizer(EsmvcRestClientProperties esmvcRestClientProperties) {
         return new DefaultRestClientBuilderCustomizer(esmvcRestClientProperties);
     }
 
@@ -55,7 +56,7 @@ public class EsmvcRestClientAutoConfiguration {
     @Autowired
     public ESRestClient esRestClient(
             @Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties,
-            final @Qualifier("restClientBuilderCustomizer")RestClientBuilderCustomizer restClientBuilderCustomizer) {
+            List<RestClientBuilderCustomizer> builderCustomizers) {
         esmvcProperties.setProtocol(Strings.useValueIfEmpty(esmvcProperties.getProtocol(), "http"));
         esmvcProperties.setName(Strings.useValueIfEmpty(esmvcProperties.getName(), "http-primary"));
         List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser(9200).parse(esmvcProperties.getNodes());
@@ -71,21 +72,36 @@ public class EsmvcRestClientAutoConfiguration {
         }).toArray(HttpHost[].class);
 
         RestClientBuilder builder = RestClient.builder(restHosts);
-        builder.setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback(){
+        builder.setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
             @Override
             public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder) {
-                restClientBuilderCustomizer.customize(httpClientBuilder);
+                Collects.forEach(builderCustomizers, new Consumer<RestClientBuilderCustomizer>() {
+                    @Override
+                    public void accept(RestClientBuilderCustomizer restClientBuilderCustomizer) {
+                        restClientBuilderCustomizer.customize(httpClientBuilder);
+                    }
+                });
                 return httpClientBuilder;
             }
         });
         builder.setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
             @Override
             public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder requestConfigBuilder) {
-                restClientBuilderCustomizer.customize(requestConfigBuilder);
+                Collects.forEach(builderCustomizers, new Consumer<RestClientBuilderCustomizer>() {
+                    @Override
+                    public void accept(RestClientBuilderCustomizer restClientBuilderCustomizer) {
+                        restClientBuilderCustomizer.customize(requestConfigBuilder);
+                    }
+                });
                 return requestConfigBuilder;
             }
         });
-        restClientBuilderCustomizer.customize(builder);
+        Collects.forEach(builderCustomizers, new Consumer<RestClientBuilderCustomizer>() {
+            @Override
+            public void accept(RestClientBuilderCustomizer restClientBuilderCustomizer) {
+                restClientBuilderCustomizer.customize(builder);
+            }
+        });
         return new ESRestClient(new RestHighLevelClient(builder));
     }
 
