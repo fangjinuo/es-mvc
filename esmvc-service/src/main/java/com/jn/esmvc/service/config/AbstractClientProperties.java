@@ -5,6 +5,12 @@ public abstract class AbstractClientProperties {
     private String protocol;
     private String nodes;
 
+    private String username;
+    private String password;
+
+    private int connectTimeout = 5; // seconds
+    private int readTimeout = 120; // seconds
+
     public String getProtocol() {
         return protocol;
     }
@@ -27,6 +33,42 @@ public abstract class AbstractClientProperties {
 
     public void setNodes(String nodes) {
         this.nodes = nodes;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getConnectTimeout() {
+        return connectTimeout;
+    }
+
+    public void setConnectTimeout(int connectTimeout) {
+        if (connectTimeout >= 0) {
+            this.connectTimeout = connectTimeout;
+        }
+    }
+
+    public int getReadTimeout() {
+        return readTimeout;
+    }
+
+    public void setReadTimeout(int readTimeout) {
+        if (readTimeout >= 0) {
+            this.readTimeout = readTimeout;
+        }
     }
 
 }

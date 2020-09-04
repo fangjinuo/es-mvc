@@ -1,4 +1,6 @@
-package com.jn.esmvc.service.config;
+package com.jn.esmvc.service.config.tcp;
+
+import com.jn.esmvc.service.config.AbstractClientProperties;
 
 import java.util.Map;
 

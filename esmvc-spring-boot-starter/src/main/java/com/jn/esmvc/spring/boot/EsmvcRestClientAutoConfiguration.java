@@ -2,8 +2,9 @@ package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.ESRestClient;
-import com.jn.esmvc.service.config.EsmvcRestClientProperties;
+import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;
 import com.jn.langx.util.Emptys;
+import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
 import com.jn.langx.util.function.Function;
@@ -42,13 +43,9 @@ public class EsmvcRestClientAutoConfiguration {
     @Primary
     @Autowired
     public ESRestClient esRestClient(@Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties) {
-        if (Emptys.isEmpty(esmvcProperties.getProtocol())) {
-            esmvcProperties.setProtocol("http");
-        }
-        if (Emptys.isEmpty(esmvcProperties.getName())) {
-            esmvcProperties.setName("http-primary");
-        }
-        List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser().parse(esmvcProperties.getNodes());
+        esmvcProperties.setProtocol(Strings.useValueIfEmpty(esmvcProperties.getProtocol(), "http"));
+        esmvcProperties.setName(Strings.useValueIfEmpty(esmvcProperties.getName(), "http-primary"));
+        List<NetworkAddress> clusterAddress = new ESClusterRestAddressParser(9200).parse(esmvcProperties.getNodes());
         if (Emptys.isEmpty(clusterAddress)) {
             clusterAddress = Collects.newArrayList(new NetworkAddress("localhost", 9200));
         }

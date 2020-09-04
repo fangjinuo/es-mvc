@@ -1,13 +1,14 @@
 package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
-import com.jn.esmvc.service.config.EsmvcTransportClientProperties;
+import com.jn.esmvc.service.config.tcp.EsmvcTransportClientProperties;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
 import com.jn.langx.util.function.Consumer2;
 import com.jn.langx.util.function.Function;
 import com.jn.langx.util.net.NetworkAddress;
+import com.jn.langx.util.reflect.type.Primitives;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
@@ -63,14 +64,14 @@ public class EsmvcTransportClientAutoConfiguration {
                         return;
                     }
                     if (value instanceof Number) {
-                        if (value.getClass() == int.class || value.getClass() == Integer.class) {
+                        if (Primitives.isInteger(value.getClass())) {
                             builder.put(key, (Integer) value);
-                        } else if (value.getClass() == double.class || value.getClass() == Double.class) {
+                        } else if (Primitives.isDouble(value.getClass())) {
                             builder.put(key, (Double) value);
                         }
-                        if (value.getClass() == long.class || value.getClass() == Long.class) {
+                        if (Primitives.isLong(value.getClass())) {
                             builder.put(key, (Long) value);
-                        } else if (value.getClass() == float.class || value.getClass() == Float.class) {
+                        } else if (Primitives.isFloat(value.getClass())) {
                             builder.put(key, (Float) value);
                         }
                         return;

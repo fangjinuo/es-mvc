@@ -1,5 +1,6 @@
-package com.jn.esmvc.service.config;
+package com.jn.esmvc.service.config.rest;
 
+import com.jn.esmvc.service.config.AbstractClientProperties;
 import com.jn.langx.util.collection.Collects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
