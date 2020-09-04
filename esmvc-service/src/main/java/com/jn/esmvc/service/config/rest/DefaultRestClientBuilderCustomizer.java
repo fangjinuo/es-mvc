@@ -14,6 +14,8 @@ public class DefaultRestClientBuilderCustomizer implements RestClientBuilderCust
 
     private EsmvcRestClientProperties esmvcRestClientProperties;
 
+    public DefaultRestClientBuilderCustomizer(){}
+
     public DefaultRestClientBuilderCustomizer(EsmvcRestClientProperties restClientProperties) {
         this.esmvcRestClientProperties = restClientProperties;
     }
@@ -39,5 +41,9 @@ public class DefaultRestClientBuilderCustomizer implements RestClientBuilderCust
     public void customize(RequestConfig.Builder builder) {
         builder.setConnectTimeout(esmvcRestClientProperties.getConnectTimeout());
         builder.setSocketTimeout(esmvcRestClientProperties.getReadTimeout());
+    }
+
+    public void setEsmvcRestClientProperties(EsmvcRestClientProperties esmvcRestClientProperties) {
+        this.esmvcRestClientProperties = esmvcRestClientProperties;
     }
 }
