@@ -1,0 +1,33 @@
+# https://docs.search-guard.com/6.x-25/offline-tls-tool
+
+ca:
+  root:
+    dn: CN=ca.bessystem.com,OU=BES,O=BES
+    keysize: 2048
+    pkPassword: bes_root_ca
+    validityDays: 36500
+  intermediate:
+    dn: CN=signing.ca.bessystem.com,OU=BES,O=BES
+    keysize: 2048
+    pkPassword: bes_intermediate_ca
+    validityDays: 36500
+defaults:
+  validityDays: 3650
+  pkPassword: auto
+  generatedPasswordLength: 20
+  nodesDn:
+    - "CN=*.CUSTOMER.com,OU=BES CUSTOMER OPS,O=BES CUSTOMER,DC=CUSTOMER,DC=com"
+  nodeOid: "1.2.3.4.5.5"
+  httpsEnabled: true
+  reuseTransportCertificatesForHttp: false
+nodes:
+  - name: node-1
+    dn: CN=nod1.XXXX.com,OU=XXXX OPS,O=XXXX,DC=XXXX,DC=com
+  - name: node-2
+    dn: CN=node2.XXXX.com,OU=XXXX OPS,O=XXXX,DC=XXXX,DC=com
+clients:
+  - name: common client
+    dn: CN=common-client.XXXX.com,OU=XXXX OPS,O=XXXX,DC=XXXX,DC=com
+  - name: admin client
+    dn: CN=admin-client.XXXX.com,OU=XXXX OPS,O=XXXX,DC=XXXX,DC=com
+    admin: true
