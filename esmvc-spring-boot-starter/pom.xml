@@ -43,6 +43,7 @@
             <groupId>com.floragunn</groupId>
             <artifactId>search-guard-ssl</artifactId>
             <version>6.7.0-25.6</version>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
