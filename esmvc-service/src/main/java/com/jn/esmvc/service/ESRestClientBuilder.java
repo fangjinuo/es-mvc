@@ -3,6 +3,7 @@ package com.jn.esmvc.service;
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;
 import com.jn.esmvc.service.config.rest.RestClientBuilderCustomizer;
+import com.jn.langx.Builder;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
@@ -19,7 +20,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import java.util.List;
 
-public class ESRestClientBuilder {
+public class ESRestClientBuilder implements Builder<ESRestClient> {
     private EsmvcRestClientProperties esmvcProperties;
     public ESRestClientBuilder properties(EsmvcRestClientProperties properties){
         this.esmvcProperties = properties;
