@@ -1,5 +1,7 @@
 package com.jn.esmvc.service.config;
 
+import java.util.Map;
+
 public abstract class AbstractClientProperties {
     private String name;
     private String protocol;
@@ -10,6 +12,16 @@ public abstract class AbstractClientProperties {
 
     private int connectTimeout = 5; // seconds
     private int readTimeout = 120; // seconds
+
+    private Map<String, Object> props;
+
+    public Map<String, Object> getProps() {
+        return props;
+    }
+
+    public void setProps(Map<String, Object> props) {
+        this.props = props;
+    }
 
     public String getProtocol() {
         return protocol;
