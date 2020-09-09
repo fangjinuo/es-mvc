@@ -17,7 +17,6 @@ import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
-
 import java.util.List;
 
 public class ESRestClientBuilder implements Builder<ESRestClient> {
@@ -44,7 +43,7 @@ public class ESRestClientBuilder implements Builder<ESRestClient> {
         HttpHost[] restHosts = Pipeline.of(clusterAddress).map(new Function<NetworkAddress, HttpHost>() {
             @Override
             public HttpHost apply(NetworkAddress networkAddress) {
-                return new HttpHost(networkAddress.getHost(), networkAddress.getPort());
+                return new HttpHost(networkAddress.getHost(), networkAddress.getPort(), esmvcProperties.getProtocol());
             }
         }).toArray(HttpHost[].class);
 

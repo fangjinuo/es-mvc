@@ -11,6 +11,7 @@ public class EsmvcRestClientProperties extends AbstractClientProperties {
     public static final List<String> supportedProtocols = Collects.newArrayList("http", "https");
     private static final Logger logger = LoggerFactory.getLogger(EsmvcRestClientProperties.class);
 
+
     public EsmvcRestClientProperties(){
         setProtocol("http");
     }

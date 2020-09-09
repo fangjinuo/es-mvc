@@ -3,6 +3,9 @@ package com.jn.esmvc.service;
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.config.tcp.EsmvcTransportClientProperties;
 import com.jn.langx.Builder;
+import com.jn.langx.io.resource.ClassPathResource;
+import com.jn.langx.io.resource.FileResource;
+import com.jn.langx.io.resource.Resources;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
@@ -13,8 +16,10 @@ import com.jn.langx.util.reflect.type.Primitives;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.List;
 
@@ -58,7 +63,15 @@ public class ESTcpClientBuilder implements Builder<TransportClient> {
                         builder.put(key, (Boolean) value);
                     }
                     if (value instanceof String) {
-                        builder.put(key, (String) value);
+                        if(((String) value).startsWith("classpath:")){
+                            ClassPathResource classPathResource = Resources.loadClassPathResource((String) value);
+                            builder.put(key, classPathResource.getAbsolutePath());
+                        }else if(((String) value).startsWith("file:")){
+                            FileResource fileResource = Resources.loadFileResource((File) value);
+                            builder.put(key, fileResource.getAbsolutePath());
+                        }else{
+                            builder.put(key, (String) value);
+                        }
                     }
                 }
             });
@@ -75,7 +88,12 @@ public class ESTcpClientBuilder implements Builder<TransportClient> {
                 return new TransportAddress(new InetSocketAddress(networkAddress.getHost(), networkAddress.getPort()));
             }
         }).toArray(TransportAddress[].class);
+        if(Emptys.isEmpty(esmvcTransportClientProperties.getPlugins())){
+            return new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
+        }else{
+            List<Class<? extends Plugin>> plugins = esmvcTransportClientProperties.getPlugins();
+            return new PreBuiltTransportClient(settings,plugins ).addTransportAddresses(addresses);
+        }
 
-        return new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
     }
 }

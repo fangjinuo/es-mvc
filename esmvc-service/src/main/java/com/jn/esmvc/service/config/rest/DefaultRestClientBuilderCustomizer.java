@@ -10,6 +10,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
 import org.elasticsearch.client.RestClientBuilder;
 
+
 public class DefaultRestClientBuilderCustomizer implements RestClientBuilderCustomizer {
 
     private EsmvcRestClientProperties esmvcRestClientProperties;
@@ -36,6 +37,8 @@ public class DefaultRestClientBuilderCustomizer implements RestClientBuilderCust
             builder.setDefaultCredentialsProvider(credentialsProvider);
         }
     }
+
+
 
     @Override
     public void customize(RequestConfig.Builder builder) {
