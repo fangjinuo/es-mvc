@@ -25,11 +25,13 @@ import java.util.List;
 
 public class ESTcpClientBuilder implements Builder<TransportClient> {
     private EsmvcTransportClientProperties esmvcTransportClientProperties;
-    public ESTcpClientBuilder properties(EsmvcTransportClientProperties transportClientProperties){
+
+    public ESTcpClientBuilder properties(EsmvcTransportClientProperties transportClientProperties) {
         this.esmvcTransportClientProperties = transportClientProperties;
         return this;
     }
-    public TransportClient build(){
+
+    public TransportClient build() {
         if (Emptys.isEmpty(esmvcTransportClientProperties.getName())) {
             esmvcTransportClientProperties.setName("tcp-primary");
         }
@@ -63,13 +65,13 @@ public class ESTcpClientBuilder implements Builder<TransportClient> {
                         builder.put(key, (Boolean) value);
                     }
                     if (value instanceof String) {
-                        if(((String) value).startsWith("classpath:")){
+                        if (((String) value).startsWith("classpath:")) {
                             ClassPathResource classPathResource = Resources.loadClassPathResource((String) value);
                             builder.put(key, classPathResource.getAbsolutePath());
-                        }else if(((String) value).startsWith("file:")){
+                        } else if (((String) value).startsWith("file:")) {
                             FileResource fileResource = Resources.loadFileResource((File) value);
                             builder.put(key, fileResource.getAbsolutePath());
-                        }else{
+                        } else {
                             builder.put(key, (String) value);
                         }
                     }
@@ -88,11 +90,11 @@ public class ESTcpClientBuilder implements Builder<TransportClient> {
                 return new TransportAddress(new InetSocketAddress(networkAddress.getHost(), networkAddress.getPort()));
             }
         }).toArray(TransportAddress[].class);
-        if(Emptys.isEmpty(esmvcTransportClientProperties.getPlugins())){
+        if (Emptys.isEmpty(esmvcTransportClientProperties.getPlugins())) {
             return new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
-        }else{
+        } else {
             List<Class<? extends Plugin>> plugins = esmvcTransportClientProperties.getPlugins();
-            return new PreBuiltTransportClient(settings,plugins ).addTransportAddresses(addresses);
+            return new PreBuiltTransportClient(settings, plugins).addTransportAddresses(addresses);
         }
 
     }
