@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 
 @AutoConfigureAfter(EsmvcRestClientAutoConfiguration.class)
 @ConditionalOnProperty(name = "esmvc.rest.primary.search-guard-ssl.enabled", havingValue = "true", matchIfMissing = true)
-@ConditionalOnClass(name = {"com.floragunn.searchguard.ssl.SearchGuardSSLPlugin"})
 @ConditionalOnBean(EsmvcRestClientProperties.class)
 @Configuration("searchGuardRestClientAutoConfiguration")
 public class SearchGuardRestClientAutoConfiguration {

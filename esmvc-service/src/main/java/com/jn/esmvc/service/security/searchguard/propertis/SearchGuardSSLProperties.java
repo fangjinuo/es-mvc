@@ -8,7 +8,6 @@ public class SearchGuardSSLProperties {
     private String pemkeyFilepath;
     private String pemkeyPassword;
     private String pemtrustedcasFilepath;
-    private List<String> SSLHostnameVerifiers;
 
     public String getPemcertFilepath() {
         return pemcertFilepath;
@@ -40,14 +39,6 @@ public class SearchGuardSSLProperties {
 
     public void setPemtrustedcasFilepath(String pemtrustedcasFilepath) {
         this.pemtrustedcasFilepath = pemtrustedcasFilepath;
-    }
-
-    public List<String> getSSLHostnameVerifiers() {
-        return SSLHostnameVerifiers;
-    }
-
-    public void setSSLHostnameVerifiers(List<String> SSLHostnameVerifiers) {
-        this.SSLHostnameVerifiers = SSLHostnameVerifiers;
     }
 
     public boolean isEnable() {
