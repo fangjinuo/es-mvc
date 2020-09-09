@@ -3,7 +3,6 @@ package com.jn.esmvc.service.security.searchguard;
 import com.jn.esmvc.service.config.rest.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.security.CustomHostnameVerifier;
 import com.jn.esmvc.service.security.searchguard.propertis.SearchGuardSSLProperties;
-import com.jn.esmvc.service.util.SSLContextBuildUtils;
 import com.jn.langx.io.resource.ClassPathResource;
 import com.jn.langx.io.resource.FileResource;
 import com.jn.langx.io.resource.Resources;
@@ -27,22 +26,22 @@ public class SearchGuardRestClientBuilderCustomizer extends DefaultRestClientBui
     @Override
     public void customize(HttpAsyncClientBuilder builder) {
         super.customize(builder);
-        if(searchGuardSSLProperties != null && searchGuardSSLProperties.isEnable()){
+        if(searchGuardSSLProperties != null && searchGuardSSLProperties.isEnabled()){
             builder.setSSLHostnameVerifier(new CustomHostnameVerifier(searchGuardSSLProperties));
             builder.setSSLContext(build(searchGuardSSLProperties));
         }
     }
 
     static SSLContext build(SearchGuardSSLProperties searchGuardSSLProperties){
-        String pemkeyFilepath = searchGuardSSLProperties.getPemkeyFilepath();
-        String pemcertFilepath = searchGuardSSLProperties.getPemcertFilepath();
-        String pemkeyPassword = searchGuardSSLProperties.getPemkeyPassword();
-        String pemtrustedcasFilepath = searchGuardSSLProperties.getPemtrustedcasFilepath();
+        String pemkeyFilepath = searchGuardSSLProperties.getPemKeyFilepath();
+        String pemcertFilepath = searchGuardSSLProperties.getPemCertFilepath();
+        String pemkeyPassword = searchGuardSSLProperties.getPemKeyPassword();
+        String pemtrustedcasFilepath = searchGuardSSLProperties.getPemTrustedCAsFilepath();
         pemkeyFilepath = getContent(pemkeyFilepath);
         pemcertFilepath = getContent(pemcertFilepath);
         pemtrustedcasFilepath = getContent(pemtrustedcasFilepath);
         try {
-            return SSLContextBuildUtils.buildSSLContext(pemcertFilepath, pemkeyFilepath, pemkeyPassword, pemtrustedcasFilepath);
+            return SgSSLContexts.buildSSLContext(pemcertFilepath, pemkeyFilepath, pemkeyPassword, pemtrustedcasFilepath);
         } catch (Exception e) {
             logger.error("build SSLContext error:", e);
             throw new RuntimeException(e);

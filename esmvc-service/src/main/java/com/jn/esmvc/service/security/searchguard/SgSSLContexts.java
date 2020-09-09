@@ -1,5 +1,6 @@
-package com.jn.esmvc.service.util;
+package com.jn.esmvc.service.security.searchguard;
 
+import com.jn.esmvc.service.security.PemReader;
 import com.jn.langx.security.PKIs;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
@@ -19,7 +20,7 @@ import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 
-public class SSLContextBuildUtils {
+public class SgSSLContexts {
 
     static final String ALIAS = "key";
     public static final char[] EMPTY_CHARS = new char[0];
@@ -52,17 +53,12 @@ public class SSLContextBuildUtils {
         }
 
         SSLContext context = SSLContext.getInstance("TLS");
-        context.init(trustManagerFactory == null ? null : keyManagerFactory.getKeyManagers(),
-                trustManagerFactory == null ? null : trustManagerFactory.getTrustManagers(),null);
+        context.init(keyManagerFactory == null ? null : keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(),null);
         return context;
     }
 
 
-    public static KeyManagerFactory buildKeyManagerFactory(X509Certificate[] certChainFile,
-                                                    String keyAlgorithm, PrivateKey key,
-                                                    String keyPassword, KeyManagerFactory kmf)
-            throws KeyStoreException, NoSuchAlgorithmException, IOException,
-            CertificateException, UnrecoverableKeyException {
+    public static KeyManagerFactory buildKeyManagerFactory(X509Certificate[] certChainFile, String keyAlgorithm, PrivateKey key, String keyPassword, KeyManagerFactory kmf) throws KeyStoreException, NoSuchAlgorithmException, IOException, CertificateException, UnrecoverableKeyException {
         char[] keyPasswordChars = keyStorePassword(keyPassword);
         KeyStore ks = buildKeyStore(certChainFile, key, keyPasswordChars);
         return buildKeyManagerFactory(ks, keyAlgorithm, keyPasswordChars, kmf);
@@ -76,10 +72,7 @@ public class SSLContextBuildUtils {
         ks.setKeyEntry(ALIAS, key, keyPasswordChars, certChain);
         return ks;
     }
-    static KeyManagerFactory buildKeyManagerFactory(KeyStore ks,
-                                                    String keyAlgorithm,
-                                                    char[] keyPasswordChars, KeyManagerFactory kmf)
-            throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
+    static KeyManagerFactory buildKeyManagerFactory(KeyStore ks, String keyAlgorithm, char[] keyPasswordChars, KeyManagerFactory kmf) throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
         // Set up key manager factory to use our key store
         if (kmf == null) {
             kmf = KeyManagerFactory.getInstance(keyAlgorithm);
@@ -107,8 +100,7 @@ public class SSLContextBuildUtils {
         SecretKey pbeKey = keyFactory.generateSecret(pbeKeySpec);
         Cipher cipher = Cipher.getInstance(encryptedPrivateKeyInfo.getAlgName());
         cipher.init(2, pbeKey, encryptedPrivateKeyInfo.getAlgParameters());
-        PKCS8EncodedKeySpec keySpec = encryptedPrivateKeyInfo.getKeySpec(cipher);
-        return keySpec;
+        return encryptedPrivateKeyInfo.getKeySpec(cipher);
     }
 
     private static PrivateKey getPrivateKeyFromByteBuffer(ByteBuf encodedKeyBuf, String keyPassword)
@@ -123,10 +115,7 @@ public class SSLContextBuildUtils {
         return  PKIs.createPrivateKey("RSA", null, encodedKeySpec);
     }
 
-    static PrivateKey toPrivateKey(File keyFile, String keyPassword) throws NoSuchAlgorithmException,
-            NoSuchPaddingException, InvalidKeySpecException,
-            InvalidAlgorithmParameterException,
-            KeyException, IOException {
+    static PrivateKey toPrivateKey(File keyFile, String keyPassword) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, InvalidAlgorithmParameterException, KeyException, IOException {
         if (keyFile == null) {
             return null;
         }

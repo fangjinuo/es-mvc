@@ -1,51 +1,49 @@
 package com.jn.esmvc.service.security.searchguard.propertis;
 
-import java.util.List;
-
 public class SearchGuardSSLProperties {
-    private boolean enable;
-    private String pemcertFilepath;
-    private String pemkeyFilepath;
-    private String pemkeyPassword;
-    private String pemtrustedcasFilepath;
+    private boolean enabled;
+    private String pemCertFilepath;
+    private String pemKeyFilepath;
+    private String pemKeyPassword;
+    private String pemTrustedCAsFilepath;
 
-    public String getPemcertFilepath() {
-        return pemcertFilepath;
+    public String getPemCertFilepath() {
+        return pemCertFilepath;
     }
 
-    public void setPemcertFilepath(String pemcertFilepath) {
-        this.pemcertFilepath = pemcertFilepath;
+    public void setPemCertFilepath(String pemCertFilepath) {
+        this.pemCertFilepath = pemCertFilepath;
     }
 
-    public String getPemkeyFilepath() {
-        return pemkeyFilepath;
+    public String getPemKeyFilepath() {
+        return pemKeyFilepath;
     }
 
-    public void setPemkeyFilepath(String pemkeyFilepath) {
-        this.pemkeyFilepath = pemkeyFilepath;
+    public void setPemKeyFilepath(String pemKeyFilepath) {
+        this.pemKeyFilepath = pemKeyFilepath;
     }
 
-    public String getPemkeyPassword() {
-        return pemkeyPassword;
+    public String getPemKeyPassword() {
+        return pemKeyPassword;
     }
 
-    public void setPemkeyPassword(String pemkeyPassword) {
-        this.pemkeyPassword = pemkeyPassword;
+    public void setPemKeyPassword(String pemKeyPassword) {
+        this.pemKeyPassword = pemKeyPassword;
     }
 
-    public String getPemtrustedcasFilepath() {
-        return pemtrustedcasFilepath;
+    public String getPemTrustedCAsFilepath() {
+        return pemTrustedCAsFilepath;
     }
 
-    public void setPemtrustedcasFilepath(String pemtrustedcasFilepath) {
-        this.pemtrustedcasFilepath = pemtrustedcasFilepath;
+    public void setPemTrustedCAsFilepath(String pemTrustedCAsFilepath) {
+        this.pemTrustedCAsFilepath = pemTrustedCAsFilepath;
     }
 
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

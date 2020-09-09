@@ -14,14 +14,12 @@
  * under the License.
  */
 
-package com.jn.esmvc.service.util;
+package com.jn.esmvc.service.security;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
 import io.netty.util.CharsetUtil;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.InternalLoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +35,7 @@ import java.util.regex.Pattern;
 /**
  * Reads a PEM file and converts it into a list of DERs so that they are imported into a {@link KeyStore} easily.
  */
-final class PemReader {
+public final class PemReader {
 
     private static final Logger logger = LoggerFactory.getLogger(PemReader.class);
 
@@ -52,7 +50,7 @@ final class PemReader {
                     "-+END\\s+.*PRIVATE\\s+KEY[^-]*-+",            // Footer
             Pattern.CASE_INSENSITIVE);
 
-    static ByteBuf[] readCertificates(File file) throws CertificateException {
+    public static ByteBuf[] readCertificates(File file) throws CertificateException {
         try {
             InputStream in = new FileInputStream(file);
 
@@ -97,7 +95,7 @@ final class PemReader {
         return certs.toArray(new ByteBuf[0]);
     }
 
-    static ByteBuf readPrivateKey(File file) throws KeyException {
+    public static ByteBuf readPrivateKey(File file) throws KeyException {
         try {
             InputStream in = new FileInputStream(file);
 
