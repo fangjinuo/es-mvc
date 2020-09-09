@@ -1,9 +1,9 @@
-package com.jn.esmvc.service.config.rest;
+package com.jn.esmvc.service.security.searchguard.propertis;
 
 import java.util.List;
 
-public class HttpsClientProperties {
-
+public class SearchGuardSSLProperties {
+    private boolean enable;
     private String pemcertFilepath;
     private String pemkeyFilepath;
     private String pemkeyPassword;
@@ -48,5 +48,13 @@ public class HttpsClientProperties {
 
     public void setSSLHostnameVerifiers(List<String> SSLHostnameVerifiers) {
         this.SSLHostnameVerifiers = SSLHostnameVerifiers;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

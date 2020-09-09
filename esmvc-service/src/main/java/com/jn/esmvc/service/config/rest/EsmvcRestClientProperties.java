@@ -10,7 +10,7 @@ import java.util.List;
 public class EsmvcRestClientProperties extends AbstractClientProperties {
     public static final List<String> supportedProtocols = Collects.newArrayList("http", "https");
     private static final Logger logger = LoggerFactory.getLogger(EsmvcRestClientProperties.class);
-    private HttpsClientProperties httpsClientProperties;
+
 
     public EsmvcRestClientProperties(){
         setProtocol("http");
@@ -24,11 +24,4 @@ public class EsmvcRestClientProperties extends AbstractClientProperties {
         super.setProtocol(protocol);
     }
 
-    public HttpsClientProperties getHttpsClientProperties() {
-        return httpsClientProperties;
-    }
-
-    public void setHttpsClientProperties(HttpsClientProperties httpsClientProperties) {
-        this.httpsClientProperties = httpsClientProperties;
-    }
 }

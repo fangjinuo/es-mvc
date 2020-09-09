@@ -1,25 +1,24 @@
 package com.jn.esmvc.service.security;
 
-import com.jn.esmvc.service.config.rest.HttpsClientProperties;
-import com.jn.langx.util.Emptys;
+import com.jn.esmvc.service.security.searchguard.propertis.SearchGuardSSLProperties;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
-import java.util.List;
 
 public class CustomHostnameVerifier implements HostnameVerifier {
-        private final HttpsClientProperties httpsClientProperties;
+        private final SearchGuardSSLProperties searchGuardSSLProperties;
 
-        public CustomHostnameVerifier(HttpsClientProperties httpsClientProperties) {
-            this.httpsClientProperties = httpsClientProperties;
+        public CustomHostnameVerifier(SearchGuardSSLProperties searchGuardSSLProperties) {
+            this.searchGuardSSLProperties = searchGuardSSLProperties;
         }
 
         @Override
         public boolean verify(String hostNameOrIp, SSLSession sslSession) {
-            List<String> sslHostnameVerifiers = httpsClientProperties.getSSLHostnameVerifiers();
+            return true;
+            /* List<String> sslHostnameVerifiers = searchGuardSSLProperties.getSSLHostnameVerifiers();
             if(Emptys.isEmpty(sslHostnameVerifiers)){
                 return false;
             }
-            return sslHostnameVerifiers.contains(hostNameOrIp);
+            return sslHostnameVerifiers.contains(hostNameOrIp);*/
         }
     }

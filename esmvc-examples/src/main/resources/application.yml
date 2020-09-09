@@ -6,7 +6,8 @@ esmvc:
       name: testRest
       nodes: 192.168.1.64:9200
       protocol: https
-      httpsClientProperties:
+      search-guard-ssl:
+        enable: true
         pemcertFilepath: classpath:ssl/common client.pem
         pemkeyFilepath: classpath:ssl/common client.key
         pemkeyPassword: LmqZy28M3lHBfcJuD9tL
@@ -26,10 +27,10 @@ esmvc:
         "[client.transport.nodes_sampler_interval]": 60s
         "[client.transport.ignore_cluster_name]": false
         "[cluster.name]": my-application # 当集群名称不忽略时，该名称必须是存在的集群名称
-        "[searchguard.ssl.transport.pemkey_filepath]": ${esmvc.rest.primary.httpsClientProperties.pemkeyFilepath} #classpath:ssl/common client.key
-        "[searchguard.ssl.transport.pemcert_filepath]": ${esmvc.rest.primary.httpsClientProperties.pemcertFilepath} #classpath:ssl/common client.pem
-        "[searchguard.ssl.transport.pemtrustedcas_filepath]": ${esmvc.rest.primary.httpsClientProperties.pemtrustedcasFilepath} #classpath:ssl/root-ca.pem
-        "[searchguard.ssl.transport.pemkey_password]": ${esmvc.rest.primary.httpsClientProperties.pemkeyPassword} #LmqZy28M3lHBfcJuD9tL
+        "[searchguard.ssl.transport.pemkey_filepath]": ${esmvc.rest.primary.search-guard-ssl.pemkeyFilepath} #classpath:ssl/common client.key
+        "[searchguard.ssl.transport.pemcert_filepath]": ${esmvc.rest.primary.search-guard-ssl.pemcertFilepath} #classpath:ssl/common client.pem
+        "[searchguard.ssl.transport.pemtrustedcas_filepath]": ${esmvc.rest.primary.search-guard-ssl.pemtrustedcasFilepath} #classpath:ssl/root-ca.pem
+        "[searchguard.ssl.transport.pemkey_password]": ${esmvc.rest.primary.search-guard-ssl.pemkeyPassword} #LmqZy28M3lHBfcJuD9tL
         "[searchguard.ssl.transport.enforce_hostname_verification]": false
 swagger:
   base-package: com.jn.esmvc.examples

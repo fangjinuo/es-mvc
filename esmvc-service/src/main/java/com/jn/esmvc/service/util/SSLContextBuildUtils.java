@@ -19,7 +19,7 @@ import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 
-public class CustomSSLContext {
+public class SSLContextBuildUtils {
 
     static final String ALIAS = "key";
     public static final char[] EMPTY_CHARS = new char[0];
