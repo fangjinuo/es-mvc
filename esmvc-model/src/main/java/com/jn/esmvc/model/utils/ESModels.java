@@ -8,7 +8,7 @@ import com.jn.esmvc.model.AbstractESModel;
 import com.jn.langx.util.Preconditions;
 
 public class ESModels {
-    private static final ESModelIdGenerator defaultModelIdGenerator = new ESModelIdGenerator();
+    public static final ESModelIdGenerator defaultModelIdGenerator = new ESModelIdGenerator();
     public static String getIndex(Class<? extends AbstractESModel> modelClass) {
         try {
             Index indexAnnotation = modelClass.getAnnotation(Index.class);
