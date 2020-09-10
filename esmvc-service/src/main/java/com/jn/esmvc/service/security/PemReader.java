@@ -16,14 +16,13 @@
 
 package com.jn.esmvc.service.security;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.handler.codec.base64.Base64;
+import com.jn.langx.util.io.Charsets;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 import java.security.KeyException;
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
@@ -50,7 +49,7 @@ public final class PemReader {
                     "-+END\\s+.*PRIVATE\\s+KEY[^-]*-+",            // Footer
             Pattern.CASE_INSENSITIVE);
 
-    public static ByteBuf[] readCertificates(File file) throws CertificateException {
+    public static ByteBuffer[] readCertificates(File file) throws CertificateException {
         try {
             InputStream in = new FileInputStream(file);
 
@@ -64,7 +63,7 @@ public final class PemReader {
         }
     }
 
-    static ByteBuf[] readCertificates(InputStream in) throws CertificateException {
+    static ByteBuffer[] readCertificates(InputStream in) throws CertificateException {
         String content;
         try {
             content = readContent(in);
@@ -72,19 +71,16 @@ public final class PemReader {
             throw new CertificateException("failed to read certificate input stream", e);
         }
 
-        List<ByteBuf> certs = new ArrayList<ByteBuf>();
+        List<ByteBuffer> certs = new ArrayList<ByteBuffer>();
         Matcher m = CERT_PATTERN.matcher(content);
         int start = 0;
-        for (;;) {
+        for (; ; ) {
             if (!m.find(start)) {
                 break;
             }
 
-            ByteBuf base64 = Unpooled.copiedBuffer(m.group(1), CharsetUtil.US_ASCII);
-            ByteBuf der = Base64.decode(base64);
-            base64.release();
-            certs.add(der);
-
+            byte[] base64Bytes = m.group(1).getBytes(Charsets.US_ASCII);
+            certs.add(ByteBuffer.wrap(com.jn.langx.codec.base64.Base64.decodeBase64(base64Bytes)));
             start = m.end();
         }
 
@@ -92,10 +88,10 @@ public final class PemReader {
             throw new CertificateException("found no certificates in input stream");
         }
 
-        return certs.toArray(new ByteBuf[0]);
+        return certs.toArray(new ByteBuffer[0]);
     }
 
-    public static ByteBuf readPrivateKey(File file) throws KeyException {
+    public static ByteBuffer readPrivateKey(File file) throws KeyException {
         try {
             InputStream in = new FileInputStream(file);
 
@@ -109,7 +105,7 @@ public final class PemReader {
         }
     }
 
-    static ByteBuf readPrivateKey(InputStream in) throws KeyException {
+    static ByteBuffer readPrivateKey(InputStream in) throws KeyException {
         String content;
         try {
             content = readContent(in);
@@ -122,18 +118,15 @@ public final class PemReader {
             throw new KeyException("could not find a PKCS #8 private key in input stream" +
                     " (see http://netty.io/wiki/sslcontextbuilder-and-private-key.html for more information)");
         }
-
-        ByteBuf base64 = Unpooled.copiedBuffer(m.group(1), CharsetUtil.US_ASCII);
-        ByteBuf der = Base64.decode(base64);
-        base64.release();
-        return der;
+        byte[] base64Bytes = m.group(1).getBytes(Charsets.US_ASCII);
+        return ByteBuffer.wrap(com.jn.langx.codec.base64.Base64.decodeBase64(base64Bytes));
     }
 
     private static String readContent(InputStream in) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
             byte[] buf = new byte[8192];
-            for (;;) {
+            for (; ; ) {
                 int ret = in.read(buf);
                 if (ret < 0) {
                     break;
@@ -162,5 +155,6 @@ public final class PemReader {
         }
     }
 
-    private PemReader() { }
+    private PemReader() {
+    }
 }

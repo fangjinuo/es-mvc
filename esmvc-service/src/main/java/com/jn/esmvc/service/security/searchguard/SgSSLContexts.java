@@ -2,17 +2,17 @@ package com.jn.esmvc.service.security.searchguard;
 
 import com.jn.esmvc.service.security.PemReader;
 import com.jn.langx.security.PKIs;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufInputStream;
 
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -36,13 +36,13 @@ public class SgSSLContexts {
         {
             X509Certificate[] rootX509Certificatess = toX509Certificates(rootPemFile);
             int i = 1;
-            for (X509Certificate root: rootX509Certificatess) {
+            for (X509Certificate root : rootX509Certificatess) {
                 String alias = Integer.toString(i);
                 ks.setCertificateEntry(alias, root);
                 i++;
             }
         }
-        TrustManagerFactory trustManagerFactory  = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(ks);
         {
             PrivateKey privateKey = toPrivateKey(clientKeyFile, password);
@@ -53,7 +53,7 @@ public class SgSSLContexts {
         }
 
         SSLContext context = SSLContext.getInstance("TLS");
-        context.init(keyManagerFactory == null ? null : keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(),null);
+        context.init(keyManagerFactory == null ? null : keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), null);
         return context;
     }
 
@@ -72,6 +72,7 @@ public class SgSSLContexts {
         ks.setKeyEntry(ALIAS, key, keyPasswordChars, certChain);
         return ks;
     }
+
     static KeyManagerFactory buildKeyManagerFactory(KeyStore ks, String keyAlgorithm, char[] keyPasswordChars, KeyManagerFactory kmf) throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableKeyException {
         // Set up key manager factory to use our key store
         if (kmf == null) {
@@ -103,16 +104,16 @@ public class SgSSLContexts {
         return encryptedPrivateKeyInfo.getKeySpec(cipher);
     }
 
-    private static PrivateKey getPrivateKeyFromByteBuffer(ByteBuf encodedKeyBuf, String keyPassword)
+    private static PrivateKey getPrivateKeyFromByteBuffer(ByteBuffer encodedKeyBuf, String keyPassword)
             throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException,
             InvalidAlgorithmParameterException, KeyException, IOException {
 
-        byte[] encodedKey = new byte[encodedKeyBuf.readableBytes()];
-        encodedKeyBuf.readBytes(encodedKey).release();
+        byte[] encodedKey = new byte[encodedKeyBuf.remaining()];
+        encodedKeyBuf.get(encodedKey).clear();
 
         PKCS8EncodedKeySpec encodedKeySpec = generateKeySpec(
                 keyPassword == null ? null : keyPassword.toCharArray(), encodedKey);
-        return  PKIs.createPrivateKey("RSA", null, encodedKeySpec);
+        return PKIs.createPrivateKey("RSA", null, encodedKeySpec);
     }
 
     static PrivateKey toPrivateKey(File keyFile, String keyPassword) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, InvalidAlgorithmParameterException, KeyException, IOException {
@@ -129,13 +130,13 @@ public class SgSSLContexts {
         return getCertificatesFromBuffers(PemReader.readCertificates(file));
     }
 
-    static X509Certificate[] getCertificatesFromBuffers(ByteBuf[] certs) throws CertificateException {
+    static X509Certificate[] getCertificatesFromBuffers(ByteBuffer[] certs) throws CertificateException {
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
         X509Certificate[] x509Certs = new X509Certificate[certs.length];
 
         try {
             for (int i = 0; i < certs.length; i++) {
-                InputStream is = new ByteBufInputStream(certs[i], false);
+                InputStream is = new ByteArrayInputStream(certs[i].array());
                 try {
                     x509Certs[i] = (X509Certificate) cf.generateCertificate(is);
                 } finally {
@@ -148,8 +149,8 @@ public class SgSSLContexts {
                 }
             }
         } finally {
-            for (ByteBuf buf: certs) {
-                buf.release();
+            for (ByteBuffer buf : certs) {
+                buf.clear();
             }
         }
         return x509Certs;
