@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 @AutoConfigureAfter(ScrollContextCacheAutoConfiguration.class)
-@ConditionalOnProperty(name = "esmvc.tcp.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "esmvc.tcp.enabled", havingValue = "true", matchIfMissing = false)
 @ConditionalOnMissingBean(name = "esmvcTransportClientAutoConfiguration")
 @ConditionalOnClass(PreBuiltTransportClient.class)
 @Configuration("esmvcTransportClientAutoConfiguration")
