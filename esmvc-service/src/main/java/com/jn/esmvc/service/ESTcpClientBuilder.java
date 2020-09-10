@@ -69,7 +69,7 @@ public class ESTcpClientBuilder implements Builder<TransportClient> {
                             ClassPathResource classPathResource = Resources.loadClassPathResource((String) value);
                             builder.put(key, classPathResource.getAbsolutePath());
                         } else if (((String) value).startsWith("file:")) {
-                            FileResource fileResource = Resources.loadFileResource((File) value);
+                            FileResource fileResource = Resources.loadFileResource((String) value);
                             builder.put(key, fileResource.getAbsolutePath());
                         } else {
                             builder.put(key, (String) value);
