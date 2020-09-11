@@ -19,7 +19,6 @@ import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
-import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.List;
 
