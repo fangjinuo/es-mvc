@@ -10,8 +10,8 @@ public abstract class AbstractClientProperties {
     private String username;
     private String password;
 
-    private int connectTimeout = 5; // seconds
-    private int readTimeout = 120; // seconds
+    private int connectTimeout = 5; // mills
+    private int readTimeout = 120; // mills
 
     private Map<String, Object> props;
 

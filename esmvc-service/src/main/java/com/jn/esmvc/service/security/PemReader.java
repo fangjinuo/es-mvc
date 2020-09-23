@@ -17,7 +17,6 @@
 package com.jn.esmvc.service.security;
 
 import com.jn.langx.util.io.Charsets;
-import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -133,7 +132,7 @@ public final class PemReader {
                 }
                 out.write(buf, 0, ret);
             }
-            return out.toString(CharsetUtil.US_ASCII.name());
+            return out.toString(Charsets.US_ASCII.name());
         } finally {
             safeClose(out);
         }
