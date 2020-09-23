@@ -36,11 +36,6 @@
             <version>${elasticsearch.version}</version>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.floragunn</groupId>
-            <artifactId>search-guard-ssl</artifactId>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
 </project>
