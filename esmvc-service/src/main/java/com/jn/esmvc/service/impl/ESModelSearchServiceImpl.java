@@ -12,6 +12,7 @@ import com.jn.esmvc.service.util.ESRequests;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.Preconditions;
 import com.jn.langx.util.collection.Collects;
+import com.jn.langx.util.function.Consumer;
 import com.jn.langx.util.pagination.PagingRequest;
 import com.jn.langx.util.pagination.PagingResult;
 import org.elasticsearch.action.search.*;
@@ -255,17 +256,20 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
             request.add(r);
         }
         MultiSearchResponse multiSearchResponse = null;
-        Set<MODEL> list = new HashSet<>();
+        final Set<MODEL> list = new HashSet<>();
 
         try {
             multiSearchResponse = client.msearch(request, null);
-            multiSearchResponse.forEach(item -> {
-                if (!item.isFailure()) {
-                    SearchResponse response = item.getResponse();
-                    SearchHits searchHits = response.getHits();
-                    for (SearchHit hit : searchHits.getHits()) {
-                        if (hit.hasSource()) {
-                            list.add(asModel(hit, json, modelClass));
+            Collects.forEach(multiSearchResponse, new Consumer<MultiSearchResponse.Item>() {
+                @Override
+                public void accept(MultiSearchResponse.Item item) {
+                    if (!item.isFailure()) {
+                        SearchResponse response = item.getResponse();
+                        SearchHits searchHits = response.getHits();
+                        for (SearchHit hit : searchHits.getHits()) {
+                            if (hit.hasSource()) {
+                                list.add(asModel(hit, json, modelClass));
+                            }
                         }
                     }
                 }

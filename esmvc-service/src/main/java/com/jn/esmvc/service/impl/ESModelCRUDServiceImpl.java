@@ -5,14 +5,13 @@ import com.jn.esmvc.model.utils.ESModels;
 import com.jn.esmvc.service.AbstractESModelService;
 import com.jn.esmvc.service.ESModelCRUDService;
 import com.jn.langx.util.Preconditions;
+import com.jn.langx.util.collection.Collects;
+import com.jn.langx.util.function.Consumer;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.get.MultiGetRequest;
-import org.elasticsearch.action.get.MultiGetResponse;
+import org.elasticsearch.action.get.*;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.support.WriteRequest;
@@ -196,22 +195,31 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     @Override
     public List<MODEL> getByIds(List<String> ids) throws IOException {
         Preconditions.checkNotNull(ids);
-        String index = ESModels.getIndex(modelClass);
-        String type = ESModels.getType(modelClass);
-        MultiGetRequest request = new MultiGetRequest();
-        ids.forEach(id -> request.add(index, type, id));
+        final String index = ESModels.getIndex(modelClass);
+        final String type = ESModels.getType(modelClass);
+        final MultiGetRequest request = new MultiGetRequest();
+        Collects.forEach(ids, new Consumer<String>() {
+            @Override
+            public void accept(String id) {
+                request.add(index, type, id);
+            }
+        });
 
-        List<MODEL> list = new ArrayList<>();
+        final List<MODEL> list = new ArrayList<>();
         MultiGetResponse response;
         try {
             response = client.mget(request, null);
-            response.forEach(multiGetItemResponse -> {
-                if (!multiGetItemResponse.isFailed()) {
-                    if (multiGetItemResponse.getResponse().isExists() && !multiGetItemResponse.getResponse().isSourceEmpty()) {
-                        list.add(asModel(multiGetItemResponse.getResponse(), json, modelClass));
+            Collects.forEach(response, new Consumer<MultiGetItemResponse>() {
+                @Override
+                public void accept(MultiGetItemResponse multiGetItemResponse) {
+                    if (!multiGetItemResponse.isFailed()) {
+                        if (multiGetItemResponse.getResponse().isExists() && !multiGetItemResponse.getResponse().isSourceEmpty()) {
+                            list.add(asModel(multiGetItemResponse.getResponse(), json, modelClass));
+                        }
                     }
                 }
             });
+
         } catch (IOException ex) {
             logRequestWhenFail(logger, request, ex);
             throw ex;
@@ -224,20 +232,22 @@ public class ESModelCRUDServiceImpl<MODEL extends AbstractESModel> extends Abstr
     public void bulkMerge(List<MODEL> models) throws IOException {
         Preconditions.checkNotNull(models);
 
-        BulkRequest request = new BulkRequest();
-
-        models.forEach(model -> {
-            String index = ESModels.getIndex(model.getClass());
-            String type = ESModels.getType(model.getClass());
-            String id = ESModels.getId(model);
-            UpdateRequest mergeRequest = new UpdateRequest();
-            mergeRequest.index(index)
-                    .type(type)
-                    .id(id)
-                    .doc(json.toJson(model), XContentType.JSON)
-                    .docAsUpsert(true)
-                    .fetchSource(false);
-            request.add(mergeRequest);
+        final BulkRequest request = new BulkRequest();
+        Collects.forEach(models, new Consumer<MODEL>() {
+            @Override
+            public void accept(MODEL model) {
+                String index = ESModels.getIndex(model.getClass());
+                String type = ESModels.getType(model.getClass());
+                String id = ESModels.getId(model);
+                UpdateRequest mergeRequest = new UpdateRequest();
+                mergeRequest.index(index)
+                        .type(type)
+                        .id(id)
+                        .doc(json.toJson(model), XContentType.JSON)
+                        .docAsUpsert(true)
+                        .fetchSource(false);
+                request.add(mergeRequest);
+            }
         });
 
         BulkResponse bulkResponse;
