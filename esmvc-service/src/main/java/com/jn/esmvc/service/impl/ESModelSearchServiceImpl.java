@@ -15,6 +15,7 @@ import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.function.Consumer;
 import com.jn.langx.util.pagination.PagingRequest;
 import com.jn.langx.util.pagination.PagingResult;
+import com.jn.langx.util.reflect.Reflects;
 import org.elasticsearch.action.search.*;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
@@ -185,6 +186,13 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
             pr.setPageNo(pageNo);
             ES_PAGING.set(pr);
         }
+
+        if (searchBodyBuilder.from() + searchBodyBuilder.size() > 10000) {
+            Reflects.setDeclaredFieldValue(searchBodyBuilder, "from", -1, true, false);
+            Reflects.setDeclaredFieldValue(searchBodyBuilder, "size", -1, true, false);
+            useFromSizePagation = false;
+        }
+
         ScrollContext<MODEL> scrollContext = (ScrollContext<MODEL>) searchScrollCache.get(queryBuilder);
         searchBodyBuilder.query(queryBuilder);
 
