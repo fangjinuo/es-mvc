@@ -5,6 +5,7 @@ import com.jn.esmvc.service.ESRestClientBuilder;
 import com.jn.esmvc.service.config.rest.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;
 import com.jn.esmvc.service.config.rest.RestClientBuilderCustomizer;
+import com.jn.langx.util.Emptys;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @AutoConfigureAfter(ScrollContextCacheAutoConfiguration.class)
@@ -45,11 +47,13 @@ public class EsmvcRestClientAutoConfiguration {
     @Autowired
     public ESRestClient esRestClient(
             @Qualifier("esmvcRestClientProperties") EsmvcRestClientProperties esmvcProperties,
-            ObjectProvider<RestClientBuilderCustomizer> builderCustomizers) {
-        return new ESRestClientBuilder()
-                .properties(esmvcProperties)
-                .restClientBuilderCustomizers(builderCustomizers.stream().collect(Collectors.toList()))
-                .build();
+            ObjectProvider<List<RestClientBuilderCustomizer>> builderCustomizers) {
+        ESRestClientBuilder builder = new ESRestClientBuilder().properties(esmvcProperties);
+        List<RestClientBuilderCustomizer> customizers = builderCustomizers.getIfAvailable();
+        if(Emptys.isNotEmpty(customizers)){
+            builder.restClientBuilderCustomizers(customizers);
+        }
+        return builder.build();
     }
 
 
