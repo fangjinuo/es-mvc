@@ -163,14 +163,14 @@ public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOpt
     }
 
     @Override
-    public TermVectorsResponse termvectors(TermVectorsRequest request, RequestOptions options) throws IOException {
+    public TermVectorsResponse termVectors(TermVectorsRequest request, RequestOptions options) throws IOException {
         RestTermVectorRequestAdapter requestAdapter = new RestTermVectorRequestAdapter();
         RestTermVectorsResponseAdapter responseAdapter = new RestTermVectorsResponseAdapter();
         return responseAdapter.apply(get().termvectors(requestAdapter.apply(request), mergeRequestOptions(getGlobalOptions(), options)));
     }
 
     @Override
-    public void termvectorsAsync(TermVectorsRequest request, RequestOptions options, ActionListener<TermVectorsResponse> listener) {
+    public void termVectorsAsync(TermVectorsRequest request, RequestOptions options, ActionListener<TermVectorsResponse> listener) {
         RestTermVectorRequestAdapter requestAdapter = new RestTermVectorRequestAdapter();
         RestTermVectorsResponseAdapter responseAdapter = new RestTermVectorsResponseAdapter();
         get().termvectorsAsync(requestAdapter.apply(request), options, new DelegatableActionListener<>(listener, responseAdapter));

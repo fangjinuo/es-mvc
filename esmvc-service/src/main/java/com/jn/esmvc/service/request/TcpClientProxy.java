@@ -148,14 +148,14 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
     }
 
     @Override
-    public TermVectorsResponse termvectors(TermVectorsRequest request, Object o) throws IOException {
+    public TermVectorsResponse termVectors(TermVectorsRequest request, Object o) throws IOException {
         TcpTermVectorsRequestAdapter requestAdapter = new TcpTermVectorsRequestAdapter();
         TcpTermVectorsResponseAdapter responseAdapter = new TcpTermVectorsResponseAdapter();
         return responseAdapter.apply(get().termVectors(requestAdapter.apply(request)).actionGet());
     }
 
     @Override
-    public void termvectorsAsync(TermVectorsRequest request, Object o, ActionListener<TermVectorsResponse> listener) {
+    public void termVectorsAsync(TermVectorsRequest request, Object o, ActionListener<TermVectorsResponse> listener) {
         TcpTermVectorsRequestAdapter requestAdapter = new TcpTermVectorsRequestAdapter();
         TcpTermVectorsResponseAdapter responseAdapter = new TcpTermVectorsResponseAdapter();
         get().termVectors(requestAdapter.apply(request), new DelegatableActionListener<>(listener, responseAdapter));

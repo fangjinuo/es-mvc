@@ -224,8 +224,8 @@ public abstract class ClientProxy<CLIENT, OPTIONS> extends Holder<CLIENT> {
     public abstract void msearch(MultiSearchRequest request, OPTIONS options, ActionListener<MultiSearchResponse> listener);
 
 
-    public abstract TermVectorsResponse termvectors(TermVectorsRequest request, OPTIONS options) throws IOException;
-    public abstract void termvectorsAsync(TermVectorsRequest request, OPTIONS options, ActionListener<TermVectorsResponse> listener);
+    public abstract TermVectorsResponse termVectors(TermVectorsRequest request, OPTIONS options) throws IOException;
+    public abstract void termVectorsAsync(TermVectorsRequest request, OPTIONS options, ActionListener<TermVectorsResponse> listener);
 
 
     public abstract CountResponse count(CountRequest request, OPTIONS options) throws IOException;
