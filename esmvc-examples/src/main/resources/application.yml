@@ -7,7 +7,7 @@ esmvc:
       nodes: 192.168.1.64:9200
       protocol: https
       search-guard-ssl:
-        enabled: true
+        enabled: false
         pem-key-filepath: classpath:ssl/searchguard/common client.key
         pem-cert-filepath: classpath:ssl/searchguard/common client.pem
         pem-key-password: LmqZy28M3lHBfcJuD9tL

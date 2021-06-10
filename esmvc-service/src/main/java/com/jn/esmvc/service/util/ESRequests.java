@@ -6,6 +6,8 @@ import com.jn.esmvc.service.ClientProxy;
 import com.jn.esmvc.service.ESRestClient;
 import com.jn.langx.util.Preconditions;
 import com.jn.langx.util.pagination.PagingRequest;
+import com.jn.langx.util.reflect.Reflects;
+import com.jn.langx.util.reflect.type.Types;
 import com.jn.langx.util.struct.ThreadLocalHolder;
 import org.elasticsearch.action.ActionRequest;
 import org.elasticsearch.action.get.GetResponse;
@@ -13,6 +15,7 @@ import org.elasticsearch.action.search.ClearScrollRequest;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.index.get.GetResult;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,4 +100,14 @@ public class ESRequests {
         return null;
     }
 
+    public static long getSearchTotalHits(SearchHits searchHits) {
+        Object obj = searchHits.getTotalHits();
+        if (obj == null) {
+            return searchHits.getHits().length;
+        }
+        if (obj instanceof Long || Types.isPrimitive(obj.getClass())) {
+            return (long) obj;
+        }
+        return Reflects.getDeclaredFieldValue(obj, "value", true, true);
+    }
 }

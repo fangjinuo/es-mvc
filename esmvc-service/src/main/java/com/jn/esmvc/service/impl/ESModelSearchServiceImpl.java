@@ -74,7 +74,8 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
     protected List<MODEL> extractSearchResults(SearchResponse response) {
         SearchHits searchHits = response.getHits();
         List<MODEL> models = new LinkedList<>();
-        if (searchHits.getTotalHits() > 0) {
+        long totalHits = ESRequests.getSearchTotalHits(searchHits);
+        if (totalHits > 0) {
             for (SearchHit hit : searchHits.getHits()) {
                 if (hit.hasSource()) {
                     models.add(asModel(hit, json, modelClass));
@@ -84,12 +85,11 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
 
         PagingRequest pr = ES_PAGING.get();
         if (pr != null) {
-            SearchHits hits = response.getHits();
             PagingResult<MODEL> pagingResult = new PagingResult<MODEL>();
             pagingResult.setItems(models);
             pagingResult.setPageNo(pr.getPageNo());
             pagingResult.setPageSize(pr.getPageSize());
-            pagingResult.setTotal(hits.getTotalHits());
+            pagingResult.setTotal(totalHits);
             pr.setResult(pagingResult);
         }
 
@@ -100,7 +100,8 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
         List<MODEL> results = new LinkedList<>();
         results.addAll(scrollContext.getScrolledModels());
         SearchHits searchHits = response.getHits();
-        if (searchHits.getTotalHits() > 0) {
+        long totalHits = ESRequests.getSearchTotalHits(searchHits);
+        if (totalHits > 0) {
             List<MODEL> models = new LinkedList<>();
             for (SearchHit hit : searchHits.getHits()) {
                 if (hit.hasSource()) {
@@ -143,7 +144,7 @@ public class ESModelSearchServiceImpl<MODEL extends AbstractESModel> extends Abs
             pagingResult.setItems(results);
             pagingResult.setPageNo(pr.getPageNo());
             pagingResult.setPageSize(pr.getPageSize());
-            pagingResult.setTotal(searchHits.getTotalHits());
+            pagingResult.setTotal(totalHits);
             pr.setResult(pagingResult);
         }
         return results;
