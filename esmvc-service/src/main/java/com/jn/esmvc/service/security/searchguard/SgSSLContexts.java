@@ -34,9 +34,9 @@ public class SgSSLContexts {
         ks.load(null, null);
         KeyManagerFactory keyManagerFactory = null;
         {
-            X509Certificate[] rootX509Certificatess = toX509Certificates(rootPemFile);
+            X509Certificate[] rootX509Certificates = toX509Certificates(rootPemFile);
             int i = 1;
-            for (X509Certificate root : rootX509Certificatess) {
+            for (X509Certificate root : rootX509Certificates) {
                 String alias = Integer.toString(i);
                 ks.setCertificateEntry(alias, root);
                 i++;
