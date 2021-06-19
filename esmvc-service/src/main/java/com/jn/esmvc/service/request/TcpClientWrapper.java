@@ -10,8 +10,8 @@ import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsRe
 import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
-import com.jn.esmvc.service.request.indices.IndicesClientProxy;
-import com.jn.esmvc.service.request.indices.tcp.TcpIndicesClientProxy;
+import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
+import com.jn.esmvc.service.request.indices.tcp.TcpIndicesClientWrapper;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -39,8 +39,8 @@ public class TcpClientWrapper extends ClientWrapper<TransportClient, Object> {
     }
 
     @Override
-    public IndicesClientProxy indicesClient() {
-        return new TcpIndicesClientProxy(this);
+    public IndicesClientWrapper indicesClient() {
+        return new TcpIndicesClientWrapper(this);
     }
 
     public static TcpClientWrapper fromTransportClient(TransportClient transportClient){

@@ -5,7 +5,7 @@ import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
-import com.jn.esmvc.service.request.indices.IndicesClientProxy;
+import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
 import com.jn.langx.util.struct.Holder;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -36,7 +36,7 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
         return globalOptions;
     }
 
-    public abstract IndicesClientProxy indicesClient();
+    public abstract IndicesClientWrapper indicesClient();
 
     /**
      * 同步 index
@@ -230,4 +230,6 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
     public abstract CountResponse count(CountRequest request, OPTIONS options) throws IOException;
     public abstract void countAsync(CountRequest request, OPTIONS options,  ActionListener<CountResponse> listener);
+
+
 }

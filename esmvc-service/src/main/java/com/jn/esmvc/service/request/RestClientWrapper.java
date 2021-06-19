@@ -11,8 +11,8 @@ import com.jn.esmvc.service.request.document.action.termvectors.RestTermVectorRe
 import com.jn.esmvc.service.request.document.action.termvectors.RestTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
-import com.jn.esmvc.service.request.indices.IndicesClientProxy;
-import com.jn.esmvc.service.request.indices.rest.RestIndicesClientProxy;
+import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
+import com.jn.esmvc.service.request.indices.rest.RestIndicesClientWrapper;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -48,8 +48,8 @@ public class RestClientWrapper extends ClientWrapper<RestHighLevelClient, Reques
     }
 
     @Override
-    public IndicesClientProxy indicesClient() {
-        return new RestIndicesClientProxy(this);
+    public IndicesClientWrapper indicesClient() {
+        return new RestIndicesClientWrapper(this);
     }
 
     private RequestOptions mergeRequestOptions(RequestOptions global, RequestOptions options) {
