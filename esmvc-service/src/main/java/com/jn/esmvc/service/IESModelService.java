@@ -7,6 +7,6 @@ public interface IESModelService<MODEL extends AbstractESModel> {
 
     IESModelService setModelClass(Class<MODEL> modelClass);
 
-    ClientProxy getClient();
-    IESModelService setClient(ClientProxy clientHolder);
+    ClientWrapper getClient();
+    IESModelService setClient(ClientWrapper clientHolder);
 }

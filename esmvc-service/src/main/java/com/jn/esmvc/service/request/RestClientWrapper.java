@@ -1,6 +1,6 @@
 package com.jn.esmvc.service.request;
 
-import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.ClientWrapper;
 import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
@@ -32,19 +32,19 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import java.io.IOException;
 
-public class RestClientProxy extends ClientProxy<RestHighLevelClient, RequestOptions> {
+public class RestClientWrapper extends ClientWrapper<RestHighLevelClient, RequestOptions> {
 
-    public RestClientProxy() {
+    public RestClientWrapper() {
         setGlobalOptions(RequestOptions.DEFAULT);
     }
 
-    public RestClientProxy(ESRestClient restClient){
+    public RestClientWrapper(ESRestClient restClient){
         this.set(restClient.getRestClient());
         this.setGlobalOptions(restClient.getRequestOptions());
     }
 
-    public static RestClientProxy fromESRestClient(ESRestClient restClient) {
-        return new RestClientProxy(restClient);
+    public static RestClientWrapper fromESRestClient(ESRestClient restClient) {
+        return new RestClientWrapper(restClient);
     }
 
     @Override

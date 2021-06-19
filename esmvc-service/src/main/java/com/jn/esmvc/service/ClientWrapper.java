@@ -24,7 +24,7 @@ import org.elasticsearch.action.update.UpdateResponse;
 
 import java.io.IOException;
 
-public abstract class ClientProxy<CLIENT, OPTIONS> extends Holder<CLIENT> {
+public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
     private OPTIONS globalOptions;
 

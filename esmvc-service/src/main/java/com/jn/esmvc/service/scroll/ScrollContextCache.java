@@ -1,6 +1,6 @@
 package com.jn.esmvc.service.scroll;
 
-import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.ClientWrapper;
 import com.jn.esmvc.service.util.ESRequests;
 import com.jn.langx.cache.*;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -92,12 +92,12 @@ public class ScrollContextCache {
     }
 
     @Deprecated
-    public ClientProxy getClientProxy() {
+    public ClientWrapper getClientProxy() {
         return null;
     }
 
     @Deprecated
-    public void setClientProxy(ClientProxy clientProxy) {
+    public void setClientProxy(ClientWrapper clientProxy) {
 
     }
 

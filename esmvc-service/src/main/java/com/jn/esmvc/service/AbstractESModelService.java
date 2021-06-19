@@ -9,7 +9,7 @@ import com.jn.esmvc.model.AbstractESModel;
 import java.lang.reflect.Modifier;
 
 public class AbstractESModelService<MODEL extends AbstractESModel> implements IESModelService<MODEL> {
-    protected ClientProxy client;
+    protected ClientWrapper client;
     protected Class<MODEL> modelClass;
     protected JSON json = JSONBuilderProvider.create()
             .addSerializationExclusion(new IgnoreAnnotationExclusion())
@@ -29,12 +29,12 @@ public class AbstractESModelService<MODEL extends AbstractESModel> implements IE
     }
 
     @Override
-    public ClientProxy getClient() {
+    public ClientWrapper getClient() {
         return client;
     }
 
     @Override
-    public IESModelService setClient(ClientProxy client) {
+    public IESModelService setClient(ClientWrapper client) {
         this.client = client;
         return this;
     }

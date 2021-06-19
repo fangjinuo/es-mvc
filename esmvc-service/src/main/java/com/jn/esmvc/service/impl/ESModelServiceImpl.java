@@ -2,7 +2,7 @@ package com.jn.esmvc.service.impl;
 
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.service.*;
-import com.jn.esmvc.service.request.RestClientProxy;
+import com.jn.esmvc.service.request.RestClientWrapper;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -21,7 +21,7 @@ public class ESModelServiceImpl<MODEL extends AbstractESModel> extends AbstractE
 
 
     @Override
-    public AbstractESModelService<MODEL> setClient(ClientProxy client) {
+    public AbstractESModelService<MODEL> setClient(ClientWrapper client) {
         super.setClient(client);
         crudService.setClient(client);
         searchService.setClient(client);
@@ -29,7 +29,7 @@ public class ESModelServiceImpl<MODEL extends AbstractESModel> extends AbstractE
     }
 
     public AbstractESModelService<MODEL> setClient(ESRestClient client) {
-        super.setClient(RestClientProxy.fromESRestClient(client));
+        super.setClient(RestClientWrapper.fromESRestClient(client));
         return this;
     }
 

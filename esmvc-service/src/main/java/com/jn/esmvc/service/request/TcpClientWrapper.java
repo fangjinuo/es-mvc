@@ -1,6 +1,6 @@
 package com.jn.esmvc.service.request;
 
-import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.ClientWrapper;
 import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
@@ -30,11 +30,11 @@ import org.elasticsearch.client.transport.TransportClient;
 
 import java.io.IOException;
 
-public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
+public class TcpClientWrapper extends ClientWrapper<TransportClient, Object> {
 
-    public TcpClientProxy(){}
+    public TcpClientWrapper(){}
 
-    public TcpClientProxy(TransportClient transportClient){
+    public TcpClientWrapper(TransportClient transportClient){
         this.set(transportClient);
     }
 
@@ -43,8 +43,8 @@ public class TcpClientProxy extends ClientProxy<TransportClient, Object> {
         return new TcpIndicesClientProxy(this);
     }
 
-    public static TcpClientProxy fromTransportClient(TransportClient transportClient){
-        return new TcpClientProxy(transportClient);
+    public static TcpClientWrapper fromTransportClient(TransportClient transportClient){
+        return new TcpClientWrapper(transportClient);
     }
 
     @Override

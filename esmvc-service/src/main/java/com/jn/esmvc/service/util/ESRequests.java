@@ -2,7 +2,7 @@ package com.jn.esmvc.service.util;
 
 import com.jn.easyjson.core.JSON;
 import com.jn.esmvc.model.AbstractESModel;
-import com.jn.esmvc.service.ClientProxy;
+import com.jn.esmvc.service.ClientWrapper;
 import com.jn.esmvc.service.ESRestClient;
 import com.jn.langx.util.Preconditions;
 import com.jn.langx.util.pagination.PagingRequest;
@@ -42,7 +42,7 @@ public class ESRequests {
         }
     }
 
-    public static void clearScroll(String scrollId, ClientProxy<?, ?> clientProxy) {
+    public static void clearScroll(String scrollId, ClientWrapper<?, ?> clientProxy) {
         Preconditions.checkNotNull(scrollId);
         ClearScrollRequest request = new ClearScrollRequest();
         request.addScrollId(scrollId);
