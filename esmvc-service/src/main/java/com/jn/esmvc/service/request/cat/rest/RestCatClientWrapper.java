@@ -4,6 +4,9 @@ import com.jn.esmvc.service.request.RestClientWrapper;
 import com.jn.esmvc.service.request.cat.CatClientWrapper;
 import com.jn.esmvc.service.request.cat.action.CatNodesRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
+import com.jn.langx.http.HttpMethod;
+import com.jn.langx.util.Objs;
+import com.jn.langx.util.Strings;
 import org.elasticsearch.client.*;
 import org.elasticsearch.common.CheckedFunction;
 import org.elasticsearch.common.xcontent.XContentParser;
@@ -31,6 +34,13 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
         return getHighLevelClient().getLowLevelClient();
     }
 
+    /**
+     * GET /_cat/nodes
+     *
+     * @param requestOptions
+     * @param request
+     * @return
+     */
     @Override
     public CatNodesResponse nodes(RequestOptions requestOptions, CatNodesRequest request) {
         RequestOptions options = restClientWrapper.mergeRequestOptions(requestOptions);
@@ -39,7 +49,22 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                 new CheckedFunction<CatNodesRequest, Request, IOException>() {
                     @Override
                     public Request apply(CatNodesRequest request) throws IOException {
-                        return null;
+                        Request req = new Request(HttpMethod.GET.name(), "/_cat/nodes");
+
+                        if (request.getDataUnit() != null) {
+                            req.addParameter("bytes", request.getDataUnit().getStandardSymbol());
+                        }
+                        if (Strings.isNotEmpty(request.getFormat())) {
+                            req.addParameter("format", request.getFormat());
+                        }
+                        req.addParameter("full_id", "true");
+                        if (Objs.isNotEmpty(request.getMetrics())) {
+                            req.addParameter("h", Strings.join(",", request.getMetrics()));
+                        }
+                        if (request.getTimeUnit() != null) {
+                            req.addParameter("time", request.getTimeUnit().getSimpleName());
+                        }
+                        return req;
                     }
                 }, options,
                 new CheckedFunction<XContentParser, CatNodesResponse, IOException>() {
