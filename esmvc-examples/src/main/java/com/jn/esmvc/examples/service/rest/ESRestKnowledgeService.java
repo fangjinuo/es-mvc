@@ -1,7 +1,7 @@
 package com.jn.esmvc.examples.service.rest;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
-import com.jn.esmvc.service.impl.ESModelServiceImpl;
+import com.jn.esmvc.examples.service.ESKnowledgeService;
 import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.springframework.beans.factory.InitializingBean;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ESRestKnowledgeService extends ESModelServiceImpl<KnowledgeESModel> implements InitializingBean {
+public class ESRestKnowledgeService extends ESKnowledgeService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {

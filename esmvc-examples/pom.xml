@@ -80,6 +80,10 @@
             <version>${easyjson.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.floragunn</groupId>
+            <artifactId>search-guard-ssl</artifactId>
+        </dependency>
 
     </dependencies>
 
