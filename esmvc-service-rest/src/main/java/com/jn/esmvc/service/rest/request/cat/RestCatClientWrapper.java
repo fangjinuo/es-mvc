@@ -54,18 +54,6 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
         RequestOptions options = restClientWrapper.mergeRequestOptions(requestOptions);
         if (request == null) {
             request = new CatNodesRequest();
-            request.setMetrics(Collects.newArrayList("ip",
-                    "role",
-                    "master",
-                    "name",
-                    "id",
-                    "pid",
-                    "port",
-                    "http",
-                    "version",
-                    "build",
-                    "jdk"
-            ));
         }
         CatNodesResponse catNodesResponse = getClientWrapper().performRequestAndParseEntity(request,
                 new CheckedFunction<CatNodesRequest, Request, IOException>() {

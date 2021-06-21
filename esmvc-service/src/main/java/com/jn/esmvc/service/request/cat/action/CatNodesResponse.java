@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class CatNodesResponse extends ActionResponse {
-    private final List<Map<String, String>> nodes = Collects.emptyArrayList();
+    private final List<NodeRuntime> nodes = Collects.emptyArrayList();
 
-    public List<Map<String, String>> getNodes() {
+    public List<NodeRuntime> getNodes() {
         return nodes;
     }
 
@@ -35,7 +35,7 @@ public class CatNodesResponse extends ActionResponse {
                 filteredNode.put(key, entry.getValue());
             }
         });
-        this.nodes.add(filteredNode);
+        this.nodes.add(new NodeRuntime(filteredNode));
     }
 
 }

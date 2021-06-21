@@ -2,6 +2,7 @@ package com.jn.esmvc.service.request.cat.action;
 
 import com.jn.langx.annotation.Nullable;
 import com.jn.langx.util.DataUnit;
+import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.collection.Pipeline;
 import com.jn.langx.util.function.Function;
 import com.jn.langx.util.timing.TimeUnit2;
@@ -10,7 +11,6 @@ import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.tasks.Task;
 import org.elasticsearch.tasks.TaskId;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +31,20 @@ public class CatNodesRequest extends ActionRequest {
 
     @Nullable
     private TimeUnit2 timeUnit;
-
+    private static final List<String> DEFAULT = Collects.newArrayList("id",
+            "name",
+            "ip",
+            "role",
+            "master",
+            "pid",
+            "port",
+            "http",
+            "version",
+            "build",
+            "jdk"
+    );
     @Nullable
-    private List<String> metrics;
+    private List<String> metrics = DEFAULT;
 
     private boolean fullId = false;
 
@@ -74,7 +85,7 @@ public class CatNodesRequest extends ActionRequest {
     }
 
     public void setMetrics(List<String> metrics) {
-        this.metrics = Pipeline.of(metrics).map(new Function<String, String>() {
+        this.metrics = Pipeline.of(metrics).addAll(DEFAULT).map(new Function<String, String>() {
             @Override
             public String apply(String metric) {
                 if (CatNodesMetrics.isValidMetric(metric)) {
@@ -82,7 +93,7 @@ public class CatNodesRequest extends ActionRequest {
                 }
                 return null;
             }
-        }).clearNulls().asList();
+        }).clearNulls().distinct().asList();
 
     }
 

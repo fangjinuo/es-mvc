@@ -1,11 +1,12 @@
 package com.jn.esmvc.spring.boot;
 
+import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
+import com.jn.esmvc.service.rest.ESRestClient;
+import com.jn.esmvc.service.rest.ESRestClientBuilder;
 import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.rest.config.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.rest.config.RestClientBuilderCustomizer;
-import com.jn.esmvc.service.rest.ESRestClient;
-import com.jn.esmvc.service.rest.ESRestClientBuilder;
 import com.jn.langx.util.Emptys;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.ObjectProvider;
@@ -50,15 +51,18 @@ public class EsmvcRestClientAutoConfiguration {
             ObjectProvider<List<RestClientBuilderCustomizer>> builderCustomizers) {
         ESRestClientBuilder builder = new ESRestClientBuilder().properties(esmvcProperties);
         List<RestClientBuilderCustomizer> customizers = builderCustomizers.getIfAvailable();
-        if(Emptys.isNotEmpty(customizers)){
+        if (Emptys.isNotEmpty(customizers)) {
             builder.restClientBuilderCustomizers(customizers);
         }
         return builder.build();
     }
 
     @Bean
-    public RestClientWrapper restClientWrapper(ESRestClient esRestClient){
-        return RestClientWrapper.fromESRestClient(esRestClient);
+    public RestClientWrapper restClientWrapper(ESRestClient esRestClient) {
+        RestClientWrapper wrapper = RestClientWrapper.fromESRestClient(esRestClient);
+
+        CatNodesResponse response = wrapper.cat().nodes(null,null);
+        return wrapper;
     }
 
 
