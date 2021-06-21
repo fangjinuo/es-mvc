@@ -56,8 +56,8 @@
             <artifactId>esmvc-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
+            <groupId>com.github.fangjinuo.esmvc</groupId>
+            <artifactId>esmvc-service-tcp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
