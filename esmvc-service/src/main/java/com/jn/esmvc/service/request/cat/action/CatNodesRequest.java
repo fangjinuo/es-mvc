@@ -35,6 +35,16 @@ public class CatNodesRequest extends ActionRequest {
     @Nullable
     private List<String> metrics;
 
+    private boolean fullId = false;
+
+    public boolean isFullId() {
+        return fullId;
+    }
+
+    public void setFullId(boolean fullId) {
+        this.fullId = fullId;
+    }
+
     public DataUnit getDataUnit() {
         return dataUnit;
     }

@@ -64,7 +64,7 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                         if (Strings.isNotEmpty(request.getFormat())) {
                             req.addParameter("format", request.getFormat());
                         }
-                        req.addParameter("full_id", "true");
+                        req.addParameter("full_id", ""+ request.isFullId());
                         if (Objs.isNotEmpty(request.getMetrics())) {
                             req.addParameter("h", Strings.join(",", request.getMetrics()));
                         }
