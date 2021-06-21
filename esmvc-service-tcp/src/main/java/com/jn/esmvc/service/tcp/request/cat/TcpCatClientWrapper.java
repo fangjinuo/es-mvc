@@ -1,6 +1,7 @@
 package com.jn.esmvc.service.tcp.request.cat;
 
 import com.jn.esmvc.service.request.cat.CatClientWrapper;
+import com.jn.esmvc.service.request.cat.action.CatNodeAttrsRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodeAttrsResponse;
 import com.jn.esmvc.service.request.cat.action.CatNodesRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
@@ -24,7 +25,7 @@ public class TcpCatClientWrapper implements CatClientWrapper<TcpClientWrapper,Ob
     }
 
     @Override
-    public CatNodeAttrsResponse nodeattrs() {
+    public CatNodeAttrsResponse nodeattrs(Object o, CatNodeAttrsRequest request) {
         return null;
     }
 }

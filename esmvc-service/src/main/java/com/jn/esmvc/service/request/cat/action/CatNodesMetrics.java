@@ -1,14 +1,20 @@
 package com.jn.esmvc.service.request.cat.action;
 
+import com.jn.langx.util.collection.Collects;
+import com.jn.langx.util.function.Consumer;
+import com.jn.langx.util.function.Consumer2;
+
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html
  */
 public class CatNodesMetrics {
     private static final Map<String, String> nameMapping = new LinkedHashMap<String, String>();
-
+    private static final Set<String> metricNames = Collects.emptyHashSet(true);
     static {
         nameMapping.put("i", "ip");
 
@@ -70,6 +76,12 @@ public class CatNodesMetrics {
 
         nameMapping.put("file_desc.max", "fileDescriptorMax");
         nameMapping.put("fdm", "fileDescriptorMax");
+
+        nameMapping.put("cpu","cpu");
+        nameMapping.put("load_1m","load_1m");
+        nameMapping.put("load_5m","load_5m");
+        nameMapping.put("load_15m","load_15m");
+        nameMapping.put("u","uptime");
 
         nameMapping.put("completion.size", "completionSize");
         nameMapping.put("cs", "completionSize");
@@ -238,6 +250,15 @@ public class CatNodesMetrics {
 
         nameMapping.put("suggest.total", "suggestTotal");
         nameMapping.put("suto", "suggestTotal");
+
+        Collects.forEach(nameMapping, new Consumer2<String, String>() {
+            @Override
+            public void accept(String key, String value) {
+                metricNames.add(key);
+                metricNames.add(value);
+            }
+        });
+
     }
 
     public static String getStandardMetric(String metric) {
@@ -249,6 +270,6 @@ public class CatNodesMetrics {
     }
 
     public static boolean isValidMetric(String metric) {
-        return nameMapping.containsKey(metric);
+        return metricNames.contains(metric);
     }
 }

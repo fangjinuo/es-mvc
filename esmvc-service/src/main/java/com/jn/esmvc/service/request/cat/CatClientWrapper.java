@@ -1,5 +1,6 @@
 package com.jn.esmvc.service.request.cat;
 
+import com.jn.esmvc.service.request.cat.action.CatNodeAttrsRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodeAttrsResponse;
 import com.jn.esmvc.service.request.cat.action.CatNodesRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
@@ -12,5 +13,5 @@ public interface CatClientWrapper<WRAPPER,OPTIONS> {
 
     CatNodesResponse nodes(@Nullable OPTIONS options,@Nullable CatNodesRequest request);
 
-    CatNodeAttrsResponse nodeattrs();
+    CatNodeAttrsResponse nodeattrs(@Nullable OPTIONS options,@Nullable CatNodeAttrsRequest request);
 }

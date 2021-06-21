@@ -1,5 +1,6 @@
 package com.jn.esmvc.examples.controller;
 
+import com.jn.esmvc.service.request.cat.action.CatNodeAttrsResponse;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
 import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.rest.request.cat.RestCatClientWrapper;
@@ -21,6 +22,12 @@ public class CatController {
     public CatNodesResponse nodes() {
         RestCatClientWrapper clientWrapper = restClientWrapper.cat();
         return clientWrapper.nodes(null, null);
+    }
+
+    @GetMapping("/nodeattrs")
+    public CatNodeAttrsResponse nodeattrs() {
+        RestCatClientWrapper clientWrapper = restClientWrapper.cat();
+        return clientWrapper.nodeattrs(null, null);
     }
 
     @Autowired

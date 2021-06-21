@@ -1,6 +1,7 @@
 package com.jn.esmvc.service.rest.request.cat;
 
 import com.jn.esmvc.service.request.cat.CatClientWrapper;
+import com.jn.esmvc.service.request.cat.action.CatNodeAttrsRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodeAttrsResponse;
 import com.jn.esmvc.service.request.cat.action.CatNodesRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
@@ -95,8 +96,44 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
         return catNodesResponse;
     }
 
-    public CatNodeAttrsResponse nodeattrs() {
-        List<Node> nodes = getLowLevelClient().getNodes();
-        return null;
+    public CatNodeAttrsResponse nodeattrs(RequestOptions requestOptions, CatNodeAttrsRequest request) {
+        RequestOptions options = restClientWrapper.mergeRequestOptions(requestOptions);
+        if (request == null) {
+            request = new CatNodeAttrsRequest();
+        }
+        CatNodeAttrsResponse catNodeAttrsResponse = getClientWrapper().performRequestAndParseEntity(request,
+                new CheckedFunction<CatNodeAttrsRequest, Request, IOException>() {
+                    @Override
+                    public Request apply(CatNodeAttrsRequest request) throws IOException {
+                        Request req = new Request(HttpMethod.GET.name(), "/_cat/nodeattrs");
+                        if (Strings.isNotEmpty(request.getFormat())) {
+                            req.addParameter("format", request.getFormat());
+                        }
+                        if (Objs.isNotEmpty(request.getMetrics())) {
+                            req.addParameter("h", Strings.join(",", request.getMetrics()));
+                        }
+                        return req;
+                    }
+                }, options,
+                new CheckedFunction<XContentParser, CatNodeAttrsResponse, IOException>() {
+                    @Override
+                    public CatNodeAttrsResponse apply(XContentParser xContentParser) throws IOException {
+                        List<Object> list = xContentParser.listOrderedMap();
+
+                        CatNodeAttrsResponse response = new CatNodeAttrsResponse();
+                        Collects.forEach(list, new Consumer<Object>() {
+                            @Override
+                            public void accept(Object o) {
+                                if (o instanceof Map) {
+                                    response.addNodeAttr((Map)o);
+                                }
+                            }
+                        });
+                        return response;
+                    }
+                },
+                null
+        );
+        return catNodeAttrsResponse;
     }
 }
