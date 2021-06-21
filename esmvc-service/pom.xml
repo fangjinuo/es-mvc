@@ -5,11 +5,13 @@
     <parent>
         <groupId>com.github.fangjinuo.esmvc</groupId>
         <artifactId>esmvc</artifactId>
-        <version>1.2.6</version>
+        <version>1.3.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>esmvc-service</artifactId>
+
+    <name>${groupId}:${artifactId}:${version}</name>
 
     <properties>
         <sqlhelper.version>3.1.1</sqlhelper.version>
