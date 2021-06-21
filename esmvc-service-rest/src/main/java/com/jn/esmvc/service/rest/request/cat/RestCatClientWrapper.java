@@ -10,14 +10,13 @@ import com.jn.langx.util.Objs;
 import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.function.Consumer;
-import com.jn.langx.util.function.Consumer2;
-import com.jn.langx.util.function.Function;
 import org.elasticsearch.client.*;
 import org.elasticsearch.common.CheckedFunction;
 import org.elasticsearch.common.xcontent.XContentParser;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper, RequestOptions> {
     private RestClientWrapper restClientWrapper;
@@ -84,7 +83,7 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                             @Override
                             public void accept(Object o) {
                                 if (o instanceof Map) {
-                                    response.addNodeInfo((Map)o);
+                                    response.addNodeInfo((Map) o);
                                 }
                             }
                         });
