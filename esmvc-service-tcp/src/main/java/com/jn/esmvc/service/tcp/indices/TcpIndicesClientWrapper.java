@@ -1,6 +1,6 @@
-package com.jn.esmvc.service.request.indices.tcp;
+package com.jn.esmvc.service.tcp.indices;
 
-import com.jn.esmvc.service.request.TcpClientWrapper;
+import com.jn.esmvc.service.tcp.TcpClientWrapper;
 import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
 
 public class TcpIndicesClientWrapper implements IndicesClientWrapper<TcpClientWrapper> {

@@ -1,6 +1,7 @@
-package com.jn.esmvc.service.request.document.action.count;
+package com.jn.esmvc.service.tcp.document.action.count;
 
 import com.jn.esmvc.service.request.document.action.RequestAdapter;
+import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.langx.util.Preconditions;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.search.aggregations.AggregationBuilder;

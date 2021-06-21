@@ -1,6 +1,6 @@
 package com.jn.esmvc.spring.boot;
 
-import com.jn.esmvc.service.ESTcpClientBuilder;
+import com.jn.esmvc.service.tcp.ESTcpClientBuilder;
 import com.jn.esmvc.service.config.tcp.EsmvcTransportClientProperties;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;

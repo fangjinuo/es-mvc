@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.document.action.termvectors;
+package com.jn.esmvc.service.tcp.document.action.termvectors;
 
 import com.jn.esmvc.service.request.document.action.RequestAdapter;
 import org.elasticsearch.action.termvectors.TermVectorsRequest;

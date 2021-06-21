@@ -1,6 +1,7 @@
-package com.jn.esmvc.service.request.document.action.count;
+package com.jn.esmvc.service.tcp.document.action.count;
 
 import com.jn.esmvc.service.request.document.action.ResponseAdapter;
+import com.jn.esmvc.service.request.document.action.count.CountResponse;
 import com.jn.esmvc.service.util.ESRequests;
 import org.elasticsearch.action.search.SearchResponse;
 

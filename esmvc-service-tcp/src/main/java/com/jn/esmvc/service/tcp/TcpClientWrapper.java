@@ -1,17 +1,17 @@
-package com.jn.esmvc.service.request;
+package com.jn.esmvc.service.tcp;
 
 import com.jn.esmvc.service.ClientWrapper;
 import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
-import com.jn.esmvc.service.request.document.action.count.TcpCountRequestAdapter;
-import com.jn.esmvc.service.request.document.action.count.TcpCountResponseAdapter;
-import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsRequestAdapter;
-import com.jn.esmvc.service.request.document.action.termvectors.TcpTermVectorsResponseAdapter;
+import com.jn.esmvc.service.tcp.document.action.count.TcpCountRequestAdapter;
+import com.jn.esmvc.service.tcp.document.action.count.TcpCountResponseAdapter;
+import com.jn.esmvc.service.tcp.document.action.termvectors.TcpTermVectorsRequestAdapter;
+import com.jn.esmvc.service.tcp.document.action.termvectors.TcpTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
 import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
-import com.jn.esmvc.service.request.indices.tcp.TcpIndicesClientWrapper;
+import com.jn.esmvc.service.tcp.indices.TcpIndicesClientWrapper;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
