@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.rest.indices;
+package com.jn.esmvc.service.rest.request.indices;
 
 import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
 import com.jn.esmvc.service.rest.RestClientWrapper;

@@ -1,7 +1,7 @@
 package com.jn.esmvc.spring.boot;
 
-import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;
-import com.jn.esmvc.service.security.searchguard.SearchGuardRestClientBuilderCustomizer;
+import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
+import com.jn.esmvc.service.rest.security.searchguard.SearchGuardRestClientBuilderCustomizer;
 import com.jn.esmvc.service.security.searchguard.propertis.SearchGuardSSLProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

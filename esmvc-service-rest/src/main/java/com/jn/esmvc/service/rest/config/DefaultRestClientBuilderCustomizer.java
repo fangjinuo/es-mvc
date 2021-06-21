@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.config.rest;
+package com.jn.esmvc.service.rest.config;
 
 import com.jn.langx.util.Emptys;
 import org.apache.http.auth.AuthScope;

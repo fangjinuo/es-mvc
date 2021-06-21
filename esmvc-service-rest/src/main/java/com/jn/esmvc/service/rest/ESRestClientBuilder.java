@@ -1,8 +1,8 @@
 package com.jn.esmvc.service.rest;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
-import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;
-import com.jn.esmvc.service.config.rest.RestClientBuilderCustomizer;
+import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
+import com.jn.esmvc.service.rest.config.RestClientBuilderCustomizer;
 import com.jn.langx.Builder;
 import com.jn.langx.util.Emptys;
 import com.jn.langx.util.Strings;

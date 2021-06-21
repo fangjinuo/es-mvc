@@ -1,7 +1,7 @@
 package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.service.tcp.ESTcpClientBuilder;
-import com.jn.esmvc.service.config.tcp.EsmvcTransportClientProperties;
+import com.jn.esmvc.service.tcp.config.EsmvcTransportClientProperties;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;

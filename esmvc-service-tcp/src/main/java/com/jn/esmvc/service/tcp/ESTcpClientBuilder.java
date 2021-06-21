@@ -1,7 +1,7 @@
 package com.jn.esmvc.service.tcp;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
-import com.jn.esmvc.service.config.tcp.EsmvcTransportClientProperties;
+import com.jn.esmvc.service.tcp.config.EsmvcTransportClientProperties;
 import com.jn.langx.Builder;
 import com.jn.langx.io.resource.ClassPathResource;
 import com.jn.langx.io.resource.FileResource;

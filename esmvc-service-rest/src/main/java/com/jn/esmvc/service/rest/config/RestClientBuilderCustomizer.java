@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.config.rest;
+package com.jn.esmvc.service.rest.config;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;

@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.config.tcp;
+package com.jn.esmvc.service.tcp.config;
 
 import com.jn.esmvc.service.config.AbstractClientProperties;
 import org.elasticsearch.plugins.Plugin;

@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.tcp.document.action.count;
+package com.jn.esmvc.service.tcp.request.document.action.count;
 
 import com.jn.esmvc.service.request.document.action.ResponseAdapter;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;

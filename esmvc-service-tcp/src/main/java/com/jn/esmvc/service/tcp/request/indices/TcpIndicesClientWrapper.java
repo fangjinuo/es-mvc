@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.tcp.indices;
+package com.jn.esmvc.service.tcp.request.indices;
 
 import com.jn.esmvc.service.tcp.TcpClientWrapper;
 import com.jn.esmvc.service.request.indices.IndicesClientWrapper;

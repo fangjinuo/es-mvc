@@ -1,6 +1,7 @@
-package com.jn.esmvc.service.rest.cat;
+package com.jn.esmvc.service.rest.request.cat;
 
 import com.jn.esmvc.service.request.cat.CatClientWrapper;
+import com.jn.esmvc.service.request.cat.action.CatNodeAttrsResponse;
 import com.jn.esmvc.service.request.cat.action.CatNodesRequest;
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
 import com.jn.esmvc.service.rest.RestClientWrapper;
@@ -77,7 +78,8 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
         return catNodesResponse;
     }
 
-    public List<Node> nodeattrs() {
-        return getLowLevelClient().getNodes();
+    public CatNodeAttrsResponse nodeattrs() {
+        List<Node> nodes = getLowLevelClient().getNodes();
+        return null;
     }
 }

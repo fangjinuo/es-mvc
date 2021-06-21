@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.config.rest;
+package com.jn.esmvc.service.rest.config;
 
 import com.jn.esmvc.service.config.AbstractClientProperties;
 import com.jn.langx.util.collection.Collects;
