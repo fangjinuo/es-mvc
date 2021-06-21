@@ -1,13 +1,19 @@
 package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.service.request.cat.action.CatNodesResponse;
+import com.jn.esmvc.service.request.cat.action.NodeRuntime;
 import com.jn.esmvc.service.rest.ESRestClient;
 import com.jn.esmvc.service.rest.ESRestClientBuilder;
 import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.rest.config.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.rest.config.RestClientBuilderCustomizer;
+import com.jn.esmvc.service.util.Versions;
 import com.jn.langx.util.Emptys;
+import com.jn.langx.util.Strings;
+import com.jn.langx.util.collection.Pipeline;
+import com.jn.langx.util.function.Function;
+import org.elasticsearch.Version;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +35,7 @@ import java.util.List;
 @ConditionalOnClass(RestHighLevelClient.class)
 @Configuration("esmvcRestClientAutoConfiguration")
 public class EsmvcRestClientAutoConfiguration {
+
 
     @Bean("esmvcRestClientProperties")
     @ConditionalOnMissingBean(name = "esmvcRestClientProperties")
@@ -60,8 +67,7 @@ public class EsmvcRestClientAutoConfiguration {
     @Bean
     public RestClientWrapper restClientWrapper(ESRestClient esRestClient) {
         RestClientWrapper wrapper = RestClientWrapper.fromESRestClient(esRestClient);
-
-        CatNodesResponse response = wrapper.cat().nodes(null,null);
+        Versions.checkVersion(wrapper);
         return wrapper;
     }
 
