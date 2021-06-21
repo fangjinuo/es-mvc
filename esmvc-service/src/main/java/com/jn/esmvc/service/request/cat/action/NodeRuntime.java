@@ -28,17 +28,40 @@ public class NodeRuntime {
     public NodeRuntime(Map<String, String> metrics) {
         this.metrics = metrics;
         StringMapAccessor accessor = new StringMapAccessor(new StringMap(metrics));
+
         setId(accessor.getString("nodeId"));
+        this.metrics.remove("nodeId");
+
         setName(accessor.getString("name"));
+        this.metrics.remove("name");
+
         setIp(accessor.getString("ip"));
+        this.metrics.remove("ip");
+
         setNodeRole(accessor.getString("nodeRole"));
+        this.metrics.remove("nodeRole");
+
         setMaster("*".equals(accessor.getString("master", "-")));
+        this.metrics.remove("master");
+
         setPid(accessor.getInteger("pid"));
+        this.metrics.remove("pid");
+
         setTcpPort(accessor.getInteger("port"));
+        this.metrics.remove("port");
+
         setVersion(accessor.getString("version"));
+        this.metrics.remove("version");
+
         setBuild(accessor.getString("build"));
+        this.metrics.remove("build");
+
         setJdk(accessor.getString("jdk"));
+        this.metrics.remove("jdk");
+
         setHttpAddress(accessor.getString("http_address"));
+        this.metrics.remove("http_address");
+
         String httpAddress = getHttpAddress();
         if (httpAddress != null) {
             httpAddress = httpAddress.replace(getIp(),"");
@@ -141,5 +164,13 @@ public class NodeRuntime {
 
     public void setJdk(String jdk) {
         this.jdk = jdk;
+    }
+
+    public Map<String, String> getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(Map<String, String> metrics) {
+        this.metrics = metrics;
     }
 }
