@@ -1,9 +1,11 @@
 package com.jn.esmvc.service.rest;
 
 import com.jn.esmvc.service.ClientWrapper;
+import com.jn.esmvc.service.request.cat.CatClientWrapper;
 import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
+import com.jn.esmvc.service.rest.request.cat.RestCatClientWrapper;
 import com.jn.esmvc.service.rest.request.document.action.count.RestCountRequestAdapter;
 import com.jn.esmvc.service.rest.request.document.action.count.RestCountResponseAdapter;
 import com.jn.esmvc.service.rest.request.document.action.termvectors.RestTermVectorRequestAdapter;
@@ -54,8 +56,13 @@ public class RestClientWrapper extends ClientWrapper<RestHighLevelClient, Reques
     }
 
     @Override
-    public IndicesClientWrapper indicesClient() {
+    public RestIndicesClientWrapper indicesClient() {
         return new RestIndicesClientWrapper(this);
+    }
+
+    @Override
+    public RestCatClientWrapper cat() {
+        return new RestCatClientWrapper(this);
     }
 
     public RequestOptions mergeRequestOptions(RequestOptions options) {

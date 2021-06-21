@@ -45,7 +45,9 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
     @Override
     public CatNodesResponse nodes(RequestOptions requestOptions, CatNodesRequest request) {
         RequestOptions options = restClientWrapper.mergeRequestOptions(requestOptions);
-
+        if (request == null) {
+            request = new CatNodesRequest();
+        }
         CatNodesResponse catNodesResponse = getClientWrapper().performRequestAndParseEntity(request,
                 new CheckedFunction<CatNodesRequest, Request, IOException>() {
                     @Override

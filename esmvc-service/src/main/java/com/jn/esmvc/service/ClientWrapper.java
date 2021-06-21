@@ -1,6 +1,7 @@
 package com.jn.esmvc.service;
 
 
+import com.jn.esmvc.service.request.cat.CatClientWrapper;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
@@ -28,7 +29,7 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
     private OPTIONS globalOptions;
 
-    public void setGlobalOptions(OPTIONS options){
+    public void setGlobalOptions(OPTIONS options) {
         this.globalOptions = options;
     }
 
@@ -36,7 +37,10 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
         return globalOptions;
     }
 
-    public abstract IndicesClientWrapper indicesClient();
+    public abstract <WRAPPER> IndicesClientWrapper<WRAPPER, OPTIONS> indicesClient();
+
+    public abstract <WRAPPER> CatClientWrapper<WRAPPER, OPTIONS> cat();
+
 
     /**
      * 同步 index
@@ -128,7 +132,6 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
      * @param listener
      */
     public abstract void mgetAsync(MultiGetRequest request, OPTIONS options, ActionListener<MultiGetResponse> listener);
-
 
 
     /**
@@ -225,11 +228,13 @@ public abstract class ClientWrapper<CLIENT, OPTIONS> extends Holder<CLIENT> {
 
 
     public abstract TermVectorsResponse termVectors(TermVectorsRequest request, OPTIONS options) throws IOException;
+
     public abstract void termVectorsAsync(TermVectorsRequest request, OPTIONS options, ActionListener<TermVectorsResponse> listener);
 
 
     public abstract CountResponse count(CountRequest request, OPTIONS options) throws IOException;
-    public abstract void countAsync(CountRequest request, OPTIONS options,  ActionListener<CountResponse> listener);
+
+    public abstract void countAsync(CountRequest request, OPTIONS options, ActionListener<CountResponse> listener);
 
 
 }

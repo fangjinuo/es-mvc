@@ -1,16 +1,18 @@
 package com.jn.esmvc.service.tcp;
 
 import com.jn.esmvc.service.ClientWrapper;
+import com.jn.esmvc.service.request.cat.CatClientWrapper;
 import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
+import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
+import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
+import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
+import com.jn.esmvc.service.tcp.request.cat.TcpCatClientWrapper;
 import com.jn.esmvc.service.tcp.request.document.action.count.TcpCountRequestAdapter;
 import com.jn.esmvc.service.tcp.request.document.action.count.TcpCountResponseAdapter;
 import com.jn.esmvc.service.tcp.request.document.action.termvectors.TcpTermVectorsRequestAdapter;
 import com.jn.esmvc.service.tcp.request.document.action.termvectors.TcpTermVectorsResponseAdapter;
-import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
-import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
-import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
 import com.jn.esmvc.service.tcp.request.indices.TcpIndicesClientWrapper;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -32,9 +34,10 @@ import java.io.IOException;
 
 public class TcpClientWrapper extends ClientWrapper<TransportClient, Object> {
 
-    public TcpClientWrapper(){}
+    public TcpClientWrapper() {
+    }
 
-    public TcpClientWrapper(TransportClient transportClient){
+    public TcpClientWrapper(TransportClient transportClient) {
         this.set(transportClient);
     }
 
@@ -43,7 +46,12 @@ public class TcpClientWrapper extends ClientWrapper<TransportClient, Object> {
         return new TcpIndicesClientWrapper(this);
     }
 
-    public static TcpClientWrapper fromTransportClient(TransportClient transportClient){
+    @Override
+    public CatClientWrapper cat() {
+        return new TcpCatClientWrapper(this);
+    }
+
+    public static TcpClientWrapper fromTransportClient(TransportClient transportClient) {
         return new TcpClientWrapper(transportClient);
     }
 
@@ -165,13 +173,13 @@ public class TcpClientWrapper extends ClientWrapper<TransportClient, Object> {
     public CountResponse count(CountRequest request, Object o) throws IOException {
         TcpCountRequestAdapter requestAdapter = new TcpCountRequestAdapter();
         TcpCountResponseAdapter responseAdapter = new TcpCountResponseAdapter();
-        return responseAdapter.apply(search(requestAdapter.apply(request),o));
+        return responseAdapter.apply(search(requestAdapter.apply(request), o));
     }
 
     @Override
     public void countAsync(CountRequest request, Object o, ActionListener<CountResponse> listener) {
         TcpCountRequestAdapter requestAdapter = new TcpCountRequestAdapter();
         TcpCountResponseAdapter responseAdapter = new TcpCountResponseAdapter();
-        searchAsync(requestAdapter.apply(request),o, new DelegatableActionListener<>(listener, responseAdapter));
+        searchAsync(requestAdapter.apply(request), o, new DelegatableActionListener<>(listener, responseAdapter));
     }
 }
