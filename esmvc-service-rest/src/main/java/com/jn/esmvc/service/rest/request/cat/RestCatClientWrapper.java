@@ -8,12 +8,16 @@ import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.langx.http.HttpMethod;
 import com.jn.langx.util.Objs;
 import com.jn.langx.util.Strings;
+import com.jn.langx.util.collection.Collects;
+import com.jn.langx.util.function.Consumer;
+import com.jn.langx.util.function.Consumer2;
+import com.jn.langx.util.function.Function;
 import org.elasticsearch.client.*;
 import org.elasticsearch.common.CheckedFunction;
 import org.elasticsearch.common.xcontent.XContentParser;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper, RequestOptions> {
     private RestClientWrapper restClientWrapper;
@@ -73,9 +77,21 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                 new CheckedFunction<XContentParser, CatNodesResponse, IOException>() {
                     @Override
                     public CatNodesResponse apply(XContentParser xContentParser) throws IOException {
-                        return null;
+                        List<Object> list = xContentParser.listOrderedMap();
+
+                        CatNodesResponse response = new CatNodesResponse();
+                        Collects.forEach(list, new Consumer<Object>() {
+                            @Override
+                            public void accept(Object o) {
+                                if (o instanceof Map) {
+                                    response.addNodeInfo((Map)o);
+                                }
+                            }
+                        });
+                        return response;
                     }
-                }, null
+                },
+                null
         );
         return catNodesResponse;
     }

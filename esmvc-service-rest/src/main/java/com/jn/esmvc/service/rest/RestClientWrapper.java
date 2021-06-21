@@ -204,14 +204,23 @@ public class RestClientWrapper extends ClientWrapper<RestHighLevelClient, Reques
         get().countAsync(requestAdapter.apply(request), mergeRequestOptions(requestOptions), new DelegatableActionListener<>(listener, responseAdapter));
     }
 
-    private final Method restHighLevelClient_performRequestAndParseEntity = Reflects.getDeclaredMethod(RestHighLevelClient.class, "performRequestAndParseEntity", Object.class, CheckedFunction.class, RequestOptions.class, CheckedFunction.class, ActionListener.class);
+    private static final Method restHighLevelClient_performRequestAndParseEntity = Reflects.getDeclaredMethod(
+            RestHighLevelClient.class, "performRequestAndParseEntity",
+            ActionRequest.class,
+            CheckedFunction.class,
+            RequestOptions.class,
+            CheckedFunction.class,
+            Set.class);
 
     public final <Req extends ActionRequest, Resp> Resp performRequestAndParseEntity(Req request,
                                                                                      CheckedFunction<Req, Request, IOException> requestConverter,
                                                                                      RequestOptions options,
                                                                                      CheckedFunction<XContentParser, Resp, IOException> entityParser,
                                                                                      Set<Integer> ignores) {
-        return Reflects.invoke(restHighLevelClient_performRequestAndParseEntity, get(), new Object[]{request, requestConverter, options, entityParser, ignores}, true, true);
+        return Reflects.invoke(restHighLevelClient_performRequestAndParseEntity,
+                get(),
+                new Object[]{request, requestConverter, options, entityParser, ignores},
+                true, true);
     }
 
 }
