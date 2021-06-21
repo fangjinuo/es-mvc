@@ -39,7 +39,7 @@ public class Versions {
                 if (Version.CURRENT.toString().equalsIgnoreCase(version)) {
                     return true;
                 } else {
-                    logger.warn("Client version: {}, Server version: {}", Version.CURRENT.toString(), version);
+                    logger.warn("======Client version: {}, Server version: {}======", Version.CURRENT.toString(), version);
                     return false;
                 }
             }
