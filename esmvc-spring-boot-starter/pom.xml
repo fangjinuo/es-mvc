@@ -19,10 +19,7 @@
             <groupId>com.github.fangjinuo.esmvc</groupId>
             <artifactId>esmvc-service-rest</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.github.fangjinuo.esmvc</groupId>
-            <artifactId>esmvc-service-tcp</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -45,11 +42,9 @@
             <artifactId>search-guard-ssl</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
-            <version>${elasticsearch.version}</version>
+            <groupId>com.github.fangjinuo.esmvc</groupId>
+            <artifactId>esmvc-service-tcp</artifactId>
             <optional>true</optional>
         </dependency>
 
