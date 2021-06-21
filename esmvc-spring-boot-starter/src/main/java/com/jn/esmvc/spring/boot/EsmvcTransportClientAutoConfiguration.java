@@ -1,6 +1,7 @@
 package com.jn.esmvc.spring.boot;
 
 import com.jn.esmvc.service.tcp.ESTcpClientBuilder;
+import com.jn.esmvc.service.tcp.TcpClientWrapper;
 import com.jn.esmvc.service.tcp.config.EsmvcTransportClientProperties;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
@@ -38,4 +39,8 @@ public class EsmvcTransportClientAutoConfiguration {
         return new ESTcpClientBuilder().properties(esmvcTransportClientProperties).build();
     }
 
+    @Bean
+    public TcpClientWrapper tcpClientWrapper(TransportClient transportClient){
+        return TcpClientWrapper.fromTransportClient(transportClient);
+    }
 }

@@ -1,5 +1,6 @@
 package com.jn.esmvc.spring.boot;
 
+import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.rest.config.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.rest.config.RestClientBuilderCustomizer;
@@ -53,6 +54,11 @@ public class EsmvcRestClientAutoConfiguration {
             builder.restClientBuilderCustomizers(customizers);
         }
         return builder.build();
+    }
+
+    @Bean
+    public RestClientWrapper restClientWrapper(ESRestClient esRestClient){
+        return RestClientWrapper.fromESRestClient(esRestClient);
     }
 
 

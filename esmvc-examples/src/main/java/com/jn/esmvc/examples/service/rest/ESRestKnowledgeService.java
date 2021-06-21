@@ -1,8 +1,8 @@
 package com.jn.esmvc.examples.service.rest;
 
 import com.jn.esmvc.examples.model.KnowledgeESModel;
-import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.impl.ESModelServiceImpl;
+import com.jn.esmvc.service.rest.RestClientWrapper;
 import com.jn.esmvc.service.scroll.ScrollContextCache;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,8 @@ public class ESRestKnowledgeService extends ESModelServiceImpl<KnowledgeESModel>
     }
 
     @Autowired
-    @Qualifier("esRestClient")
-    public ESRestKnowledgeService setClient(ESRestClient client) {
-        super.setClient(client);
+    public ESRestKnowledgeService setClient(RestClientWrapper restClientWrapper) {
+        super.setClient(restClientWrapper);
         return this;
     }
 

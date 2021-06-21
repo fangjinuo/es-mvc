@@ -69,9 +69,7 @@
         <module>esmvc-spring-boot-starter</module>
         <module>esmvc-service-rest</module>
         <module>esmvc-service-tcp</module>
-        <!--
         <module>esmvc-examples</module>
-        -->
     </modules>
 
     <dependencyManagement>
