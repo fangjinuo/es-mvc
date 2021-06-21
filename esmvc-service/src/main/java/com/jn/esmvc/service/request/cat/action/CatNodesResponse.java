@@ -2,14 +2,13 @@ package com.jn.esmvc.service.request.cat.action;
 
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.function.Consumer;
-import org.elasticsearch.action.ActionResponse;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CatNodesResponse extends ActionResponse {
+public class CatNodesResponse {
     private final List<NodeRuntime> nodes = Collects.emptyArrayList();
 
     public List<NodeRuntime> getNodes() {
@@ -17,7 +16,7 @@ public class CatNodesResponse extends ActionResponse {
     }
 
     public void setNodes(List<Map<String, String>> nodes) {
-        Collects.forEach(nodes, new Consumer<Map<String,String>>() {
+        Collects.forEach(nodes, new Consumer<Map<String, String>>() {
             @Override
             public void accept(Map<String, String> node) {
                 addNode(node);

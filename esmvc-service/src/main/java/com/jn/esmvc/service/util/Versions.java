@@ -27,7 +27,7 @@ public class Versions {
                 }
             }).distinct().asList();
         } catch (Throwable ex) {
-            logger.warn("Error occur when get servers version");
+            logger.warn("Error occur when get servers version with the {}", wrapper);
         }
 
         if (Emptys.isNotEmpty(nodesVersions)) {
@@ -37,6 +37,7 @@ public class Versions {
             } else {
                 String version = nodesVersions.get(0);
                 if (Version.CURRENT.toString().equalsIgnoreCase(version)) {
+                    logger.info("======Client version: {}, Server version: {}======", Version.CURRENT.toString(), version);
                     return true;
                 } else {
                     logger.warn("======Client version: {}, Server version: {}======", Version.CURRENT.toString(), version);
