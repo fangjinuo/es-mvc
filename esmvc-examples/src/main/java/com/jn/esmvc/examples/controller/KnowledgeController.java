@@ -13,41 +13,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/knowledges")
-public class RestClientKnowledgeController {
+public class KnowledgeController {
 
     private ESRestKnowledgeService restKnowledgeService;
     private ESTcpKnowledgeService tcpKnowledgeService;
 
     @PostMapping
-    public void add(@RequestParam(defaultValue = "true")  boolean rest, @RequestBody KnowledgeESModel knowledge) throws IOException {
+    public void add(@RequestParam(defaultValue = "true") boolean rest, @RequestBody KnowledgeESModel knowledge) throws IOException {
         getService(rest).add(knowledge);
     }
 
-    private ESKnowledgeService getService(boolean rest){
-        return rest? restKnowledgeService:tcpKnowledgeService;
+    private ESKnowledgeService getService(boolean rest) {
+        return rest ? restKnowledgeService : tcpKnowledgeService;
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@RequestParam(defaultValue = "true")  boolean rest,@PathVariable String id) throws IOException {
+    public void deleteById(@RequestParam(defaultValue = "true") boolean rest, @PathVariable String id) throws IOException {
         getService(rest).removeById(id);
     }
 
     @PatchMapping
-    public void updateById(@RequestParam(defaultValue = "true")  boolean rest,@RequestBody KnowledgeESModel knowledgeESModel) throws IOException {
+    public void updateById(@RequestParam(defaultValue = "true") boolean rest, @RequestBody KnowledgeESModel knowledgeESModel) throws IOException {
         getService(rest).updateById(knowledgeESModel.get_id(), knowledgeESModel);
     }
 
     @GetMapping("/{id}")
-    public KnowledgeESModel getById(@RequestParam(defaultValue = "true")  boolean rest,@PathVariable String id) throws IOException {
+    public KnowledgeESModel getById(@RequestParam(defaultValue = "true") boolean rest, @PathVariable String id) throws IOException {
         return getService(rest).getById(id);
     }
 
     @GetMapping
-    public PagingResult<KnowledgeESModel> list(@RequestParam(defaultValue = "true")  boolean rest) throws IOException {
+    public PagingResult<KnowledgeESModel> list(@RequestParam(defaultValue = "true") boolean rest) throws IOException {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         QueryBuilder queryBuilder = new MatchAllQueryBuilder();
         sourceBuilder.from(0).size(100).query(queryBuilder);
@@ -55,7 +54,7 @@ public class RestClientKnowledgeController {
         return ESRequests.ES_PAGING.get().getResult();
     }
 
-    public long total(@RequestParam(defaultValue = "true")  boolean rest) throws IOException{
+    public long total(@RequestParam(defaultValue = "true") boolean rest) throws IOException {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         QueryBuilder queryBuilder = new MatchAllQueryBuilder();
         sourceBuilder.query(queryBuilder);
@@ -66,6 +65,7 @@ public class RestClientKnowledgeController {
     public void setRestKnowledgeService(ESRestKnowledgeService restKnowledgeService) {
         this.restKnowledgeService = restKnowledgeService;
     }
+
     @Autowired
     public void setTcpKnowledgeService(ESTcpKnowledgeService tcpKnowledgeService) {
         this.tcpKnowledgeService = tcpKnowledgeService;
