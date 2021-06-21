@@ -1,4 +1,4 @@
-package com.jn.esmvc.service;
+package com.jn.esmvc.service.rest;
 
 import com.jn.langx.util.Preconditions;
 import org.elasticsearch.client.RequestOptions;

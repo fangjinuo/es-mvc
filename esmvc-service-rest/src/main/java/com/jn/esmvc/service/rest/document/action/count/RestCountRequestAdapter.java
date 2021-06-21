@@ -1,4 +1,4 @@
-package com.jn.esmvc.service.request.document.action.count;
+package com.jn.esmvc.service.rest.document.action.count;
 
 import com.jn.esmvc.service.request.document.action.RequestAdapter;
 import com.jn.langx.util.Emptys;

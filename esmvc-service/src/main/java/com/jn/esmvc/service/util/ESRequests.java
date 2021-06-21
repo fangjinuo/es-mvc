@@ -3,7 +3,6 @@ package com.jn.esmvc.service.util;
 import com.jn.easyjson.core.JSON;
 import com.jn.esmvc.model.AbstractESModel;
 import com.jn.esmvc.service.ClientWrapper;
-import com.jn.esmvc.service.ESRestClient;
 import com.jn.langx.util.Preconditions;
 import com.jn.langx.util.pagination.PagingRequest;
 import com.jn.langx.util.reflect.Reflects;
@@ -29,17 +28,6 @@ public class ESRequests {
 
     public static void logRequestWhenFail(Logger logger, ActionRequest request, Throwable ex) {
         logger.error("Error occur when execute elasticsearch restful request {}", request, ex);
-    }
-
-    public static void clearScroll(String scrollId, ESRestClient esRestClient) {
-        Preconditions.checkNotNull(scrollId);
-        ClearScrollRequest request = new ClearScrollRequest();
-        request.addScrollId(scrollId);
-        try {
-            esRestClient.getRestClient().clearScroll(request, esRestClient.getRequestOptions());
-        } catch (Exception ex) {
-            logRequestWhenFail(logger, request, ex);
-        }
     }
 
     public static void clearScroll(String scrollId, ClientWrapper<?, ?> clientProxy) {

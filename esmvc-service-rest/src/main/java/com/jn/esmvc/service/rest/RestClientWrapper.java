@@ -1,18 +1,17 @@
-package com.jn.esmvc.service.request;
+package com.jn.esmvc.service.rest;
 
 import com.jn.esmvc.service.ClientWrapper;
-import com.jn.esmvc.service.ESRestClient;
 import com.jn.esmvc.service.request.document.action.DelegatableActionListener;
 import com.jn.esmvc.service.request.document.action.count.CountRequest;
 import com.jn.esmvc.service.request.document.action.count.CountResponse;
-import com.jn.esmvc.service.request.document.action.count.RestCountRequestAdapter;
-import com.jn.esmvc.service.request.document.action.count.RestCountResponseAdapter;
-import com.jn.esmvc.service.request.document.action.termvectors.RestTermVectorRequestAdapter;
-import com.jn.esmvc.service.request.document.action.termvectors.RestTermVectorsResponseAdapter;
+import com.jn.esmvc.service.rest.document.action.count.RestCountRequestAdapter;
+import com.jn.esmvc.service.rest.document.action.count.RestCountResponseAdapter;
+import com.jn.esmvc.service.rest.document.action.termvectors.RestTermVectorRequestAdapter;
+import com.jn.esmvc.service.rest.document.action.termvectors.RestTermVectorsResponseAdapter;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsRequest;
 import com.jn.esmvc.service.request.document.action.termvectors.TermVectorsResponse;
 import com.jn.esmvc.service.request.indices.IndicesClientWrapper;
-import com.jn.esmvc.service.request.indices.rest.RestIndicesClientWrapper;
+import com.jn.esmvc.service.rest.indices.RestIndicesClientWrapper;
 import com.jn.langx.util.reflect.Reflects;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.ActionRequest;
@@ -32,7 +31,6 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Request;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.Validatable;
 import org.elasticsearch.common.CheckedFunction;
 import org.elasticsearch.common.xcontent.XContentParser;
 

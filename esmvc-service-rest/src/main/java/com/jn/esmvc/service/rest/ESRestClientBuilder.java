@@ -1,4 +1,4 @@
-package com.jn.esmvc.service;
+package com.jn.esmvc.service.rest;
 
 import com.jn.esmvc.model.utils.ESClusterRestAddressParser;
 import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;

@@ -67,6 +67,8 @@
         <module>esmvc-model</module>
         <module>esmvc-service</module>
         <module>esmvc-spring-boot-starter</module>
+        <module>esmvc-service-rest</module>
+        <module>esmvc-service-tcp</module>
         <!--
         <module>esmvc-examples</module>
         -->
@@ -119,6 +121,18 @@
                 <artifactId>esmvc-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-service-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-service-tcp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>com.github.fangjinuo.esmvc</groupId>

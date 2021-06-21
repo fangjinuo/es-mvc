@@ -1,10 +1,10 @@
 package com.jn.esmvc.spring.boot;
 
-import com.jn.esmvc.service.ESRestClient;
-import com.jn.esmvc.service.ESRestClientBuilder;
 import com.jn.esmvc.service.config.rest.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.config.rest.EsmvcRestClientProperties;
 import com.jn.esmvc.service.config.rest.RestClientBuilderCustomizer;
+import com.jn.esmvc.service.rest.ESRestClient;
+import com.jn.esmvc.service.rest.ESRestClientBuilder;
 import com.jn.langx.util.Emptys;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.ObjectProvider;
@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AutoConfigureAfter(ScrollContextCacheAutoConfiguration.class)
 @ConditionalOnProperty(name = "esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
