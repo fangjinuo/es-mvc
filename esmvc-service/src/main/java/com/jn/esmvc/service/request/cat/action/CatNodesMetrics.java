@@ -3,6 +3,9 @@ package com.jn.esmvc.service.request.cat.action;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html
+ */
 public class CatNodesMetrics {
     private static final Map<String, String> nameMapping = new LinkedHashMap<String, String>();
 
@@ -68,10 +71,6 @@ public class CatNodesMetrics {
         nameMapping.put("file_desc.max", "fileDescriptorMax");
         nameMapping.put("fdm", "fileDescriptorMax");
 
-        nameMapping.put("load_1m", "load_1m");
-        nameMapping.put("load_5m", "load_5m");
-        nameMapping.put("load_15m", "load_15m");
-
         nameMapping.put("completion.size", "completionSize");
         nameMapping.put("cs", "completionSize");
 
@@ -131,6 +130,114 @@ public class CatNodesMetrics {
 
         nameMapping.put("get.missing_total", "getMissingTotal");
         nameMapping.put("gmto", "getMissingTotal");
+
+        nameMapping.put("indexing.delete_current", "indexingDeleteCurrent");
+        nameMapping.put("idc", "indexingDeleteCurrent");
+
+        nameMapping.put("indexing.delete_time", "indexingDeleteTime");
+        nameMapping.put("idti", "indexingDeleteTime");
+
+        nameMapping.put("indexing.delete_total", "indexingDeleteTotal");
+        nameMapping.put("idto", "indexingDeleteTotal");
+
+        nameMapping.put("indexing.index_current", "indexingIndexCurrent");
+        nameMapping.put("iic", "indexingIndexCurrent");
+
+        nameMapping.put("indexing.index_time", "indexingIndexTime");
+        nameMapping.put("iiti", "indexingIndexTime");
+
+        nameMapping.put("indexing.index_total", "indexingIndexTotal");
+        nameMapping.put("iito", "indexingIndexTotal");
+
+        nameMapping.put("indexing.index_failed", "indexingIndexFailed");
+        nameMapping.put("iif", "indexingIndexFailed");
+
+        nameMapping.put("merges.current", "mergesCurrent");
+        nameMapping.put("mc", "mergesCurrent");
+
+        nameMapping.put("merges.current_docs", "mergesCurrentDocs");
+        nameMapping.put("mcd", "mergesCurrentDocs");
+
+        nameMapping.put("merges.current_size", "mergesCurrentSize");
+        nameMapping.put("mcs", "mergesCurrentSize");
+
+        nameMapping.put("merges.total", "mergesTotal");
+        nameMapping.put("mt", "mergesTotal");
+
+        nameMapping.put("merges.total_docs", "mergesTotalDocs");
+        nameMapping.put("mtd", "mergesTotalDocs");
+
+        nameMapping.put("merges.total_size", "mergesTotalSize");
+        nameMapping.put("mts", "mergesTotalSize");
+
+        nameMapping.put("merges.total_time", "mergesTotalTime");
+        nameMapping.put("mtt", "mergesTotalTime");
+
+        nameMapping.put("refresh.total", "refreshTotal");
+        nameMapping.put("rto", "refreshTotal");
+
+        nameMapping.put("refresh.time", "refreshTime");
+        nameMapping.put("rti", "refreshTime");
+
+        nameMapping.put("script.compilations", "scriptCompilations");
+        nameMapping.put("scrcc", "scriptCompilations");
+
+        nameMapping.put("script.cache_evictions", "scriptCacheEvictions");
+        nameMapping.put("scrce", "scriptCacheEvictions");
+
+        nameMapping.put("search.fetch_current", "searchFetchCurrent");
+        nameMapping.put("sfc", "searchFetchCurrent");
+
+        nameMapping.put("search.fetch_time", "searchFetchTime");
+        nameMapping.put("sfti", "searchFetchTime");
+
+        nameMapping.put("search.fetch_total", "searchFetchTotal");
+        nameMapping.put("sfto", "searchFetchTotal");
+
+        nameMapping.put("search.open_contexts", "searchOpenContexts");
+        nameMapping.put("so", "searchOpenContexts");
+
+        nameMapping.put("search.query_current", "searchQueryCurrent");
+        nameMapping.put("sqc", "searchQueryCurrent");
+
+        nameMapping.put("search.query_time", "searchQueryTime");
+        nameMapping.put("sqti", "searchQueryTime");
+
+        nameMapping.put("search.query_total", "searchQueryTotal");
+        nameMapping.put("sqto", "searchQueryTotal");
+
+        nameMapping.put("search.scroll_current", "searchScrollCurrent");
+        nameMapping.put("scc", "searchScrollCurrent");
+
+        nameMapping.put("search.scroll_time", "searchScrollTime");
+        nameMapping.put("scti", "searchScrollTime");
+
+        nameMapping.put("search.scroll_total", "searchScrollTotal");
+        nameMapping.put("scto", "searchScrollTotal");
+
+        nameMapping.put("segments.count", "segmentsCount");
+        nameMapping.put("sc", "");
+
+        nameMapping.put("segments.memory", "segmentsMemory");
+        nameMapping.put("sm", "segmentsMemory");
+
+        nameMapping.put("segments.index_writer_memory", "segmentsIndexWriterMemory");
+        nameMapping.put("siwm", "segmentsIndexWriterMemory");
+
+        nameMapping.put("segments.version_map_memory", "segmentsVersionMapMemory");
+        nameMapping.put("svmm", "segmentsVersionMapMemory");
+
+        nameMapping.put("segments.fixed_bitset_memory", "fixedBitsetMemory");
+        nameMapping.put("sfbm", "fixedBitsetMemory");
+
+        nameMapping.put("suggest.current", "suggestCurrent");
+        nameMapping.put("suc", "suggestCurrent");
+
+        nameMapping.put("suggest.time", "suggestTime");
+        nameMapping.put("suti", "suggestTime");
+
+        nameMapping.put("suggest.total", "suggestTotal");
+        nameMapping.put("suto", "suggestTotal");
     }
 
     public static String getStandardMetric(String metric) {
