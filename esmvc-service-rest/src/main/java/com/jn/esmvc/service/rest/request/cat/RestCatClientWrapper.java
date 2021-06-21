@@ -83,7 +83,7 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                             @Override
                             public void accept(Object o) {
                                 if (o instanceof Map) {
-                                    response.addNodeInfo((Map) o);
+                                    response.addNode((Map) o);
                                 }
                             }
                         });
