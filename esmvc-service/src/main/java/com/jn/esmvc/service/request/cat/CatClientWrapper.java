@@ -11,5 +11,6 @@ public interface CatClientWrapper<WRAPPER, OPTIONS> {
 
     CatNodesResponse nodes(@Nullable OPTIONS options, @Nullable CatNodesRequest request);
 
+
     CatNodeAttrsResponse nodeattrs(@Nullable OPTIONS options, @Nullable CatNodeAttrsRequest request);
 }

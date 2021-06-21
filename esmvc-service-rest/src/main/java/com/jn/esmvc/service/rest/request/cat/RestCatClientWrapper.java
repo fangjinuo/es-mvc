@@ -11,7 +11,10 @@ import com.jn.langx.util.Objs;
 import com.jn.langx.util.Strings;
 import com.jn.langx.util.collection.Collects;
 import com.jn.langx.util.function.Consumer;
-import org.elasticsearch.client.*;
+import org.elasticsearch.client.Request;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.CheckedFunction;
 import org.elasticsearch.common.xcontent.XContentParser;
 
@@ -51,6 +54,18 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
         RequestOptions options = restClientWrapper.mergeRequestOptions(requestOptions);
         if (request == null) {
             request = new CatNodesRequest();
+            request.setMetrics(Collects.newArrayList("ip",
+                    "role",
+                    "master",
+                    "name",
+                    "id",
+                    "pid",
+                    "port",
+                    "http",
+                    "version",
+                    "build",
+                    "jdk"
+            ));
         }
         CatNodesResponse catNodesResponse = getClientWrapper().performRequestAndParseEntity(request,
                 new CheckedFunction<CatNodesRequest, Request, IOException>() {
@@ -64,7 +79,7 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                         if (Strings.isNotEmpty(request.getFormat())) {
                             req.addParameter("format", request.getFormat());
                         }
-                        req.addParameter("full_id", ""+ request.isFullId());
+                        req.addParameter("full_id", "" + request.isFullId());
                         if (Objs.isNotEmpty(request.getMetrics())) {
                             req.addParameter("h", Strings.join(",", request.getMetrics()));
                         }
@@ -125,7 +140,7 @@ public class RestCatClientWrapper implements CatClientWrapper<RestClientWrapper,
                             @Override
                             public void accept(Object o) {
                                 if (o instanceof Map) {
-                                    response.addNodeAttr((Map)o);
+                                    response.addNodeAttr((Map) o);
                                 }
                             }
                         });
