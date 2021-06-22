@@ -11,6 +11,8 @@
 
     <artifactId>esmvc-spring-boot-starter-rest</artifactId>
 
+    <name>${groupId}:${artifactId}:${version}</name>
+
     <dependencies>
         <dependency>
             <groupId>com.github.fangjinuo.esmvc</groupId>
