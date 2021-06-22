@@ -1,4 +1,4 @@
-package com.jn.esmvc.spring.boot;
+package com.jn.esmvc.spring.boot.rest;
 
 import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.rest.security.searchguard.SearchGuardRestClientBuilderCustomizer;

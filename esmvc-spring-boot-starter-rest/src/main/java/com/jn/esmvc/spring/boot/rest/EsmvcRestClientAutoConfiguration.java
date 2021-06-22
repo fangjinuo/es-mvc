@@ -1,4 +1,4 @@
-package com.jn.esmvc.spring.boot;
+package com.jn.esmvc.spring.boot.rest;
 
 import com.jn.esmvc.service.rest.ESRestClient;
 import com.jn.esmvc.service.rest.ESRestClientBuilder;
@@ -7,6 +7,7 @@ import com.jn.esmvc.service.rest.config.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.rest.config.RestClientBuilderCustomizer;
 import com.jn.esmvc.service.util.Versions;
+import com.jn.esmvc.spring.boot.ScrollContextCacheAutoConfiguration;
 import com.jn.langx.util.Emptys;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.ObjectProvider;

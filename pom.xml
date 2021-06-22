@@ -71,6 +71,8 @@
         <module>esmvc-examples</module>
         <module>esmvc-spring-boot-common</module>
         <module>esmvc-spring-boot-starter</module>
+        <module>esmvc-spring-boot-starter-rest</module>
+        <module>esmvc-spring-boot-starter-tcp</module>
     </modules>
 
     <dependencyManagement>
@@ -136,7 +138,16 @@
                 <artifactId>esmvc-spring-boot-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-spring-boot-starter-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-spring-boot-starter-tcp</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.fangjinuo.esmvc</groupId>
                 <artifactId>esmvc-spring-boot-starter</artifactId>

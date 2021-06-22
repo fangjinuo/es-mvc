@@ -1,9 +1,10 @@
-package com.jn.esmvc.spring.boot;
+package com.jn.esmvc.spring.boot.tcp;
 
 import com.jn.esmvc.service.tcp.ESTcpClientBuilder;
 import com.jn.esmvc.service.tcp.TcpClientWrapper;
 import com.jn.esmvc.service.tcp.config.EsmvcTransportClientProperties;
 import com.jn.esmvc.service.util.Versions;
+import com.jn.esmvc.spring.boot.ScrollContextCacheAutoConfiguration;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.springframework.beans.factory.annotation.Autowired;

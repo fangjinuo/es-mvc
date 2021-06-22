@@ -1,6 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.jn.esmvc.spring.boot.ESModelIdAutoConfiguration,\
   com.jn.esmvc.spring.boot.ScrollContextCacheAutoConfiguration,\
-  com.jn.esmvc.spring.boot.EsmvcRestClientAutoConfiguration,\
-  com.jn.esmvc.spring.boot.EsmvcTransportClientAutoConfiguration,\
-  com.jn.esmvc.spring.boot.SearchGuardRestClientAutoConfiguration
+  com.jn.esmvc.spring.boot.rest.EsmvcRestClientAutoConfiguration,\
+  com.jn.esmvc.spring.boot.tcp.EsmvcTransportClientAutoConfiguration,\
+  com.jn.esmvc.spring.boot.rest.SearchGuardRestClientAutoConfiguration
