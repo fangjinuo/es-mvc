@@ -27,7 +27,7 @@ public class Versions {
                 }
             }).distinct().asList();
         } catch (Throwable ex) {
-            logger.warn("Error occur when get servers version with the {}", wrapper);
+            logger.warn("Error occur when get servers version with the {}", wrapper.getClass());
         }
 
         if (Emptys.isNotEmpty(nodesVersions)) {

@@ -66,14 +66,26 @@
     <modules>
         <module>esmvc-model</module>
         <module>esmvc-service</module>
-        <module>esmvc-spring-boot-starter</module>
         <module>esmvc-service-rest</module>
         <module>esmvc-service-tcp</module>
         <module>esmvc-examples</module>
+        <module>esmvc-spring-boot-common</module>
+        <module>esmvc-spring-boot-starter</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-autoconfigure</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -119,7 +131,11 @@
                 <artifactId>esmvc-service-tcp</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.github.fangjinuo.esmvc</groupId>
+                <artifactId>esmvc-spring-boot-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.github.fangjinuo.esmvc</groupId>
