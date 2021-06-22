@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.jn.esmvc.spring.boot.ESModelIdAutoConfiguration,\
+  com.jn.esmvc.spring.boot.ScrollContextCacheAutoConfiguration,\
+  com.jn.esmvc.spring.boot.tcp.EsmvcTransportClientAutoConfiguration

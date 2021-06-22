@@ -7,6 +7,7 @@ import com.jn.esmvc.service.rest.config.DefaultRestClientBuilderCustomizer;
 import com.jn.esmvc.service.rest.config.EsmvcRestClientProperties;
 import com.jn.esmvc.service.rest.config.RestClientBuilderCustomizer;
 import com.jn.esmvc.service.util.Versions;
+import com.jn.esmvc.spring.boot.ESModelIdAutoConfiguration;
 import com.jn.esmvc.spring.boot.ScrollContextCacheAutoConfiguration;
 import com.jn.langx.util.Emptys;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -24,6 +26,7 @@ import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
+@ImportAutoConfiguration({ESModelIdAutoConfiguration.class, ScrollContextCacheAutoConfiguration.class})
 @AutoConfigureAfter(ScrollContextCacheAutoConfiguration.class)
 @ConditionalOnProperty(name = "esmvc.rest.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnMissingBean(name = "esmvcRestClientAutoConfiguration")
