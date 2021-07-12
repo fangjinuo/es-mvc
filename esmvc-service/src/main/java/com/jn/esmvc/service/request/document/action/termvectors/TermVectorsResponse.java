@@ -127,14 +127,16 @@ public class TermVectorsResponse {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof TermVectorsResponse)) return false;
+        if (!(obj instanceof TermVectorsResponse)){
+            return false;
+        }
         TermVectorsResponse other = (TermVectorsResponse) obj;
         return index.equals(other.index)
                 && type.equals(other.type)
                 && Objects.equals(id, other.id)
                 && docVersion == other.docVersion
                 && found == other.found
-                && tookInMillis == tookInMillis
+                && tookInMillis == other.tookInMillis
                 && Objects.equals(termVectorList, other.termVectorList);
     }
 
