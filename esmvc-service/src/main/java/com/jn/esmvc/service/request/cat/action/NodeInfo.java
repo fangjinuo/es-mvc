@@ -25,7 +25,7 @@ public final class NodeInfo {
             return false;
         }
 
-        NodeInfo o = (NodeInfo) obj;
+        // NodeInfo o = (NodeInfo) obj;
         return Objs.equals(this.id, this.name) || Objs.equals(this.name, this.name);
     }
 

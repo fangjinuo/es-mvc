@@ -1,5 +1,6 @@
 package com.jn.esmvc.service.request.document.action.termvectors;
 
+import com.jn.langx.util.collection.Arrs;
 import org.elasticsearch.action.ActionRequest;
 import org.elasticsearch.action.ActionRequestValidationException;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -98,11 +99,11 @@ public class TermVectorsRequest extends ActionRequest {
     }
 
     public String[] getFields() {
-        return fields;
+        return Arrs.copy(fields);
     }
 
     public void setFields(String[] fields) {
-        this.fields = fields;
+        this.fields = Arrs.copy(fields);
     }
 
     public boolean isRequestPositions() {
