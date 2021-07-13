@@ -5,7 +5,7 @@ ESMVC 旨在方便 ElasticSearch 的使用，就行访问数据库一样访问ES
 
 [![License](https://img.shields.io/badge/license-Apache2.0-green.svg)](https://github.com/fangjinuo/es-mvc/blob/master/LICENSE)
 
-[![maven](https://img.shields.io/badge/maven-v1.3.0-green.svg)](https://search.maven.org/search?q=g:com.github.fangjinuo.esmvc%20AND%20v:1.3.0)
+[![maven](https://img.shields.io/badge/maven-v1.3.1-green.svg)](https://search.maven.org/search?q=g:com.github.fangjinuo.esmvc%20AND%20v:1.3.1)
 
 
 ## Contact:
