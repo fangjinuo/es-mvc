@@ -16,7 +16,9 @@
 
 package com.jn.esmvc.service.security;
 
+import com.jn.langx.codec.base64.Base64;
 import com.jn.langx.util.io.Charsets;
+import com.jn.langx.util.io.IOs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,19 +52,20 @@ public final class PemReader {
 
     public static ByteBuffer[] readCertificates(File file) throws CertificateException {
         try {
-            InputStream in = new FileInputStream(file);
+            InputStream in=null;
 
             try {
+                in = new FileInputStream(file);
                 return readCertificates(in);
             } finally {
-                safeClose(in);
+                IOs.close(in);
             }
         } catch (FileNotFoundException e) {
             throw new CertificateException("could not find certificate file: " + file);
         }
     }
 
-    static ByteBuffer[] readCertificates(InputStream in) throws CertificateException {
+    public static ByteBuffer[] readCertificates(InputStream in) throws CertificateException {
         String content;
         try {
             content = readContent(in);
@@ -79,7 +82,7 @@ public final class PemReader {
             }
 
             byte[] base64Bytes = m.group(1).getBytes(Charsets.US_ASCII);
-            certs.add(ByteBuffer.wrap(com.jn.langx.codec.base64.Base64.decodeBase64(base64Bytes)));
+            certs.add(ByteBuffer.wrap(Base64.decodeBase64(base64Bytes)));
             start = m.end();
         }
 
@@ -92,19 +95,20 @@ public final class PemReader {
 
     public static ByteBuffer readPrivateKey(File file) throws KeyException {
         try {
-            InputStream in = new FileInputStream(file);
+            InputStream in=null;
 
             try {
+                in = new FileInputStream(file);
                 return readPrivateKey(in);
             } finally {
-                safeClose(in);
+                IOs.close(in);
             }
         } catch (FileNotFoundException e) {
             throw new KeyException("could not find key file: " + file);
         }
     }
 
-    static ByteBuffer readPrivateKey(InputStream in) throws KeyException {
+    public static ByteBuffer readPrivateKey(InputStream in) throws KeyException {
         String content;
         try {
             content = readContent(in);
@@ -134,23 +138,7 @@ public final class PemReader {
             }
             return out.toString(Charsets.US_ASCII.name());
         } finally {
-            safeClose(out);
-        }
-    }
-
-    private static void safeClose(InputStream in) {
-        try {
-            in.close();
-        } catch (IOException e) {
-            logger.warn("Failed to close a stream.", e);
-        }
-    }
-
-    private static void safeClose(OutputStream out) {
-        try {
-            out.close();
-        } catch (IOException e) {
-            logger.warn("Failed to close a stream.", e);
+            IOs.close(out);
         }
     }
 
